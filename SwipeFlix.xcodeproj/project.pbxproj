@@ -8,17 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */; };
-		3A9166942DEB8273007E0420 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9166932DEB8273007E0420 /* ContentView.swift */; };
 		3A9166962DEB8277007E0420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9166952DEB8277007E0420 /* Assets.xcassets */; };
 		3A9166992DEB8277007E0420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9166982DEB8277007E0420 /* Preview Assets.xcassets */; };
+		3AD0404C2DEB854A008DB045 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0404B2DEB854A008DB045 /* Settings.swift */; };
+		3AD0404E2DEB8575008DB045 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0404D2DEB8575008DB045 /* ShareSheet.swift */; };
+		3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0404F2DEB858F008DB045 /* MailFeedback.swift */; };
+		3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD040512DEB85A2008DB045 /* AppVersion.swift */; };
+		3AD040542DEB85BF008DB045 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */; };
+		3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD040562DEB8604008DB045 /* PurchaseView.swift */; };
+		3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD040582DEB861B008DB045 /* StoreManager.swift */; };
+		3AD0405C2DEB864C008DB045 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 3AD0405B2DEB864C008DB045 /* AlertToast */; };
+		3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0405D2DEB869F008DB045 /* SafariView.swift */; };
+		3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3A91668E2DEB8273007E0420 /* SwipeFlix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeFlix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeFlixApp.swift; sourceTree = "<group>"; };
-		3A9166932DEB8273007E0420 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3A9166952DEB8277007E0420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9166982DEB8277007E0420 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3AD0404B2DEB854A008DB045 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		3AD0404D2DEB8575008DB045 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		3AD0404F2DEB858F008DB045 /* MailFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailFeedback.swift; sourceTree = "<group>"; };
+		3AD040512DEB85A2008DB045 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		3AD040562DEB8604008DB045 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
+		3AD040582DEB861B008DB045 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		3AD0405D2DEB869F008DB045 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeFlixIndex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD0405C2DEB864C008DB045 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +70,13 @@
 			isa = PBXGroup;
 			children = (
 				3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */,
-				3A9166932DEB8273007E0420 /* ContentView.swift */,
+				3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */,
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
+				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
+				3AD0404A2DEB853B008DB045 /* Views */,
+				3AD040482DEB8518008DB045 /* Funktioner */,
+				3AD040492DEB8523008DB045 /* DataFetcher */,
+				3AD040552DEB85E9008DB045 /* in-app purchase */,
 				3A9166972DEB8277007E0420 /* Preview Content */,
 			);
 			path = SwipeFlix;
@@ -65,6 +88,41 @@
 				3A9166982DEB8277007E0420 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3AD040482DEB8518008DB045 /* Funktioner */ = {
+			isa = PBXGroup;
+			children = (
+				3AD0404D2DEB8575008DB045 /* ShareSheet.swift */,
+				3AD0404F2DEB858F008DB045 /* MailFeedback.swift */,
+				3AD040512DEB85A2008DB045 /* AppVersion.swift */,
+			);
+			path = Funktioner;
+			sourceTree = "<group>";
+		};
+		3AD040492DEB8523008DB045 /* DataFetcher */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataFetcher;
+			sourceTree = "<group>";
+		};
+		3AD0404A2DEB853B008DB045 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3AD0404B2DEB854A008DB045 /* Settings.swift */,
+				3AD0405D2DEB869F008DB045 /* SafariView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3AD040552DEB85E9008DB045 /* in-app purchase */ = {
+			isa = PBXGroup;
+			children = (
+				3AD040562DEB8604008DB045 /* PurchaseView.swift */,
+				3AD040582DEB861B008DB045 /* StoreManager.swift */,
+			);
+			path = "in-app purchase";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +141,9 @@
 			dependencies = (
 			);
 			name = SwipeFlix;
+			packageProductDependencies = (
+				3AD0405B2DEB864C008DB045 /* AlertToast */,
+			);
 			productName = SwipeFlix;
 			productReference = 3A91668E2DEB8273007E0420 /* SwipeFlix.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +172,9 @@
 				Base,
 			);
 			mainGroup = 3A9166852DEB8272007E0420;
+			packageReferences = (
+				3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */,
+			);
 			productRefGroup = 3A91668F2DEB8273007E0420 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,6 +189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD040542DEB85BF008DB045 /* Launch Screen.storyboard in Resources */,
 				3A9166992DEB8277007E0420 /* Preview Assets.xcassets in Resources */,
 				3A9166962DEB8277007E0420 /* Assets.xcassets in Resources */,
 			);
@@ -137,8 +202,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A9166942DEB8273007E0420 /* ContentView.swift in Sources */,
+				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
+				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
+				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
+				3AD0404C2DEB854A008DB045 /* Settings.swift in Sources */,
 				3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */,
+				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
+				3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */,
+				3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */,
+				3AD0404E2DEB8575008DB045 /* ShareSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +416,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3AD0405B2DEB864C008DB045 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3A9166862DEB8272007E0420 /* Project object */;
 }
