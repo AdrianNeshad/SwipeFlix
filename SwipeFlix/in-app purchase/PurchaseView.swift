@@ -12,8 +12,6 @@ struct PurchaseView: View {
     @Binding var isUnlocked: Bool
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("appLanguage") private var appLanguage = "sv"
-    @AppStorage("isDarkMode") private var isDarkMode = true
-
     
     @available(iOS 16.0, *)
     var body: some View {
@@ -68,6 +66,5 @@ struct PurchaseView: View {
             }
         }
         .padding()
-        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }

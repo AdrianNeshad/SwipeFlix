@@ -20,6 +20,14 @@
 		3AD0405C2DEB864C008DB045 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 3AD0405B2DEB864C008DB045 /* AlertToast */; };
 		3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0405D2DEB869F008DB045 /* SafariView.swift */; };
 		3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */; };
+		3ADE61BD2DEBAD8200819FD2 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61BC2DEBAD8200819FD2 /* Movie.swift */; };
+		3ADE61BF2DEBADAE00819FD2 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61BE2DEBADAE00819FD2 /* MovieViewModel.swift */; };
+		3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C02DEBADCA00819FD2 /* MovieCard.swift */; };
+		3ADE61C32DEBAE1500819FD2 /* SwipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C22DEBAE1500819FD2 /* SwipeCard.swift */; };
+		3ADE61C52DEBAED800819FD2 /* TVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C42DEBAED800819FD2 /* TVShow.swift */; };
+		3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */; };
+		3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */; };
+		3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +44,14 @@
 		3AD040582DEB861B008DB045 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		3AD0405D2DEB869F008DB045 /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeFlixIndex.swift; sourceTree = "<group>"; };
+		3ADE61BC2DEBAD8200819FD2 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		3ADE61BE2DEBADAE00819FD2 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		3ADE61C02DEBADCA00819FD2 /* MovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCard.swift; sourceTree = "<group>"; };
+		3ADE61C22DEBAE1500819FD2 /* SwipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCard.swift; sourceTree = "<group>"; };
+		3ADE61C42DEBAED800819FD2 /* TVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShow.swift; sourceTree = "<group>"; };
+		3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowViewModel.swift; sourceTree = "<group>"; };
+		3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCard.swift; sourceTree = "<group>"; };
+		3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +112,7 @@
 				3AD0404D2DEB8575008DB045 /* ShareSheet.swift */,
 				3AD0404F2DEB858F008DB045 /* MailFeedback.swift */,
 				3AD040512DEB85A2008DB045 /* AppVersion.swift */,
+				3ADE61C22DEBAE1500819FD2 /* SwipeCard.swift */,
 			);
 			path = Funktioner;
 			sourceTree = "<group>";
@@ -103,6 +120,8 @@
 		3AD040492DEB8523008DB045 /* DataFetcher */ = {
 			isa = PBXGroup;
 			children = (
+				3ADE61BC2DEBAD8200819FD2 /* Movie.swift */,
+				3ADE61C42DEBAED800819FD2 /* TVShow.swift */,
 			);
 			path = DataFetcher;
 			sourceTree = "<group>";
@@ -112,6 +131,11 @@
 			children = (
 				3AD0404B2DEB854A008DB045 /* Settings.swift */,
 				3AD0405D2DEB869F008DB045 /* SafariView.swift */,
+				3ADE61BE2DEBADAE00819FD2 /* MovieViewModel.swift */,
+				3ADE61C02DEBADCA00819FD2 /* MovieCard.swift */,
+				3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */,
+				3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */,
+				3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,13 +226,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */,
 				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
 				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
 				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
 				3AD0404C2DEB854A008DB045 /* Settings.swift in Sources */,
+				3ADE61BD2DEBAD8200819FD2 /* Movie.swift in Sources */,
 				3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */,
+				3ADE61C32DEBAE1500819FD2 /* SwipeCard.swift in Sources */,
+				3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */,
 				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
 				3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */,
+				3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */,
+				3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */,
+				3ADE61C52DEBAED800819FD2 /* TVShow.swift in Sources */,
+				3ADE61BF2DEBADAE00819FD2 /* MovieViewModel.swift in Sources */,
 				3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */,
 				3AD0404E2DEB8575008DB045 /* ShareSheet.swift in Sources */,
 			);

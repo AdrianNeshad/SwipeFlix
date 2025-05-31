@@ -8,13 +8,11 @@
 import SwiftUI
 
 @main
-struct SwipeFlixApp: App {
-    @AppStorage("isDarkMode") private var isDarkMode = true
-    
+struct SwipeFlixApp: App {    
     var body: some Scene {
         WindowGroup {
             SwipeFlixIndex()
-                .preferredColorScheme(isDarkMode ? .dark : .light)
+                .preferredColorScheme(.dark)
         }
     }
 }

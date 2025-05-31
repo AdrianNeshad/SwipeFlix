@@ -11,7 +11,6 @@ import MessageUI
 import AlertToast
 
 struct Settings: View {
-    @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("adsRemoved") private var adsRemoved = false
     @StateObject private var storeManager = StoreManager()
     @State private var showShareSheet = false
@@ -92,7 +91,7 @@ struct Settings: View {
                 }
             }
             */
-            Section(header: "About") {
+            Section("About") {
                 Button("Rate the App") {
                     requestReview()
                 }
@@ -120,7 +119,7 @@ struct Settings: View {
                                  messageBody: "")
                 }
             }
-            Section(header: "Other Apps") {
+            Section("Other Apps") {
                 Link(destination: URL(string: "https://apps.apple.com/us/app/univert/id6745692591")!) {
                     HStack {
                         Image("univert")
