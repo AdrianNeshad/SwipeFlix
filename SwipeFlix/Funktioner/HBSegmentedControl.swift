@@ -39,7 +39,7 @@ import UIKit
         didSet { layer.borderColor = borderColor.cgColor }
     }
     
-    @IBInspectable public var font: UIFont? = UIFont.systemFont(ofSize: 12) {
+    @IBInspectable public var font: UIFont? = UIFont.systemFont(ofSize: 16) {
         didSet { setFont() }
     }
     
@@ -59,8 +59,6 @@ import UIKit
     
     private func setupView() {
         layer.cornerRadius = frame.height / 2
-        layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor
-        layer.borderWidth = 2
         
         backgroundColor = UIColor.clear
         setupLabels()
@@ -126,7 +124,7 @@ import UIKit
         
         let label = labels[selectedIndex]
         label.textColor = selectedLabelColor
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, animations: {
+        UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, animations: {
             self.thumbView.frame = label.frame
         }, completion: nil)
     }

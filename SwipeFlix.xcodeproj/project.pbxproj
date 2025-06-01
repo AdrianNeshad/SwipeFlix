@@ -30,6 +30,7 @@
 		3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */; };
 		3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */; };
 		3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */; };
+		3AF90EE82DEC5333008D58FC /* WatchListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE72DEC5333008D58FC /* WatchListManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchList.swift; sourceTree = "<group>"; };
 		3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedControl.swift; sourceTree = "<group>"; };
 		3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedWrapper.swift; sourceTree = "<group>"; };
+		3AF90EE72DEC5333008D58FC /* WatchListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				3ADE61C22DEBAE1500819FD2 /* SwipeCard.swift */,
 				3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */,
 				3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */,
+				3AF90EE72DEC5333008D58FC /* WatchListManager.swift */,
 			);
 			path = Funktioner;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */,
 				3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */,
 				3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */,
+				3AF90EE82DEC5333008D58FC /* WatchListManager.swift in Sources */,
 				3ADE61C52DEBAED800819FD2 /* TVShow.swift in Sources */,
 				3ADE61BF2DEBADAE00819FD2 /* MovieViewModel.swift in Sources */,
 				3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */,

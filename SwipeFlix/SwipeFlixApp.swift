@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct SwipeFlixApp: App {    
+    @StateObject private var watchList = WatchListManager()
+
     var body: some Scene {
         WindowGroup {
             SwipeFlixIndex()
+                .environmentObject(watchList)
                 .preferredColorScheme(.dark)
         }
     }

@@ -14,14 +14,16 @@ enum SwipeContentType: String, CaseIterable, Identifiable {
 }
 
 struct SwipeFlixIndex: View {
+    @EnvironmentObject private var watchList: WatchListManager
     @AppStorage("AdsRemoved") private var AdsRemoved = false
     @StateObject private var storeManager = StoreManager()
     @StateObject private var movieVM = MovieViewModel()
     @StateObject private var tvShowVM = TVShowViewModel()
     @State private var selectedTab = 0
     @State private var selectedIndex = 0
+    @State private var showToast = false
+    @State private var toastText = ""
 
-    // 🔄 Converter mellan index och enum
     private var selectedType: SwipeContentType {
         get { SwipeContentType.allCases[selectedIndex] }
         set {
@@ -40,14 +42,22 @@ struct SwipeFlixIndex: View {
                         ZStack {
                             switch selectedType {
                             case .movies:
-                                swipeStack(items: movieVM.movies, onRemove: { liked in
+                                swipeStack(items: movieVM.movies, onRemove: { liked, movie in
+                                    if liked {
+                                        watchList.addMovie(movie)
+                                        showToast(text: "Added to Watchlist")
+                                    }
                                     movieVM.removeTop()
                                 }) { movie in
                                     MovieCard(movie: movie)
                                 }
 
                             case .tvShows:
-                                swipeStack(items: tvShowVM.shows, onRemove: { liked in
+                                swipeStack(items: tvShowVM.shows, onRemove: { liked, show in
+                                    if liked {
+                                        watchList.addTVShow(show)
+                                        showToast(text: "Added to Watchlist")
+                                    }
                                     tvShowVM.removeTop()
                                 }) { show in
                                     TVShowCard(show: show)
@@ -58,6 +68,7 @@ struct SwipeFlixIndex: View {
                         .padding(.bottom, 40)
                         .zIndex(0)
                     }
+
                     VStack {
                         Rectangle() // Top
                             .fill(Color.black)
@@ -71,6 +82,24 @@ struct SwipeFlixIndex: View {
                             .edgesIgnoringSafeArea(.bottom)
                             .zIndex(0.5)
                     }
+                    if showToast {
+                        HStack(spacing: 10) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundColor(.green)
+                                .imageScale(.large)
+
+                            Text(toastText)
+                                .foregroundColor(.white)
+                                .fontWeight(.semibold)
+                        }
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 20)
+                        .background(Color.black.opacity(0.9))
+                        .cornerRadius(12)
+                        .padding(.top, 100)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .zIndex(2)
+                    }
                     VStack(spacing: 20) {
                         Text("SwipeFlix")
                             .font(.largeTitle.bold())
@@ -79,7 +108,7 @@ struct SwipeFlixIndex: View {
                             selectedIndex: $selectedIndex,
                             items: SwipeContentType.allCases.map { $0.rawValue }
                         )
-                        .frame(height: 40)
+                        .frame(width: 300, height: 40)
                         .padding(.horizontal)
                     }
                     .zIndex(1)
@@ -111,7 +140,7 @@ struct SwipeFlixIndex: View {
 
     private func swipeStack<T: Identifiable, Content: View>(
         items: [T],
-        onRemove: @escaping (Bool) -> Void,
+        onRemove: @escaping (Bool, T) -> Void,
         @ViewBuilder content: @escaping (T) -> Content
     ) -> some View {
         ZStack {
@@ -125,7 +154,9 @@ struct SwipeFlixIndex: View {
                         content: {
                             content(item)
                         },
-                        onRemove: onRemove
+                        onRemove: { liked in
+                            onRemove(liked, item)
+                        }
                     )
                     .zIndex(Double(-index))
                     .padding(8)
@@ -133,9 +164,21 @@ struct SwipeFlixIndex: View {
             }
         }
     }
+    private func showToast(text: String) {
+        toastText = text
+        withAnimation {
+            showToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showToast = false
+            }
+        }
+    }
 }
 
 #Preview {
     SwipeFlixIndex()
+        .environmentObject(WatchListManager())
         .preferredColorScheme(.dark)
 }
