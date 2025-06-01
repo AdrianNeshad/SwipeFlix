@@ -6,6 +6,10 @@ enum SwipeContentType: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+enum SwipeDirection {
+    case left, right
+}
+
 extension URL: Identifiable {
     public var id: String { absoluteString }
 }
@@ -21,6 +25,9 @@ struct SwipeFlixIndex: View {
     @State private var showToast = false
     @State private var toastText = ""
     @State private var selectedSearchURL: URL? = nil
+
+    @State private var triggerSwipe = false
+    @State private var swipeDirection: SwipeDirection? = nil
 
     private var selectedType: SwipeContentType {
         get { SwipeContentType.allCases[selectedIndex] }
@@ -45,6 +52,7 @@ struct SwipeFlixIndex: View {
                         .offset(y: -20)
                         .zIndex(0)
                     }
+
                     VStack(spacing: 0) {
                         Rectangle()
                             .fill(Color.black)
@@ -62,6 +70,7 @@ struct SwipeFlixIndex: View {
                             .offset(y: 40)
                     }
                     .frame(maxHeight: .infinity)
+
                     HStack(spacing: 60) {
                         Button(action: {
                             swipeLeft()
@@ -82,7 +91,6 @@ struct SwipeFlixIndex: View {
                     .offset(y: UIScreen.main.bounds.height * 0.82)
                     .zIndex(1)
 
-                    // Overlay: Toast
                     if showToast {
                         HStack(spacing: 8) {
                             Image(systemName: "checkmark.seal.fill")
@@ -99,6 +107,7 @@ struct SwipeFlixIndex: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                         .zIndex(2)
                     }
+
                     VStack(spacing: 20) {
                         Text("FlixSwipe")
                             .font(.largeTitle.bold())
@@ -126,7 +135,7 @@ struct SwipeFlixIndex: View {
                     Label("Watchlist", systemImage: "list.bullet.rectangle")
                 }
                 .tag(1)
-            
+
             Explore()
                 .tabItem {
                     Label("Explore", systemImage: "square.stack.3d.up.fill")
@@ -138,7 +147,7 @@ struct SwipeFlixIndex: View {
                     Label("News Feed", systemImage: "newspaper")
                 }
                 .tag(3)
-            
+
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
@@ -189,23 +198,13 @@ struct SwipeFlixIndex: View {
     }
 
     private func swipeLeft() {
-        if selectedType == .movies, let topMovie = movieVM.movies.first {
-            movieVM.removeTop()
-        } else if selectedType == .tvShows, let topShow = tvShowVM.shows.first {
-            tvShowVM.removeTop()
-        }
+        swipeDirection = .left
+        triggerSwipe = true
     }
 
     private func swipeRight() {
-        if selectedType == .movies, let topMovie = movieVM.movies.first {
-            watchList.addMovie(topMovie)
-            movieVM.removeTop()
-            showToast(text: "Added to Watchlist")
-        } else if selectedType == .tvShows, let topShow = tvShowVM.shows.first {
-            watchList.addTVShow(topShow)
-            tvShowVM.removeTop()
-            showToast(text: "Added to Watchlist")
-        }
+        swipeDirection = .right
+        triggerSwipe = true
     }
 
     private func swipeStack<T: Identifiable, Content: View>(
@@ -221,6 +220,8 @@ struct SwipeFlixIndex: View {
             } else {
                 ForEach(Array(items.prefix(5).enumerated()), id: \.1.id) { index, item in
                     SwipeCard(
+                        triggerSwipe: index == 0 ? $triggerSwipe : .constant(false),
+                        swipeDirection: index == 0 ? $swipeDirection : .constant(nil),
                         content: {
                             content(item)
                         },
@@ -258,4 +259,3 @@ struct SwipeFlixIndex: View {
         .environmentObject(WatchListManager())
         .preferredColorScheme(.dark)
 }
-
