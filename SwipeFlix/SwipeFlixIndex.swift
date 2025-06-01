@@ -38,40 +38,11 @@ struct SwipeFlixIndex: View {
                     VStack {
                         Spacer(minLength: 150)
                         ZStack {
-                            switch selectedType {
-                            case .movies:
-                                swipeStack(items: movieVM.movies, onRemove: { liked, movie in
-                                    if liked {
-                                        watchList.addMovie(movie)
-                                        showToast(text: "Added to Watchlist")
-                                    }
-                                    movieVM.removeTop()
-                                }) { movie in
-                                    MovieCard(movie: movie) {
-                                        if let url = googleSearchURL(for: movie.title) {
-                                            selectedSearchURL = url
-                                        }
-                                    }
-                                }
-
-                            case .tvShows:
-                                swipeStack(items: tvShowVM.shows, onRemove: { liked, show in
-                                    if liked {
-                                        watchList.addTVShow(show)
-                                        showToast(text: "Added to Watchlist")
-                                    }
-                                    tvShowVM.removeTop()
-                                }) { show in
-                                    TVShowCard(show: show) {
-                                        if let url = googleSearchURL(for: show.title) {
-                                            selectedSearchURL = url
-                                        }
-                                    }
-                                }
-                            }
+                            swipeCardStack()
                         }
                         .frame(height: UIScreen.main.bounds.height * 0.75)
                         .padding(.bottom, 40)
+                        .offset(y: -20)
                         .zIndex(0)
                     }
                     VStack(spacing: 0) {
@@ -88,9 +59,30 @@ struct SwipeFlixIndex: View {
                             .frame(height: 100)
                             .edgesIgnoringSafeArea(.bottom)
                             .zIndex(0.5)
-                            .offset(y: 35)
+                            .offset(y: 40)
                     }
                     .frame(maxHeight: .infinity)
+                    HStack(spacing: 60) {
+                        Button(action: {
+                            swipeLeft()
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 50))
+                                .foregroundColor(.red)
+                        }
+
+                        Button(action: {
+                            swipeRight()
+                        }) {
+                            Image(systemName: "heart.circle.fill")
+                                .font(.system(size: 50))
+                                .foregroundColor(.green)
+                        }
+                    }
+                    .offset(y: UIScreen.main.bounds.height * 0.82)
+                    .zIndex(1)
+
+                    // Overlay: Toast
                     if showToast {
                         HStack(spacing: 8) {
                             Image(systemName: "checkmark.seal.fill")
@@ -108,30 +100,14 @@ struct SwipeFlixIndex: View {
                         .zIndex(2)
                     }
                     VStack(spacing: 20) {
-                        Text("SwipeFlix")
+                        Text("FlixSwipe")
                             .font(.largeTitle.bold())
                             .padding(.top, 50)
-                        ZStack {
-                            HBSegmentedPicker(
-                                selectedIndex: $selectedIndex,
-                                items: SwipeContentType.allCases.map { $0.rawValue }
-                            )
-                            .frame(width: 260, height: 40)
-                            /*
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    // Filter-action
-                                }) {
-                                    Image(systemName: "line.3.horizontal.decrease.circle")
-                                        .font(.title2)
-                                        .foregroundColor(.blue)
-                                }
-                                .offset(x: 45)
-                            }
-                            */
-                            .frame(width: 260, height: 40)
-                        }
+                        HBSegmentedPicker(
+                            selectedIndex: $selectedIndex,
+                            items: SwipeContentType.allCases.map { $0.rawValue }
+                        )
+                        .frame(width: 260, height: 40)
                     }
                     .zIndex(1)
                 }
@@ -150,23 +126,86 @@ struct SwipeFlixIndex: View {
                     Label("Watchlist", systemImage: "list.bullet.rectangle")
                 }
                 .tag(1)
+            
+            Explore()
+                .tabItem {
+                    Label("Explore", systemImage: "square.stack.3d.up.fill")
+                }
+                .tag(2)
 
             NewsIndex()
                 .tabItem {
                     Label("News Feed", systemImage: "newspaper")
                 }
-                .tag(2)
+                .tag(3)
             
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-                .tag(3)
+                .tag(4)
         }
         .sheet(item: $selectedSearchURL) { url in
             SafariView(url: url)
         }
         .background(Color.black.ignoresSafeArea(edges: .bottom))
+    }
+
+    private func swipeCardStack() -> some View {
+        switch selectedType {
+        case .movies:
+            return AnyView(
+                swipeStack(items: movieVM.movies, onRemove: { liked, movie in
+                    if liked {
+                        watchList.addMovie(movie)
+                        showToast(text: "Added to Watchlist")
+                    }
+                    movieVM.removeTop()
+                }) { movie in
+                    MovieCard(movie: movie) {
+                        if let url = googleSearchURL(for: movie.title) {
+                            selectedSearchURL = url
+                        }
+                    }
+                }
+            )
+        case .tvShows:
+            return AnyView(
+                swipeStack(items: tvShowVM.shows, onRemove: { liked, show in
+                    if liked {
+                        watchList.addTVShow(show)
+                        showToast(text: "Added to Watchlist")
+                    }
+                    tvShowVM.removeTop()
+                }) { show in
+                    TVShowCard(show: show) {
+                        if let url = googleSearchURL(for: show.title) {
+                            selectedSearchURL = url
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+    private func swipeLeft() {
+        if selectedType == .movies, let topMovie = movieVM.movies.first {
+            movieVM.removeTop()
+        } else if selectedType == .tvShows, let topShow = tvShowVM.shows.first {
+            tvShowVM.removeTop()
+        }
+    }
+
+    private func swipeRight() {
+        if selectedType == .movies, let topMovie = movieVM.movies.first {
+            watchList.addMovie(topMovie)
+            movieVM.removeTop()
+            showToast(text: "Added to Watchlist")
+        } else if selectedType == .tvShows, let topShow = tvShowVM.shows.first {
+            watchList.addTVShow(topShow)
+            tvShowVM.removeTop()
+            showToast(text: "Added to Watchlist")
+        }
     }
 
     private func swipeStack<T: Identifiable, Content: View>(
@@ -176,7 +215,7 @@ struct SwipeFlixIndex: View {
     ) -> some View {
         ZStack {
             if items.isEmpty {
-                Text("No more cards 🙁")
+                Text("No more cards")
                     .font(.title)
                     .foregroundColor(.gray)
             } else {
@@ -195,6 +234,7 @@ struct SwipeFlixIndex: View {
             }
         }
     }
+
     private func showToast(text: String) {
         toastText = text
         withAnimation {
@@ -206,6 +246,7 @@ struct SwipeFlixIndex: View {
             }
         }
     }
+
     private func googleSearchURL(for query: String) -> URL? {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return URL(string: "https://www.google.com/search?q=\(encoded)")
@@ -217,3 +258,4 @@ struct SwipeFlixIndex: View {
         .environmentObject(WatchListManager())
         .preferredColorScheme(.dark)
 }
+

@@ -40,7 +40,7 @@ struct WatchList: View {
                                 imageURL: movie.posterURL,
                                 linkURL: nil
                             )
-                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
                             .listStyle(.plain)
                             .listRowSeparator(.hidden)
                             .swipeActions {
@@ -72,7 +72,7 @@ struct WatchList: View {
                                 imageURL: tvShow.posterURL,
                                 linkURL: nil
                             )
-                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
                             .listStyle(.plain)
                             .listRowSeparator(.hidden)
                             .swipeActions {

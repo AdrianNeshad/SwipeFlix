@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A13C4202DECCE8E000DD7D9 /* Explore.swift */; };
 		3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */; };
 		3A9166962DEB8277007E0420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9166952DEB8277007E0420 /* Assets.xcassets */; };
 		3A9166992DEB8277007E0420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9166982DEB8277007E0420 /* Preview Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A13C4202DECCE8E000DD7D9 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 		3A91668E2DEB8273007E0420 /* SwipeFlix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeFlix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeFlixApp.swift; sourceTree = "<group>"; };
 		3A9166952DEB8277007E0420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */,
 				3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */,
 				3AF90EF72DEC7BB0008D58FC /* WatchListRowView.swift */,
+				3A13C4202DECCE8E000DD7D9 /* Explore.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */,
 				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
 				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
+				3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */,
 				3AF90EF82DEC7BB0008D58FC /* WatchListRowView.swift in Sources */,
 				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
 				3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */,
