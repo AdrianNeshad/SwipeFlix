@@ -31,6 +31,13 @@
 		3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */; };
 		3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */; };
 		3AF90EE82DEC5333008D58FC /* WatchListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE72DEC5333008D58FC /* WatchListManager.swift */; };
+		3AF90EEA2DEC5A08008D58FC /* RSSNewsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE92DEC5A08008D58FC /* RSSNewsModels.swift */; };
+		3AF90EEC2DEC5A1D008D58FC /* RSSFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EEB2DEC5A1D008D58FC /* RSSFetcher.swift */; };
+		3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EED2DEC5A55008D58FC /* String+HTMLDecoding.swift */; };
+		3AF90EF02DEC5AA1008D58FC /* NewsViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EEF2DEC5AA1008D58FC /* NewsViewItem.swift */; };
+		3AF90EF22DEC5ABE008D58FC /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */; };
+		3AF90EF42DEC5AEE008D58FC /* NewsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */; };
+		3AF90EF62DEC5B63008D58FC /* NewsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +65,13 @@
 		3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedControl.swift; sourceTree = "<group>"; };
 		3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedWrapper.swift; sourceTree = "<group>"; };
 		3AF90EE72DEC5333008D58FC /* WatchListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListManager.swift; sourceTree = "<group>"; };
+		3AF90EE92DEC5A08008D58FC /* RSSNewsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSNewsModels.swift; sourceTree = "<group>"; };
+		3AF90EEB2DEC5A1D008D58FC /* RSSFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSFetcher.swift; sourceTree = "<group>"; };
+		3AF90EED2DEC5A55008D58FC /* String+HTMLDecoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTMLDecoding.swift"; sourceTree = "<group>"; };
+		3AF90EEF2DEC5AA1008D58FC /* NewsViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewItem.swift; sourceTree = "<group>"; };
+		3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategory.swift; sourceTree = "<group>"; };
+		3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsIndex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +107,7 @@
 			children = (
 				3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */,
 				3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */,
+				3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */,
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
 				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
 				3AD0404A2DEB853B008DB045 /* Views */,
@@ -131,6 +146,10 @@
 			children = (
 				3ADE61BC2DEBAD8200819FD2 /* Movie.swift */,
 				3ADE61C42DEBAED800819FD2 /* TVShow.swift */,
+				3AF90EE92DEC5A08008D58FC /* RSSNewsModels.swift */,
+				3AF90EEB2DEC5A1D008D58FC /* RSSFetcher.swift */,
+				3AF90EED2DEC5A55008D58FC /* String+HTMLDecoding.swift */,
+				3AF90EEF2DEC5AA1008D58FC /* NewsViewItem.swift */,
 			);
 			path = DataFetcher;
 			sourceTree = "<group>";
@@ -145,6 +164,8 @@
 				3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */,
 				3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */,
 				3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */,
+				3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */,
+				3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,19 +260,26 @@
 				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
 				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
 				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
+				3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */,
+				3AF90EEC2DEC5A1D008D58FC /* RSSFetcher.swift in Sources */,
 				3AD0404C2DEB854A008DB045 /* Settings.swift in Sources */,
 				3ADE61BD2DEBAD8200819FD2 /* Movie.swift in Sources */,
+				3AF90EF42DEC5AEE008D58FC /* NewsCategory.swift in Sources */,
 				3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */,
 				3ADE61C32DEBAE1500819FD2 /* SwipeCard.swift in Sources */,
 				3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */,
 				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
+				3AF90EF22DEC5ABE008D58FC /* NewsViewModel.swift in Sources */,
 				3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */,
 				3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */,
 				3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */,
 				3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */,
 				3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */,
 				3AF90EE82DEC5333008D58FC /* WatchListManager.swift in Sources */,
+				3AF90EEA2DEC5A08008D58FC /* RSSNewsModels.swift in Sources */,
 				3ADE61C52DEBAED800819FD2 /* TVShow.swift in Sources */,
+				3AF90EF02DEC5AA1008D58FC /* NewsViewItem.swift in Sources */,
+				3AF90EF62DEC5B63008D58FC /* NewsIndex.swift in Sources */,
 				3ADE61BF2DEBADAE00819FD2 /* MovieViewModel.swift in Sources */,
 				3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */,
 				3AD0404E2DEB8575008DB045 /* ShareSheet.swift in Sources */,

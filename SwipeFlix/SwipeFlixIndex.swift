@@ -129,11 +129,17 @@ struct SwipeFlixIndex: View {
                 }
                 .tag(1)
 
+            NewsIndex()
+                .tabItem {
+                    Label("News Feed", systemImage: "newspaper")
+                }
+                .tag(2)
+            
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-                .tag(2)
+                .tag(3)
         }
         .background(Color.black.ignoresSafeArea(edges: .bottom))
     }
