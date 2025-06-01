@@ -19,47 +19,71 @@ struct WatchList: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 10) {
-                    if selectedSegment == .movies {
-                        if watchList.savedMovies.isEmpty {
-                            Text("No saved movies yet.")
+            List {
+                if selectedSegment == .movies {
+                    if watchList.savedMovies.isEmpty {
+                        HStack {
+                            Spacer()
+                            Text("No saved movies yet")
                                 .foregroundColor(.gray)
-                                .padding(.top, 50)
-                        } else {
-                            ForEach(watchList.savedMovies) { movie in
-                                WatchListRowView(
-                                    title: movie.title,
-                                    overview: movie.overview,
-                                    imageURL: movie.posterURL,
-                                    linkURL: nil
-                                )
+                                .multilineTextAlignment(.center)
+                            Spacer()
+                        }
+                        .padding(.top, 50)
+                    } else {
+                        ForEach(watchList.savedMovies) { movie in
+                            WatchListRowView(
+                                title: movie.title,
+                                overview: movie.overview,
+                                imageURL: movie.posterURL,
+                                linkURL: nil
+                            )
+                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    watchList.removeMovie(movie)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
                             }
                         }
-                    } else {
-                        if watchList.savedTVShows.isEmpty {
-                            Text("No saved TV shows yet.")
+                    }
+                } else {
+                    if watchList.savedTVShows.isEmpty {
+                        HStack {
+                            Spacer()
+                            Text("No saved TV shows yet")
                                 .foregroundColor(.gray)
-                                .padding(.top, 50)
-                        } else {
-                            ForEach(watchList.savedMovies) { movie in
-                                WatchListRowView(
-                                    title: movie.title,
-                                    overview: movie.overview,
-                                    imageURL: movie.posterURL,
-                                    linkURL: nil
-                                )
+                                .multilineTextAlignment(.center)
+                            Spacer()
+                        }
+                        .padding(.top, 50)
+                    } else {
+                        ForEach(watchList.savedTVShows) { tvShow in
+                            WatchListRowView(
+                                title: tvShow.title,
+                                overview: tvShow.overview,
+                                imageURL: tvShow.posterURL,
+                                linkURL: nil
+                            )
+                            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .swipeActions {
+                                Button(role: .destructive) {
+                                    watchList.removeTVShow(tvShow)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
                             }
                         }
                     }
                 }
-                .padding(.top, 10)
             }
+            .listStyle(.plain)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                           Text("Watchlist")
-                               .font(.title2.bold())
-                       }
+                    Text("Watchlist")
+                        .font(.title2.bold())
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Picker("", selection: $selectedSegment) {
                         Label("Movies", systemImage: "film").tag(WatchListSegment.movies)

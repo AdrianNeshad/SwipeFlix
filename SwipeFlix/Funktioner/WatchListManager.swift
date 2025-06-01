@@ -22,4 +22,12 @@ class WatchListManager: ObservableObject {
             savedTVShows.append(show)
         }
     }
+    
+    func removeMovie(_ movie: Movie) {
+        savedMovies.removeAll { $0.id == movie.id }
+    }
+
+    func removeTVShow(_ show: TVShow) {
+        savedTVShows.removeAll { $0.id == show.id }
+    }
 }

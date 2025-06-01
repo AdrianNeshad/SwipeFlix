@@ -23,7 +23,7 @@ struct SwipeCard<Content: View>: View {
         content
             .rotationEffect(.degrees(Double(offset.width / 20)))
             .offset(x: offset.width, y: offset.height)
-            .gesture( 
+            .gesture(
                 DragGesture()
                     .onChanged { gesture in
                         offset = gesture.translation
@@ -31,19 +31,19 @@ struct SwipeCard<Content: View>: View {
                     .onEnded { _ in
                         if abs(offset.width) > threshold {
                             let liked = offset.width > 0
-                            withAnimation {
+                            withAnimation(.spring()) {
                                 offset = CGSize(width: liked ? 1000 : -1000, height: 0)
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                 onRemove(liked)
                             }
                         } else {
-                            withAnimation {
+                            withAnimation(.spring()) {
                                 offset = .zero
                             }
                         }
                     }
             )
-            .animation(.spring(), value: offset)
     }
+
 }

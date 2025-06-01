@@ -154,7 +154,7 @@ struct SwipeFlixIndex: View {
     ) -> some View {
         ZStack {
             if items.isEmpty {
-                Text("No more items!")
+                Text("No more cards 🙁")
                     .font(.title)
                     .foregroundColor(.gray)
             } else {

@@ -11,39 +11,47 @@ struct TVShowCard: View {
     let show: TVShow
 
     var body: some View {
-        VStack(spacing: 0) {
-            if let url = show.posterURL {
-                ZStack(alignment: .bottom) {
-                    AsyncImage(url: url) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        Color.gray
-                    }
-                    .frame(height: 400)
-                    .clipped()
-
-                    LinearGradient(
-                        gradient: Gradient(colors: [.clear, .black]),
-                        startPoint: .center,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 100)
+        ZStack(alignment: .bottomLeading) {
+            if let poster = show.posterURL {
+                AsyncImage(url: poster) { image in
+                    image.resizable().scaledToFill()
+                } placeholder: {
+                    Color.gray
                 }
+                .frame(width: 320, height: 550)
+                .clipped()
             }
+            LinearGradient(
+                gradient: Gradient(stops: [
+                    .init(color: .black, location: 0.0),
+                    .init(color: .black.opacity(0.95), location: 0.4),
+                    .init(color: .clear, location: 0.6)
+                ]),
+                startPoint: .bottom,
+                endPoint: .top
+            )
+            .frame(height: 320)
+            .frame(width: 320)
+            .offset(y: 0)
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text(show.title)
                     .font(.title2)
                     .bold()
+                    .foregroundColor(.white)
+
                 Text(show.overview)
                     .font(.body)
-                    .lineLimit(5)
+                    .foregroundColor(.white)
+                    .lineLimit(4)
             }
             .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(UIColor.systemBackground).opacity(0.95))
+            .frame(width: 320, alignment: .leading)
+            .padding(.bottom, 20)
         }
+        .frame(width: 320, height: 550)
         .cornerRadius(16)
         .shadow(radius: 5)
+        .frame(maxWidth: .infinity)
     }
 }

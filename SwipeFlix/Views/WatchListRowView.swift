@@ -47,7 +47,7 @@ struct WatchListRowView: View {
                     Text(overview)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                        .lineLimit(6)
+                        .lineLimit(5)
                 }
 
                 Spacer()
