@@ -28,6 +28,8 @@
 		3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */; };
 		3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */; };
 		3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */; };
+		3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */; };
+		3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowViewModel.swift; sourceTree = "<group>"; };
 		3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCard.swift; sourceTree = "<group>"; };
 		3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchList.swift; sourceTree = "<group>"; };
+		3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedControl.swift; sourceTree = "<group>"; };
+		3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HBSegmentedWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,8 @@
 				3AD0404F2DEB858F008DB045 /* MailFeedback.swift */,
 				3AD040512DEB85A2008DB045 /* AppVersion.swift */,
 				3ADE61C22DEBAE1500819FD2 /* SwipeCard.swift */,
+				3AF90EE32DEC4E7D008D58FC /* HBSegmentedControl.swift */,
+				3AF90EE52DEC4F24008D58FC /* HBSegmentedWrapper.swift */,
 			);
 			path = Funktioner;
 			sourceTree = "<group>";
@@ -236,9 +242,11 @@
 				3ADE61C32DEBAE1500819FD2 /* SwipeCard.swift in Sources */,
 				3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */,
 				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
+				3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */,
 				3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */,
 				3ADE61C72DEBAEFB00819FD2 /* TVShowViewModel.swift in Sources */,
 				3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */,
+				3AF90EE62DEC4F24008D58FC /* HBSegmentedWrapper.swift in Sources */,
 				3ADE61C52DEBAED800819FD2 /* TVShow.swift in Sources */,
 				3ADE61BF2DEBADAE00819FD2 /* MovieViewModel.swift in Sources */,
 				3AD040602DEB86FB008DB045 /* SwipeFlixIndex.swift in Sources */,

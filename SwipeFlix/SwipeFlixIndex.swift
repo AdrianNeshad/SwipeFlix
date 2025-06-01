@@ -18,15 +18,25 @@ struct SwipeFlixIndex: View {
     @StateObject private var storeManager = StoreManager()
     @StateObject private var movieVM = MovieViewModel()
     @StateObject private var tvShowVM = TVShowViewModel()
-    @State private var selectedType: SwipeContentType = .movies
     @State private var selectedTab = 0
+    @State private var selectedIndex = 0
+
+    // 🔄 Converter mellan index och enum
+    private var selectedType: SwipeContentType {
+        get { SwipeContentType.allCases[selectedIndex] }
+        set {
+            if let index = SwipeContentType.allCases.firstIndex(of: newValue) {
+                selectedIndex = index
+            }
+        }
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationView {
                 ZStack(alignment: .top) {
                     VStack {
-                        Spacer(minLength: 150) // 🛡 Lämnar utrymme för titeln & picker
+                        Spacer(minLength: 150)
                         ZStack {
                             switch selectedType {
                             case .movies:
@@ -48,20 +58,31 @@ struct SwipeFlixIndex: View {
                         .padding(.bottom, 40)
                         .zIndex(0)
                     }
+                    VStack {
+                        Rectangle() // Top
+                            .fill(Color.black)
+                            .frame(height: 160)
+                            .edgesIgnoringSafeArea(.top)
+                            .zIndex(0.5)
+                        Spacer()
+                        Rectangle() // Bottom
+                            .fill(Color.black)
+                            .frame(height: 70)
+                            .edgesIgnoringSafeArea(.bottom)
+                            .zIndex(0.5)
+                    }
                     VStack(spacing: 20) {
                         Text("SwipeFlix")
                             .font(.largeTitle.bold())
                             .padding(.top, 50)
-
-                        Picker("Content Type", selection: $selectedType) {
-                            ForEach(SwipeContentType.allCases) { type in
-                                Text(type.rawValue).tag(type)
-                            }
-                        }
-                        .pickerStyle(.segmented)
+                        HBSegmentedPicker(
+                            selectedIndex: $selectedIndex,
+                            items: SwipeContentType.allCases.map { $0.rawValue }
+                        )
+                        .frame(height: 40)
                         .padding(.horizontal)
                     }
-                    .zIndex(1) // 🔼 alltid framför korten
+                    .zIndex(1)
                 }
                 .onAppear {
                     movieVM.fetch()
@@ -72,13 +93,13 @@ struct SwipeFlixIndex: View {
                 Label("Swipe", systemImage: "hand.point.right.fill")
             }
             .tag(0)
-            
+
             WatchList()
                 .tabItem {
                     Label("Watch List", systemImage: "list.bullet.rectangle")
                 }
                 .tag(1)
-            
+
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
@@ -106,7 +127,7 @@ struct SwipeFlixIndex: View {
                         },
                         onRemove: onRemove
                     )
-                    .zIndex(Double(-index)) // säkerställer djup bakifrån
+                    .zIndex(Double(-index))
                     .padding(8)
                 }
             }
