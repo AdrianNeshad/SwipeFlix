@@ -11,6 +11,7 @@ import MessageUI
 import AlertToast
 
 struct Settings: View {
+    @EnvironmentObject private var watchList: WatchListManager
     @AppStorage("adsRemoved") private var adsRemoved = false
     @StateObject private var storeManager = StoreManager()
     @State private var showShareSheet = false
@@ -29,6 +30,58 @@ struct Settings: View {
 
     var body: some View {
         Form {
+            Section(header: Text("Watchlists")) {
+                Button(action: {
+                    showClearAlert = true
+                }) {
+                    Text("Clear Movie Watchlist")
+                        .foregroundColor(.red)
+                }
+                .confirmationDialog("Do you want to clear your saved titles?",
+                    isPresented: $showClearAlert,
+                    titleVisibility: .visible
+                ) {
+                    Button("Clear", role: .destructive) {
+                        watchList.clearMovies()
+
+                        toastMessage = "Watchlist Cleared"
+                        withAnimation {
+                            showToast = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation {
+                                showToast = false
+                            }
+                        }
+                    }
+                    Button("Cancel", role: .cancel) { }
+                }
+                Button(action: {
+                    showClearAlert = true
+                }) {
+                    Text("Clear TV Shows Watchlist")
+                        .foregroundColor(.red)
+                }
+                .confirmationDialog("Do you want to clear your saved titles?",
+                    isPresented: $showClearAlert,
+                    titleVisibility: .visible
+                ) {
+                    Button("Clear", role: .destructive) {
+                        watchList.clearTVShows()
+
+                        toastMessage = "Watchlist Cleared"
+                        withAnimation {
+                            showToast = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation {
+                                showToast = false
+                            }
+                        }
+                    }
+                    Button("Cancel", role: .cancel) { }
+                }
+            }
             /*
             // Köp-sektion
             Section(header: "Ad-free") {

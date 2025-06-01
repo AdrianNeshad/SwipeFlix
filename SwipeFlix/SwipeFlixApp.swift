@@ -19,3 +19,4 @@ struct SwipeFlixApp: App {
         }
     }
 }
+    

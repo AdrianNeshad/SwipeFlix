@@ -132,7 +132,7 @@ struct SwipeFlixIndex: View {
 
             WatchList()
                 .tabItem {
-                    Label("Watchlist", systemImage: "list.bullet.rectangle")
+                    Label("Watchlists", systemImage: "list.bullet.rectangle")
                 }
                 .tag(1)
 
