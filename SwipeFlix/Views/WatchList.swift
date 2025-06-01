@@ -29,6 +29,8 @@ struct WatchList: View {
                                 .multilineTextAlignment(.center)
                             Spacer()
                         }
+                        .listStyle(.plain)
+                        .listRowSeparator(.hidden)
                         .padding(.top, 50)
                     } else {
                         ForEach(watchList.savedMovies) { movie in
@@ -39,6 +41,8 @@ struct WatchList: View {
                                 linkURL: nil
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .listStyle(.plain)
+                            .listRowSeparator(.hidden)
                             .swipeActions {
                                 Button(role: .destructive) {
                                     watchList.removeMovie(movie)
@@ -57,6 +61,8 @@ struct WatchList: View {
                                 .multilineTextAlignment(.center)
                             Spacer()
                         }
+                        .listStyle(.plain)
+                        .listRowSeparator(.hidden)
                         .padding(.top, 50)
                     } else {
                         ForEach(watchList.savedTVShows) { tvShow in
@@ -67,6 +73,8 @@ struct WatchList: View {
                                 linkURL: nil
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                            .listStyle(.plain)
+                            .listRowSeparator(.hidden)
                             .swipeActions {
                                 Button(role: .destructive) {
                                     watchList.removeTVShow(tvShow)
@@ -79,6 +87,7 @@ struct WatchList: View {
                 }
             }
             .listStyle(.plain)
+            .listRowSeparator(.hidden)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("Watchlist")

@@ -66,29 +66,6 @@ struct NewsIndex: View {
                            title: "Updated",
                            subTitle: "Showing Latest")
             }
-            .tabItem {
-                Label("Swipe", systemImage: "hand.point.right.fill")
-            }
-            .tag(0)
-
-            WatchList()
-                .tabItem {
-                    Label("Watch List", systemImage: "list.bullet.rectangle")
-                }
-                .tag(1)
-
-            NewsIndex()
-                .tabItem {
-                    Label("News Feed", systemImage: "newspaper")
-                }
-                .tag(2)
-            
-            Settings()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-                .tag(3)
-            
         }
     }
 }

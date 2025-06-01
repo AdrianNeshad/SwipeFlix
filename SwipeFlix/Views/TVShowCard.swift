@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TVShowCard: View {
     let show: TVShow
+    var tapAction: (() -> Void)? = nil
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -53,5 +54,8 @@ struct TVShowCard: View {
         .cornerRadius(16)
         .shadow(radius: 5)
         .frame(maxWidth: .infinity)
+        .onTapGesture {
+            tapAction?()
+        }
     }
 }

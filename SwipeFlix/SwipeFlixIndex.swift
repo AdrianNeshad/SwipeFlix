@@ -6,6 +6,10 @@ enum SwipeContentType: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+extension URL: Identifiable {
+    public var id: String { absoluteString }
+}
+
 struct SwipeFlixIndex: View {
     @EnvironmentObject private var watchList: WatchListManager
     @AppStorage("AdsRemoved") private var AdsRemoved = false
@@ -16,6 +20,7 @@ struct SwipeFlixIndex: View {
     @State private var selectedIndex = 0
     @State private var showToast = false
     @State private var toastText = ""
+    @State private var selectedSearchURL: URL? = nil
 
     private var selectedType: SwipeContentType {
         get { SwipeContentType.allCases[selectedIndex] }
@@ -42,7 +47,11 @@ struct SwipeFlixIndex: View {
                                     }
                                     movieVM.removeTop()
                                 }) { movie in
-                                    MovieCard(movie: movie)
+                                    MovieCard(movie: movie) {
+                                        if let url = googleSearchURL(for: movie.title) {
+                                            selectedSearchURL = url
+                                        }
+                                    }
                                 }
 
                             case .tvShows:
@@ -53,7 +62,11 @@ struct SwipeFlixIndex: View {
                                     }
                                     tvShowVM.removeTop()
                                 }) { show in
-                                    TVShowCard(show: show)
+                                    TVShowCard(show: show) {
+                                        if let url = googleSearchURL(for: show.title) {
+                                            selectedSearchURL = url
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -61,19 +74,23 @@ struct SwipeFlixIndex: View {
                         .padding(.bottom, 40)
                         .zIndex(0)
                     }
-                    VStack {
-                        Rectangle() // Top
+                    VStack(spacing: 0) {
+                        Rectangle()
                             .fill(Color.black)
                             .frame(height: 160)
                             .edgesIgnoringSafeArea(.top)
                             .zIndex(0.5)
-                        Spacer()
-                        Rectangle() // Bottom
+
+                        Spacer(minLength: 0)
+
+                        Rectangle()
                             .fill(Color.black)
-                            .frame(height: 70)
+                            .frame(height: 100)
                             .edgesIgnoringSafeArea(.bottom)
                             .zIndex(0.5)
+                            .offset(y: 35)
                     }
+                    .frame(maxHeight: .infinity)
                     if showToast {
                         HStack(spacing: 8) {
                             Image(systemName: "checkmark.seal.fill")
@@ -100,6 +117,7 @@ struct SwipeFlixIndex: View {
                                 items: SwipeContentType.allCases.map { $0.rawValue }
                             )
                             .frame(width: 260, height: 40)
+                            /*
                             HStack {
                                 Spacer()
                                 Button(action: {
@@ -111,6 +129,7 @@ struct SwipeFlixIndex: View {
                                 }
                                 .offset(x: 45)
                             }
+                            */
                             .frame(width: 260, height: 40)
                         }
                     }
@@ -143,6 +162,9 @@ struct SwipeFlixIndex: View {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(3)
+        }
+        .sheet(item: $selectedSearchURL) { url in
+            SafariView(url: url)
         }
         .background(Color.black.ignoresSafeArea(edges: .bottom))
     }
@@ -183,6 +205,10 @@ struct SwipeFlixIndex: View {
                 showToast = false
             }
         }
+    }
+    private func googleSearchURL(for query: String) -> URL? {
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return URL(string: "https://www.google.com/search?q=\(encoded)")
     }
 }
 

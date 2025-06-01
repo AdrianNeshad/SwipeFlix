@@ -99,8 +99,8 @@ struct Settings: View {
                     showShareSheet = true
                 }
                 .sheet(isPresented: $showShareSheet) {
-                    let message = "Check out the Unifeed news app! 📲"
-                    let appLink = URL(string: "https://apps.apple.com/us/app/unifeed/id6746576849")!
+                    let message = "Check out the FlixSwipe app! 📲"
+                    let appLink = URL(string: "https://apps.apple.com/us/app/flixswipe/id6746682499")!
                     ShareSheet(activityItems: [message, appLink])
                         .presentationDetents([.medium])
                 }

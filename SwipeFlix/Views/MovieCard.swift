@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieCard: View {
     let movie: Movie
+    var tapAction: (() -> Void)? = nil
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -32,7 +33,6 @@ struct MovieCard: View {
             )
             .frame(height: 320)
             .frame(width: 320)
-            .offset(y: 0)
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(movie.title)
@@ -53,5 +53,8 @@ struct MovieCard: View {
         .cornerRadius(16)
         .shadow(radius: 5)
         .frame(maxWidth: .infinity)
+        .onTapGesture {
+            tapAction?()
+        }
     }
 }
