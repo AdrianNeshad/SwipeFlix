@@ -23,6 +23,7 @@ struct Settings: View {
     @State private var showClearAlert = false
     @State private var showToast = false
     @State private var toastMessage = ""
+    @State private var selectedSourceURL: URL? = nil
 
     enum RestoreStatus {
         case success, failure
@@ -30,6 +31,21 @@ struct Settings: View {
 
     var body: some View {
         Form {
+            Section(header: Text("Source")) {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        selectedSourceURL = URL(string: "https://www.themoviedb.org/")
+                    }) {
+                        Image("tmdb")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 40)
+                            .padding(.vertical, 8)
+                    }
+                    Spacer()
+                }
+            }
             Section(header: Text("Watchlists")) {
                 Button(action: {
                     showClearAlert = true
@@ -212,6 +228,9 @@ struct Settings: View {
         }
         .toast(isPresenting: $showToast) {
             AlertToast(type: .complete(Color.green), title: toastMessage)
+        }
+        .sheet(item: $selectedSourceURL) { url in
+            SafariView(url: url)
         }
     }
     @Environment(\.requestReview) var requestReview

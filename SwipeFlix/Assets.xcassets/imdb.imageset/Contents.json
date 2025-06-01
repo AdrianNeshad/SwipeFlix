@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "IMDB_Logo_2016.svg.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

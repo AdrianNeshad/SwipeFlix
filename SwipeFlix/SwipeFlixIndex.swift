@@ -25,7 +25,6 @@ struct SwipeFlixIndex: View {
     @State private var showToast = false
     @State private var toastText = ""
     @State private var selectedSearchURL: URL? = nil
-
     @State private var triggerSwipe = false
     @State private var swipeDirection: SwipeDirection? = nil
 
