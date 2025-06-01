@@ -88,6 +88,7 @@ struct NewsIndex: View {
                     Label("Settings", systemImage: "gear")
                 }
                 .tag(3)
+            
         }
     }
 }

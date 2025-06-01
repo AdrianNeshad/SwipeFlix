@@ -38,6 +38,7 @@
 		3AF90EF22DEC5ABE008D58FC /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */; };
 		3AF90EF42DEC5AEE008D58FC /* NewsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */; };
 		3AF90EF62DEC5B63008D58FC /* NewsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */; };
+		3AF90EF82DEC7BB0008D58FC /* WatchListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF90EF72DEC7BB0008D58FC /* WatchListRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCategory.swift; sourceTree = "<group>"; };
 		3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsIndex.swift; sourceTree = "<group>"; };
+		3AF90EF72DEC7BB0008D58FC /* WatchListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */,
 				3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */,
 				3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */,
+				3AF90EF72DEC7BB0008D58FC /* WatchListRowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */,
 				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
 				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
+				3AF90EF82DEC7BB0008D58FC /* WatchListRowView.swift in Sources */,
 				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
 				3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */,
 				3AF90EEC2DEC5A1D008D58FC /* RSSFetcher.swift in Sources */,

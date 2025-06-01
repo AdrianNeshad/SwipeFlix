@@ -15,28 +15,12 @@ enum WatchListSegment: String, CaseIterable, Identifiable {
 
 struct WatchList: View {
     @EnvironmentObject private var watchList: WatchListManager
-    @State private var selectedIndex = 0
-
-    private var selectedSegment: WatchListSegment {
-        get { WatchListSegment.allCases[selectedIndex] }
-        set {
-            if let index = WatchListSegment.allCases.firstIndex(of: newValue) {
-                selectedIndex = index
-            }
-        }
-    }
+    @State private var selectedSegment: WatchListSegment = .movies
 
     var body: some View {
-        VStack(spacing: 20) {
-            HBSegmentedPicker(
-                selectedIndex: $selectedIndex,
-                items: WatchListSegment.allCases.map { $0.rawValue }
-            )
-            .frame(width: 300, height: 44)
-            .padding(.top, 30)
-
+        NavigationView {
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: 10) {
                     if selectedSegment == .movies {
                         if watchList.savedMovies.isEmpty {
                             Text("No saved movies yet.")
@@ -44,27 +28,47 @@ struct WatchList: View {
                                 .padding(.top, 50)
                         } else {
                             ForEach(watchList.savedMovies) { movie in
-                                MovieCard(movie: movie)
-                                    .padding(.horizontal)
+                                WatchListRowView(
+                                    title: movie.title,
+                                    overview: movie.overview,
+                                    imageURL: movie.posterURL,
+                                    linkURL: nil
+                                )
                             }
                         }
-                    } else if selectedSegment == .tvShows {
+                    } else {
                         if watchList.savedTVShows.isEmpty {
                             Text("No saved TV shows yet.")
                                 .foregroundColor(.gray)
                                 .padding(.top, 50)
                         } else {
-                            ForEach(watchList.savedTVShows) { show in
-                                TVShowCard(show: show)
-                                    .padding(.horizontal)
+                            ForEach(watchList.savedMovies) { movie in
+                                WatchListRowView(
+                                    title: movie.title,
+                                    overview: movie.overview,
+                                    imageURL: movie.posterURL,
+                                    linkURL: nil
+                                )
                             }
                         }
                     }
                 }
                 .padding(.top, 10)
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                           Text("Watchlist")
+                               .font(.title2.bold())
+                       }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Picker("", selection: $selectedSegment) {
+                        Label("Movies", systemImage: "film").tag(WatchListSegment.movies)
+                        Label("TV", systemImage: "tv").tag(WatchListSegment.tvShows)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 180)
+                }
+            }
         }
-        .padding(.bottom, 20)
-        .background(Color.black.ignoresSafeArea())
     }
 }

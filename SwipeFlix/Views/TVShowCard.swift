@@ -11,15 +11,24 @@ struct TVShowCard: View {
     let show: TVShow
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             if let url = show.posterURL {
-                AsyncImage(url: url) { image in
-                    image.resizable().scaledToFill()
-                } placeholder: {
-                    Color.gray
+                ZStack(alignment: .bottom) {
+                    AsyncImage(url: url) { image in
+                        image.resizable().scaledToFill()
+                    } placeholder: {
+                        Color.gray
+                    }
+                    .frame(height: 400)
+                    .clipped()
+
+                    LinearGradient(
+                        gradient: Gradient(colors: [.clear, .black]),
+                        startPoint: .center,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 100)
                 }
-                .frame(height: 400)
-                .clipped()
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -28,10 +37,11 @@ struct TVShowCard: View {
                     .bold()
                 Text(show.overview)
                     .font(.body)
-                    .lineLimit(3)
+                    .lineLimit(5)
             }
             .padding()
-            .background(Color(UIColor.systemBackground).opacity(0.9))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(UIColor.systemBackground).opacity(0.95))
         }
         .cornerRadius(16)
         .shadow(radius: 5)

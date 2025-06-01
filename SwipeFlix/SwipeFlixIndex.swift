@@ -1,10 +1,3 @@
-//
-//  SwipeFlixIndex.swift
-//  SwipeFlix
-//
-//  Created by Adrian Neshad on 2025-05-31.
-//
-
 import SwiftUI
 
 enum SwipeContentType: String, CaseIterable, Identifiable {
@@ -68,7 +61,6 @@ struct SwipeFlixIndex: View {
                         .padding(.bottom, 40)
                         .zIndex(0)
                     }
-
                     VStack {
                         Rectangle() // Top
                             .fill(Color.black)
@@ -83,18 +75,16 @@ struct SwipeFlixIndex: View {
                             .zIndex(0.5)
                     }
                     if showToast {
-                        HStack(spacing: 10) {
+                        HStack(spacing: 8) {
                             Image(systemName: "checkmark.seal.fill")
                                 .foregroundColor(.green)
-                                .imageScale(.large)
-
                             Text(toastText)
+                                .font(.subheadline.bold())
                                 .foregroundColor(.white)
-                                .fontWeight(.semibold)
                         }
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 20)
-                        .background(Color.black.opacity(0.9))
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 16)
+                        .background(Color.black.opacity(0.95))
                         .cornerRadius(12)
                         .padding(.top, 100)
                         .transition(.move(edge: .top).combined(with: .opacity))
@@ -104,12 +94,25 @@ struct SwipeFlixIndex: View {
                         Text("SwipeFlix")
                             .font(.largeTitle.bold())
                             .padding(.top, 50)
-                        HBSegmentedPicker(
-                            selectedIndex: $selectedIndex,
-                            items: SwipeContentType.allCases.map { $0.rawValue }
-                        )
-                        .frame(width: 300, height: 40)
-                        .padding(.horizontal)
+                        ZStack {
+                            HBSegmentedPicker(
+                                selectedIndex: $selectedIndex,
+                                items: SwipeContentType.allCases.map { $0.rawValue }
+                            )
+                            .frame(width: 260, height: 40)
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    // Filter-action
+                                }) {
+                                    Image(systemName: "line.3.horizontal.decrease.circle")
+                                        .font(.title2)
+                                        .foregroundColor(.blue)
+                                }
+                                .offset(x: 45)
+                            }
+                            .frame(width: 260, height: 40)
+                        }
                     }
                     .zIndex(1)
                 }
@@ -125,7 +128,7 @@ struct SwipeFlixIndex: View {
 
             WatchList()
                 .tabItem {
-                    Label("Watch List", systemImage: "list.bullet.rectangle")
+                    Label("Watchlist", systemImage: "list.bullet.rectangle")
                 }
                 .tag(1)
 
