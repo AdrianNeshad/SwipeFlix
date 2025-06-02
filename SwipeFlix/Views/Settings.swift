@@ -184,7 +184,7 @@ struct Settings: View {
                 .sheet(isPresented: $showMailFeedback) {
                     MailFeedback(isShowing: $showMailFeedback,
                                  recipientEmail: "Adrian.neshad1@gmail.com",
-                                 subject: "Unifeed Feedback",
+                                 subject: "FlixSwipe Feedback",
                                  messageBody: "")
                 }
             }
