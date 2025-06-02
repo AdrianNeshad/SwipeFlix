@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TVShow: Identifiable, Codable {
+struct TVShow: Identifiable, Codable, Equatable {
     let id: Int
     let name: String
     let overview: String

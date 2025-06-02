@@ -14,49 +14,149 @@ enum ExploreSegment: String, CaseIterable, Identifiable {
 }
 
 struct Explore: View {
+    @AppStorage("watchlistMovies") private var watchlistMoviesString: String = "[]"
+    @AppStorage("watchlistTV") private var watchlistTVString: String = "[]"
     @StateObject private var viewModel = ExploreViewModel()
     @State private var selectedSegment: ExploreSegment = .movies
+    @State private var selectedMovie: Movie? = nil
+    @State private var selectedTVShow: TVShow? = nil
+    @State private var movieIDs: [Int] = []
+    @State private var tvIDs: [Int] = []
+    @State private var shuffledGenreMovies: [String: [Movie]] = [:]
+    @State private var shuffledGenreTVShows: [String: [TVShow]] = [:]
+    
+    private var watchlistMovieIDs: [Int] {
+        get {
+            (try? JSONDecoder().decode([Int].self, from: Data(watchlistMoviesString.utf8))) ?? []
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue),
+               let string = String(data: data, encoding: .utf8) {
+                watchlistMoviesString = string
+            }
+        }
+    }
 
+    private var watchlistTVIDs: [Int] {
+        get {
+            (try? JSONDecoder().decode([Int].self, from: Data(watchlistTVString.utf8))) ?? []
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue),
+               let string = String(data: data, encoding: .utf8) {
+                watchlistTVString = string
+            }
+        }
+    }
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    if selectedSegment == .movies {
-                        if !viewModel.topRated.isEmpty {
-                            MovieRow(title: "Top Rated", movies: viewModel.topRated)
-                        }
-                        ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
-                            let shuffled = movies.shuffled()
-                            MovieRow(title: genre, movies: shuffled)
-                        }
-                    } else {
-                        if !viewModel.topRatedTV.isEmpty {
-                            TVShowRow(title: "Top Rated", shows: viewModel.topRatedTV)
-                        }
-                        ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
-                            let shuffled = shows.shuffled()
-                            TVShowRow(title: genre, shows: shuffled)
+            ZStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        if selectedSegment == .movies {
+                            if !viewModel.topRated.isEmpty {
+                                MovieRow(title: "Top Rated", movies: viewModel.topRated) { movie in
+                                    withAnimation {
+                                        selectedMovie = movie
+                                    }
+                                }
+                            }
+                            ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
+                                let shuffled = movies.shuffled()
+                                MovieRow(title: genre, movies: shuffled) { movie in
+                                    withAnimation {
+                                        selectedMovie = movie
+                                    }
+                                }
+                            }
+                        } else {
+                            if !viewModel.topRatedTV.isEmpty {
+                                TVShowRow(title: "Top Rated", shows: viewModel.topRatedTV) { show in
+                                    withAnimation {
+                                        selectedTVShow = show
+                                    }
+                                }
+                            }
+                            ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
+                                let shuffled = shows.shuffled()
+                                TVShowRow(title: genre, shows: shuffled) { show in
+                                    withAnimation {
+                                        selectedTVShow = show
+                                    }
+                                }
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Text("Explore")
-                        .font(.title2.bold())
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("", selection: $selectedSegment) {
-                        Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
-                        Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text("Explore")
+                            .font(.title2.bold())
                     }
-                    .pickerStyle(.segmented)
-                    .frame(width: 180)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Picker("", selection: $selectedSegment) {
+                            Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                            Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                    }
                 }
-            }
-            .onAppear {
-                viewModel.fetchAll()
+                .onAppear {
+                    viewModel.fetchAll()
+                    shuffledGenreMovies = viewModel.genreMovies.mapValues { $0.shuffled() }
+                    shuffledGenreTVShows = viewModel.genreTVShows.mapValues { $0.shuffled() }
+                    movieIDs = (try? JSONDecoder().decode([Int].self, from: Data(watchlistMoviesString.utf8))) ?? []
+                    tvIDs = (try? JSONDecoder().decode([Int].self, from: Data(watchlistTVString.utf8))) ?? []
+                }
+
+
+                // Expand overlay
+                if let movie = selectedMovie {
+                    ExpandedCardView(
+                        title: movie.title,
+                        overview: movie.overview,
+                        imageURL: movie.posterURL,
+                        onClose: { selectedMovie = nil },
+                        isFavorite: Binding(
+                            get: { movieIDs.contains(movie.id) },
+                            set: { newValue in
+                                if newValue {
+                                    movieIDs.append(movie.id)
+                                } else {
+                                    movieIDs.removeAll { $0 == movie.id }
+                                }
+                                if let data = try? JSONEncoder().encode(movieIDs),
+                                   let string = String(data: data, encoding: .utf8) {
+                                    watchlistMoviesString = string
+                                }
+                            }
+                        )
+                    )
+                } else if let show = selectedTVShow {
+                    ExpandedCardView(
+                        title: show.name,
+                        overview: show.overview,
+                        imageURL: show.posterURL,
+                        onClose: { selectedTVShow = nil },
+                        isFavorite: Binding(
+                            get: { tvIDs.contains(show.id) },
+                            set: { newValue in
+                                if newValue {
+                                    tvIDs.append(show.id)
+                                } else {
+                                    tvIDs.removeAll { $0 == show.id }
+                                }
+                                if let data = try? JSONEncoder().encode(tvIDs),
+                                   let string = String(data: data, encoding: .utf8) {
+                                    watchlistTVString = string
+                                }
+                            }
+                        )
+                    )
+                }
             }
         }
     }
@@ -65,17 +165,18 @@ struct Explore: View {
 struct MovieRow: View {
     let title: String
     let movies: [Movie]
+    var onTap: ((Movie) -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.title3.bold())
-                .padding(.leading, 8)
+            Text(title).font(.title3.bold()).padding(.leading, 8)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(movies) { movie in
-                        CompactMovieCard(title: movie.title, imageURL: movie.posterURLSmall)
+                        CompactMovieCard(title: movie.title, imageURL: movie.posterURLSmall) {
+                            onTap?(movie)
+                        }
                     }
                 }
                 .padding(.horizontal, 8)
@@ -87,17 +188,18 @@ struct MovieRow: View {
 struct TVShowRow: View {
     let title: String
     let shows: [TVShow]
+    var onTap: ((TVShow) -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.title3.bold())
-                .padding(.leading, 8)
+            Text(title).font(.title3.bold()).padding(.leading, 8)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(shows) { show in
-                        CompactMovieCard(title: show.title, imageURL: show.posterURLSmall)
+                        CompactMovieCard(title: show.title, imageURL: show.posterURLSmall) {
+                            onTap?(show)
+                        }
                     }
                 }
                 .padding(.horizontal, 8)
