@@ -14,6 +14,7 @@ enum ExploreSegment: String, CaseIterable, Identifiable {
 }
 
 struct Explore: View {
+    @EnvironmentObject private var watchList: WatchListManager
     @AppStorage("watchlistMovies") private var watchlistMoviesString: String = "[]"
     @AppStorage("watchlistTV") private var watchlistTVString: String = "[]"
     @StateObject private var viewModel = ExploreViewModel()
@@ -22,9 +23,7 @@ struct Explore: View {
     @State private var selectedTVShow: TVShow? = nil
     @State private var movieIDs: [Int] = []
     @State private var tvIDs: [Int] = []
-    @State private var shuffledGenreMovies: [String: [Movie]] = [:]
-    @State private var shuffledGenreTVShows: [String: [TVShow]] = [:]
-    
+
     private var watchlistMovieIDs: [Int] {
         get {
             (try? JSONDecoder().decode([Int].self, from: Data(watchlistMoviesString.utf8))) ?? []
@@ -48,7 +47,7 @@ struct Explore: View {
             }
         }
     }
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -63,8 +62,7 @@ struct Explore: View {
                                 }
                             }
                             ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
-                                let shuffled = movies.shuffled()
-                                MovieRow(title: genre, movies: shuffled) { movie in
+                                MovieRow(title: genre, movies: movies) { movie in
                                     withAnimation {
                                         selectedMovie = movie
                                     }
@@ -79,8 +77,7 @@ struct Explore: View {
                                 }
                             }
                             ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
-                                let shuffled = shows.shuffled()
-                                TVShowRow(title: genre, shows: shuffled) { show in
+                                TVShowRow(title: genre, shows: shows) { show in
                                     withAnimation {
                                         selectedTVShow = show
                                     }
@@ -105,15 +102,10 @@ struct Explore: View {
                     }
                 }
                 .onAppear {
-                    viewModel.fetchAll()
-                    shuffledGenreMovies = viewModel.genreMovies.mapValues { $0.shuffled() }
-                    shuffledGenreTVShows = viewModel.genreTVShows.mapValues { $0.shuffled() }
-                    movieIDs = (try? JSONDecoder().decode([Int].self, from: Data(watchlistMoviesString.utf8))) ?? []
-                    tvIDs = (try? JSONDecoder().decode([Int].self, from: Data(watchlistTVString.utf8))) ?? []
+                    movieIDs = watchlistMovieIDs
+                    tvIDs = watchlistTVIDs
                 }
 
-
-                // Expand overlay
                 if let movie = selectedMovie {
                     ExpandedCardView(
                         title: movie.title,
@@ -121,13 +113,17 @@ struct Explore: View {
                         imageURL: movie.posterURL,
                         onClose: { selectedMovie = nil },
                         isFavorite: Binding(
-                            get: { movieIDs.contains(movie.id) },
+                            get: {
+                                watchList.savedMovies.contains(where: { $0.id == movie.id })
+                            },
                             set: { newValue in
                                 if newValue {
-                                    movieIDs.append(movie.id)
+                                    watchList.addMovie(movie)
                                 } else {
-                                    movieIDs.removeAll { $0 == movie.id }
+                                    watchList.removeMovie(movie)
                                 }
+
+                                movieIDs = watchList.savedMovies.map { $0.id }
                                 if let data = try? JSONEncoder().encode(movieIDs),
                                    let string = String(data: data, encoding: .utf8) {
                                     watchlistMoviesString = string
@@ -142,13 +138,17 @@ struct Explore: View {
                         imageURL: show.posterURL,
                         onClose: { selectedTVShow = nil },
                         isFavorite: Binding(
-                            get: { tvIDs.contains(show.id) },
+                            get: {
+                                watchList.savedTVShows.contains(where: { $0.id == show.id })
+                            },
                             set: { newValue in
                                 if newValue {
-                                    tvIDs.append(show.id)
+                                    watchList.addTVShow(show)
                                 } else {
-                                    tvIDs.removeAll { $0 == show.id }
+                                    watchList.removeTVShow(show)
                                 }
+
+                                tvIDs = watchList.savedTVShows.map { $0.id }
                                 if let data = try? JSONEncoder().encode(tvIDs),
                                    let string = String(data: data, encoding: .utf8) {
                                     watchlistTVString = string

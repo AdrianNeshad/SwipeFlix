@@ -32,6 +32,10 @@ class ExploreViewModel: ObservableObject {
     private var hasFetchedMovies = false
     private var hasFetchedTV = false
 
+    init() {
+        fetchAll()
+    }
+
     func fetchAll() {
         if !hasFetchedMovies {
             fetchTopRatedMovies()
@@ -49,7 +53,7 @@ class ExploreViewModel: ObservableObject {
             hasFetchedTV = true
         }
     }
-    
+
     private func fetchTopRatedMovies() {
         let pageRange = 1...3
         var allResults: [Movie] = []
@@ -96,12 +100,10 @@ class ExploreViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            if self.genreMovies[genreName] == nil {
-                self.genreMovies[genreName] = allResults.shuffled()
-            }
+            self.genreMovies[genreName] = allResults.shuffled()
         }
     }
-    
+
     private func fetchTopRatedTVShows() {
         let pageRange = 1...3
         var allResults: [TVShow] = []
@@ -148,9 +150,7 @@ class ExploreViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            if self.genreTVShows[genreName] == nil {
-                self.genreTVShows[genreName] = allResults.shuffled()
-            }
+            self.genreTVShows[genreName] = allResults.shuffled()
         }
     }
 }
