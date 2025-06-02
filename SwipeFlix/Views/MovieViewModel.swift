@@ -31,7 +31,9 @@ class MovieViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            self.movies = allResults.shuffled()
+            if self.movies.isEmpty {
+                self.movies = allResults.shuffled()
+            }
         }
     }
 

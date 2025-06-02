@@ -29,68 +29,128 @@ class ExploreViewModel: ObservableObject {
         10768: "War & Politics", 37: "Western"
     ]
 
-    func fetchAll() {
-        fetchTopRatedMovies()
-        fetchTopRatedTVShows()
+    private var hasFetchedMovies = false
+    private var hasFetchedTV = false
 
-        for (id, name) in movieGenres {
-            fetchMovies(for: id, genreName: name)
+    func fetchAll() {
+        if !hasFetchedMovies {
+            fetchTopRatedMovies()
+            for (id, name) in movieGenres {
+                fetchMovies(for: id, genreName: name)
+            }
+            hasFetchedMovies = true
         }
 
-        for (id, name) in tvGenres {
-            fetchTVShows(for: id, genreName: name)
+        if !hasFetchedTV {
+            fetchTopRatedTVShows()
+            for (id, name) in tvGenres {
+                fetchTVShows(for: id, genreName: name)
+            }
+            hasFetchedTV = true
         }
     }
-
+    
     private func fetchTopRatedMovies() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=19deb7cbacfe2238a57278a1a57a43e6") else { return }
+        let pageRange = 1...3
+        var allResults: [Movie] = []
+        let group = DispatchGroup()
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data,
-               let response = try? JSONDecoder().decode(MovieResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    self.topRated = response.results
+        for page in pageRange {
+            guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=19deb7cbacfe2238a57278a1a57a43e6&page=\(page)") else { continue }
+
+            group.enter()
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data,
+                   let response = try? JSONDecoder().decode(MovieResponse.self, from: data) {
+                    DispatchQueue.main.async {
+                        allResults.append(contentsOf: response.results)
+                    }
                 }
-            }
-        }.resume()
+                group.leave()
+            }.resume()
+        }
+
+        group.notify(queue: .main) {
+            self.topRated = allResults
+        }
     }
 
     private func fetchMovies(for genreID: Int, genreName: String) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=19deb7cbacfe2238a57278a1a57a43e6&with_genres=\(genreID)") else { return }
+        let pageRange = 1...3
+        var allResults: [Movie] = []
+        let group = DispatchGroup()
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data,
-               let response = try? JSONDecoder().decode(MovieResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    self.genreMovies[genreName] = response.results
+        for page in pageRange {
+            guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=19deb7cbacfe2238a57278a1a57a43e6&with_genres=\(genreID)&page=\(page)") else { continue }
+
+            group.enter()
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data,
+                   let response = try? JSONDecoder().decode(MovieResponse.self, from: data) {
+                    DispatchQueue.main.async {
+                        allResults.append(contentsOf: response.results)
+                    }
                 }
+                group.leave()
+            }.resume()
+        }
+
+        group.notify(queue: .main) {
+            if self.genreMovies[genreName] == nil {
+                self.genreMovies[genreName] = allResults.shuffled()
             }
-        }.resume()
+        }
     }
-
+    
     private func fetchTopRatedTVShows() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=19deb7cbacfe2238a57278a1a57a43e6") else { return }
+        let pageRange = 1...3
+        var allResults: [TVShow] = []
+        let group = DispatchGroup()
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data,
-               let response = try? JSONDecoder().decode(TVShowResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    self.topRatedTV = response.results
+        for page in pageRange {
+            guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=19deb7cbacfe2238a57278a1a57a43e6&page=\(page)") else { continue }
+
+            group.enter()
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data,
+                   let response = try? JSONDecoder().decode(TVShowResponse.self, from: data) {
+                    DispatchQueue.main.async {
+                        allResults.append(contentsOf: response.results)
+                    }
                 }
-            }
-        }.resume()
+                group.leave()
+            }.resume()
+        }
+
+        group.notify(queue: .main) {
+            self.topRatedTV = allResults
+        }
     }
 
     private func fetchTVShows(for genreID: Int, genreName: String) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/discover/tv?api_key=19deb7cbacfe2238a57278a1a57a43e6&with_genres=\(genreID)") else { return }
+        let pageRange = 1...3
+        var allResults: [TVShow] = []
+        let group = DispatchGroup()
 
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            if let data = data,
-               let response = try? JSONDecoder().decode(TVShowResponse.self, from: data) {
-                DispatchQueue.main.async {
-                    self.genreTVShows[genreName] = response.results
+        for page in pageRange {
+            guard let url = URL(string: "https://api.themoviedb.org/3/discover/tv?api_key=19deb7cbacfe2238a57278a1a57a43e6&with_genres=\(genreID)&page=\(page)") else { continue }
+
+            group.enter()
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+                if let data = data,
+                   let response = try? JSONDecoder().decode(TVShowResponse.self, from: data) {
+                    DispatchQueue.main.async {
+                        allResults.append(contentsOf: response.results)
+                    }
                 }
+                group.leave()
+            }.resume()
+        }
+
+        group.notify(queue: .main) {
+            if self.genreTVShows[genreName] == nil {
+                self.genreTVShows[genreName] = allResults.shuffled()
             }
-        }.resume()
+        }
     }
 }

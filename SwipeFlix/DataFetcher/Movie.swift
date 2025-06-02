@@ -20,6 +20,11 @@ struct Movie: Identifiable, Codable {
         guard let path = poster_path else { return nil }
         return URL(string: "https://image.tmdb.org/t/p/w500\(path)")
     }
+    
+    var posterURLSmall: URL? {
+        guard let path = poster_path else { return nil }
+        return URL(string: "https://image.tmdb.org/t/p/w185\(path)")
+    }
 
     var releaseYear: String? {
         guard let date = release_date, date.count >= 4 else { return nil }

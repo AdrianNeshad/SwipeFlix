@@ -41,7 +41,6 @@ struct Explore: View {
                 }
                 .padding()
             }
-            .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Text("Explore")

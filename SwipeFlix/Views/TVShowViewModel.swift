@@ -31,7 +31,9 @@ class TVShowViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            self.shows = allResults.shuffled()
+            if self.shows.isEmpty {
+                self.shows = allResults.shuffled()
+            }
         }
     }
 

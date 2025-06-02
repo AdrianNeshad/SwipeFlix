@@ -37,7 +37,7 @@ struct WatchList: View {
                             WatchListRowView(
                                 title: movie.title,
                                 overview: movie.overview,
-                                imageURL: movie.posterURL,
+                                imageURL: movie.posterURLSmall,
                                 linkURL: nil
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
@@ -69,7 +69,7 @@ struct WatchList: View {
                             WatchListRowView(
                                 title: tvShow.title,
                                 overview: tvShow.overview,
-                                imageURL: tvShow.posterURL,
+                                imageURL: tvShow.posterURLSmall,
                                 linkURL: nil
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
