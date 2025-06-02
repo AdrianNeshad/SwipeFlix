@@ -11,35 +11,35 @@ struct TVShowCard: View {
     let show: TVShow
     var tapAction: (() -> Void)? = nil
 
+    @State private var isExpanded = false
+
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             if let poster = show.posterURL {
-                AsyncImage(url: poster) { image in
-                    image.resizable().scaledToFill()
-                } placeholder: {
-                    Color.gray
-                }
-                .frame(width: 320, height: 550)
-                .clipped()
-            }
+                            AsyncImage(url: poster) { image in
+                                image.resizable().scaledToFill()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .frame(width: 320, height: 550)
+                            .clipped()
+                        }
             VStack(alignment: .leading, spacing: 4) {
                 if let year = show.releaseYear,
                    let rating = show.voteAverage {
                     let topGenre = show.genreNames.first ?? ""
                     let ratingText = String(format: "%.1f", rating)
                     HStack(spacing: 6) {
-                        Image("tmdb_large")
-                            .resizable()
-                            .scaledToFit()
+                        Image(systemName: "film.fill")
+                            .foregroundColor(.blue)
                             .frame(width: 20, height: 20)
                         Text("• \(year) •")
                             .font(.subheadline)
                             .bold()
                             .foregroundColor(.white)
-                        Image("imdb")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 14)
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                            .frame(width: 20, height: 20)
                         Text(ratingText)
                             .font(.subheadline)
                             .bold()
@@ -57,11 +57,10 @@ struct TVShowCard: View {
                     .padding(.top, 8)
                     .padding(.leading, 8)
                 }
-
+                
                 Spacer()
             }
             .frame(width: 320, height: 550, alignment: .topLeading)
-
             LinearGradient(
                 gradient: Gradient(stops: [
                     .init(color: .black, location: 0.0),
@@ -73,29 +72,43 @@ struct TVShowCard: View {
             )
             .frame(height: 320)
             .frame(width: 320)
-            .offset(y: 0)
-
-            VStack(alignment: .leading, spacing: 1) {
-                Text(show.title)
-                    .font(.title2)
-                    .bold()
-                    .foregroundColor(.white)
-
-                Text(show.overview)
-                    .font(.body)
-                    .foregroundColor(.white)
-                    .lineLimit(4)
+            VStack(spacing: 0) {
+                Spacer(minLength: 0)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(show.name)
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.white)
+                    Text(show.overview)
+                        .font(.body)
+                        .foregroundColor(.white)
+                        .lineLimit(isExpanded ? 20 : 4)
+                }
+                .padding()
+                .frame(width: 320, alignment: .leading)
+                .background(Color.black.opacity(isExpanded ? 0.85 : 0)
+                    .animation(.easeInOut(duration: 0.2), value: isExpanded))
+                .cornerRadius(16)
+                .onTapGesture {
+                    withAnimation(.snappy(duration: 0.35)) {
+                        isExpanded.toggle()
+                    }
+                }
             }
-            .padding()
-            .frame(width: 320, alignment: .leading)
-            .padding(.bottom, 20)
+            .frame(width: 320, height: isExpanded ? 550 : 180, alignment: .bottom)
+            .offset(y: -15)
+            Color.clear
+                            .frame(width: 320, height: 400)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                if !isExpanded {
+                                    tapAction?()
+                                }
+                            }
+                            .offset(y: -190)
         }
-        .frame(width: 320, height: 550)
         .cornerRadius(16)
         .shadow(radius: 5)
         .frame(maxWidth: .infinity)
-        .onTapGesture {
-            tapAction?()
-        }
     }
 }
