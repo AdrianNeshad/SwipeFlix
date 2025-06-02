@@ -56,31 +56,49 @@ struct Explore: View {
                         if selectedSegment == .movies {
                             if !viewModel.topRated.isEmpty {
                                 MovieRow(title: "Top Rated", movies: viewModel.topRated) { movie in
-                                    withAnimation {
-                                        selectedMovie = movie
-                                    }
+                                    withAnimation { selectedMovie = movie }
                                 }
                             }
+
+                            if !viewModel.trendingMovies.isEmpty {
+                                MovieRow(title: "Trending", movies: viewModel.trendingMovies) { movie in
+                                    withAnimation { selectedMovie = movie }
+                                }
+                            }
+
+                            if !viewModel.popularMovies.isEmpty {
+                                MovieRow(title: "Popular", movies: viewModel.popularMovies) { movie in
+                                    withAnimation { selectedMovie = movie }
+                                }
+                            }
+
                             ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
                                 MovieRow(title: genre, movies: movies) { movie in
-                                    withAnimation {
-                                        selectedMovie = movie
-                                    }
+                                    withAnimation { selectedMovie = movie }
                                 }
                             }
                         } else {
                             if !viewModel.topRatedTV.isEmpty {
                                 TVShowRow(title: "Top Rated", shows: viewModel.topRatedTV) { show in
-                                    withAnimation {
-                                        selectedTVShow = show
-                                    }
+                                    withAnimation { selectedTVShow = show }
                                 }
                             }
+
+                            if !viewModel.trendingTVShows.isEmpty {
+                                TVShowRow(title: "Trending", shows: viewModel.trendingTVShows) { show in
+                                    withAnimation { selectedTVShow = show }
+                                }
+                            }
+
+                            if !viewModel.popularTVShows.isEmpty {
+                                TVShowRow(title: "Popular", shows: viewModel.popularTVShows) { show in
+                                    withAnimation { selectedTVShow = show }
+                                }
+                            }
+
                             ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
                                 TVShowRow(title: genre, shows: shows) { show in
-                                    withAnimation {
-                                        selectedTVShow = show
-                                    }
+                                    withAnimation { selectedTVShow = show }
                                 }
                             }
                         }
@@ -172,7 +190,6 @@ struct MovieRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.title3.bold()).padding(.leading, 8)
-
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(movies) { movie in
@@ -195,7 +212,6 @@ struct TVShowRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title).font(.title3.bold()).padding(.leading, 8)
-
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(shows) { show in

@@ -18,8 +18,10 @@ struct MovieCard: View {
             if let poster = movie.posterURL {
                             AsyncImage(url: poster) { image in
                                 image.resizable().scaledToFill()
+                                    .drawingGroup()
                             } placeholder: {
                                 Color.gray
+                                    .drawingGroup()
                             }
                             .frame(width: 320, height: 550)
                             .clipped()

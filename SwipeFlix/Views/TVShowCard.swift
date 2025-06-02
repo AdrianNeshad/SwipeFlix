@@ -18,8 +18,10 @@ struct TVShowCard: View {
             if let poster = show.posterURL {
                             AsyncImage(url: poster) { image in
                                 image.resizable().scaledToFill()
+                                    .drawingGroup()
                             } placeholder: {
                                 Color.gray
+                                    .drawingGroup()
                             }
                             .frame(width: 320, height: 550)
                             .clipped()
