@@ -75,7 +75,7 @@ class ExploreViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            self.topRated = allResults
+            self.topRated = allResults.shuffled()
         }
     }
 
@@ -125,7 +125,7 @@ class ExploreViewModel: ObservableObject {
         }
 
         group.notify(queue: .main) {
-            self.topRatedTV = allResults
+            self.topRatedTV = allResults.shuffled()
         }
     }
 
