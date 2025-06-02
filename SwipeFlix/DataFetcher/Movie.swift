@@ -23,7 +23,7 @@ struct Movie: Identifiable, Codable {
     
     var posterURLSmall: URL? {
         guard let path = poster_path else { return nil }
-        return URL(string: "https://image.tmdb.org/t/p/w185\(path)")
+        return URL(string: "https://image.tmdb.org/t/p/w342\(path)")
     }
 
     var releaseYear: String? {

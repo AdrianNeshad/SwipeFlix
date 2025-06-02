@@ -11,7 +11,7 @@ class TVShowViewModel: ObservableObject {
     @Published var shows: [TVShow] = []
 
     func fetch() {
-        let pageRange = 1...3
+        let pageRange = 1...10
         var allResults: [TVShow] = []
         let group = DispatchGroup()
 

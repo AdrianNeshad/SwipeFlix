@@ -18,7 +18,7 @@ struct TVShow: Identifiable, Codable {
 
     var posterURL: URL? {
         guard let path = poster_path else { return nil }
-        return URL(string: "https://image.tmdb.org/t/p/w500\(path)")
+        return URL(string: "https://image.tmdb.org/t/p/w342\(path)")
     }
     
     var posterURLSmall: URL? {

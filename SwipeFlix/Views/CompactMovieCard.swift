@@ -14,10 +14,28 @@ struct CompactMovieCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            AsyncImage(url: imageURL) { image in
-                image.resizable().scaledToFill()
-            } placeholder: {
-                Color.gray
+            AsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .empty:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                case .success(let image):
+                    image
+                        .resizable()
+                        .interpolation(.low)
+                        .antialiased(false)
+                        .scaledToFit()
+                        .frame(width: 100, height: 150)
+
+                case .failure:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                @unknown default:
+                    Color.black
+                        .frame(width: 100, height: 150)
+                }
             }
             .frame(width: 100, height: 150)
             .clipped()

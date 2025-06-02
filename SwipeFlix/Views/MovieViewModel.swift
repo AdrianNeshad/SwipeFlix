@@ -11,7 +11,7 @@ class MovieViewModel: ObservableObject {
     @Published var movies: [Movie] = []
 
     func fetch() {
-        let pageRange = 1...3
+        let pageRange = 1...10
         var allResults: [Movie] = []
         let group = DispatchGroup()
 

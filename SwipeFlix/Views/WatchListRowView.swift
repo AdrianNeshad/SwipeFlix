@@ -27,10 +27,28 @@ struct WatchListRowView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            AsyncImage(url: imageURL) { image in
-                image.resizable().scaledToFit()
-            } placeholder: {
-                Color.gray
+            AsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .empty:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                case .success(let image):
+                    image
+                        .resizable()
+                        .interpolation(.low)
+                        .antialiased(false)
+                        .scaledToFit()
+                        .frame(width: 100, height: 150)
+
+                case .failure:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                @unknown default:
+                    Color.black
+                        .frame(width: 100, height: 150)
+                }
             }
             .frame(width: 100, height: 150)
             .cornerRadius(12)

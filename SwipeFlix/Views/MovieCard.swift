@@ -60,7 +60,7 @@ struct MovieCard: View {
                 
                 Spacer()
             }
-            .frame(width: 320, height: 550, alignment: .topLeading)
+            .frame(width: 330, height: 550, alignment: .topLeading)
             LinearGradient(
                 gradient: Gradient(stops: [
                     .init(color: .black, location: 0.0),

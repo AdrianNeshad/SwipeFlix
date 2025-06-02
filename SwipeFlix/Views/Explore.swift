@@ -75,7 +75,7 @@ struct MovieRow: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(movies) { movie in
-                        CompactMovieCard(title: movie.title, imageURL: movie.posterURL)
+                        CompactMovieCard(title: movie.title, imageURL: movie.posterURLSmall)
                     }
                 }
                 .padding(.horizontal, 8)
@@ -97,7 +97,7 @@ struct TVShowRow: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(shows) { show in
-                        CompactMovieCard(title: show.title, imageURL: show.posterURL)
+                        CompactMovieCard(title: show.title, imageURL: show.posterURLSmall)
                     }
                 }
                 .padding(.horizontal, 8)

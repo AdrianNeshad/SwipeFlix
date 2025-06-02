@@ -55,16 +55,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AC0863E7-6B0C-413F-8183-D0F9A85AB29A"
+            uuid = "F521319B-A885-4E17-8C5F-776A01CD84DF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SwipeFlix/Views/CompactMovieCard.swift"
+            filePath = "SwipeFlix/DataFetcher/Movie.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "body"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "releaseYear"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
