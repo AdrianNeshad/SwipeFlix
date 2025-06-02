@@ -14,6 +14,7 @@ struct WatchListRowView: View {
     let linkURL: URL?
 
     @State private var isPresentingSafari = false
+    @State private var isExpanded = false
 
     private var destinationURL: URL {
         if let linkURL = linkURL {
@@ -25,39 +26,53 @@ struct WatchListRowView: View {
     }
 
     var body: some View {
-        Button(action: {
-            isPresentingSafari = true
-        }) {
-            HStack(alignment: .top, spacing: 12) {
-                AsyncImage(url: imageURL) { image in
-                    image.resizable().scaledToFit()
-                } placeholder: {
-                    Color.gray
-                }
-                .frame(width: 100, height: 150)
-                .cornerRadius(12)
-                .clipped()
-                .padding(.leading, 8)
-
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(title)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-
-                    Text(overview)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .lineLimit(5)
-                }
-
-                Spacer()
+        HStack(alignment: .top, spacing: 12) {
+            AsyncImage(url: imageURL) { image in
+                image.resizable().scaledToFit()
+            } placeholder: {
+                Color.gray
             }
-            .padding(.trailing, 10)
-            .padding(.vertical, 6)
-            .background(Color(UIColor.secondarySystemBackground))
+            .frame(width: 100, height: 150)
             .cornerRadius(12)
+            .clipped()
+            .padding(.leading, 8)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+
+                Group {
+                    if isExpanded {
+                        Text(overview)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .transition(.opacity)
+                    } else {
+                        Text(overview)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .lineLimit(4)
+                            .transition(.opacity)
+                    }
+                }
+                .animation(.easeInOut(duration: 0.3), value: isExpanded)
+            }
+            Spacer()
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding(.trailing, 10)
+        .padding(.vertical, 6)
+        .background(Color(UIColor.secondarySystemBackground))
+        .cornerRadius(12)
+        .onTapGesture {
+            isExpanded.toggle()
+        }
+        .contextMenu {
+            Button {
+                isPresentingSafari = true
+            } label: {
+                Label("More info", systemImage: "globe")
+            }
+        }
         .sheet(isPresented: $isPresentingSafari) {
             SafariView(url: destinationURL)
         }

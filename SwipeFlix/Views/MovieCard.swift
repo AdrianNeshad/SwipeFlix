@@ -30,8 +30,8 @@ struct MovieCard: View {
                     let topGenre = movie.genreNames.first ?? ""
                     let ratingText = String(format: "%.1f", rating)
                     HStack(spacing: 6) {
-                        Image(systemName: "film.fill")
-                            .foregroundColor(.blue)
+                        Image("tmdb_large")
+                            .resizable()
                             .frame(width: 20, height: 20)
                         Text("• \(year) •")
                             .font(.subheadline)
