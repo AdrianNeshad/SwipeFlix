@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct ExpandedCardView: View {
     let title: String
@@ -13,6 +14,14 @@ struct ExpandedCardView: View {
     let imageURL: URL?
     let onClose: () -> Void
     @Binding var isFavorite: Bool
+    let rating: Double?
+
+    @State private var isPresentingSafari = false
+
+    private var googleSearchURL: URL {
+        let encoded = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        return URL(string: "https://www.google.com/search?q=\(encoded)")!
+    }
 
     var body: some View {
         ZStack {
@@ -23,13 +32,19 @@ struct ExpandedCardView: View {
                 }
 
             VStack(spacing: 12) {
-                AsyncImage(url: imageURL) { image in
-                    image.resizable().scaledToFit()
-                } placeholder: {
-                    Color.gray
+                // Poster image – clickable
+                Button(action: {
+                    isPresentingSafari = true
+                }) {
+                    AsyncImage(url: imageURL) { image in
+                        image.resizable().scaledToFit()
+                    } placeholder: {
+                        Color.gray
+                    }
+                    .frame(maxHeight: 400)
+                    .cornerRadius(16)
                 }
-                .frame(maxHeight: 400)
-                .cornerRadius(16)
+                .buttonStyle(.plain)
 
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
@@ -46,6 +61,14 @@ struct ExpandedCardView: View {
                         }
                     }
 
+                    HStack(spacing: 6) {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                        Text(String(format: "%.1f", rating ?? 0.0))
+                            .bold()
+                    }
+                    .font(.subheadline)
+
                     Text(overview)
                         .font(.body)
                         .foregroundColor(.secondary)
@@ -60,5 +83,8 @@ struct ExpandedCardView: View {
         }
         .transition(.opacity)
         .animation(.easeInOut, value: isFavorite)
+        .sheet(isPresented: $isPresentingSafari) {
+            SafariView(url: googleSearchURL)
+        }
     }
 }

@@ -32,19 +32,16 @@ struct Settings: View {
     var body: some View {
         Form {
             Section(header: Text("Source")) {
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        selectedSourceURL = URL(string: "https://www.themoviedb.org/")
-                    }) {
-                        Image("tmdb")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 40)
-                            .padding(.vertical, 8)
-                    }
-                    Spacer()
+                Button(action: {
+                    selectedSourceURL = URL(string: "https://www.themoviedb.org/")
+                }) {
+                    Image("tmdb")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit) 
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
             Section(header: Text("Watchlists")) {
                 Button(action: {

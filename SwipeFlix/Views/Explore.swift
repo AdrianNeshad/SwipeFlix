@@ -129,7 +129,8 @@ struct Explore: View {
                                     watchlistMoviesString = string
                                 }
                             }
-                        )
+                        ),
+                        rating: movie.voteAverage
                     )
                 } else if let show = selectedTVShow {
                     ExpandedCardView(
@@ -154,7 +155,8 @@ struct Explore: View {
                                     watchlistTVString = string
                                 }
                             }
-                        )
+                        ),
+                        rating: show.voteAverage
                     )
                 }
             }

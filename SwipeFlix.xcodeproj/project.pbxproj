@@ -159,7 +159,6 @@
 				3AF90EE92DEC5A08008D58FC /* RSSNewsModels.swift */,
 				3AF90EEB2DEC5A1D008D58FC /* RSSFetcher.swift */,
 				3AF90EED2DEC5A55008D58FC /* String+HTMLDecoding.swift */,
-				3AF90EEF2DEC5AA1008D58FC /* NewsViewItem.swift */,
 			);
 			path = DataFetcher;
 			sourceTree = "<group>";
@@ -181,6 +180,7 @@
 				3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */,
 				3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */,
 				3A3BD6242DEDF11F00AEE209 /* ExpandedCardView.swift */,
+				3AF90EEF2DEC5AA1008D58FC /* NewsViewItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

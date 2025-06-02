@@ -32,7 +32,8 @@ struct MovieCard: View {
                     HStack(spacing: 6) {
                         Image("tmdb_large")
                             .resizable()
-                            .frame(width: 20, height: 20)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
                         Text("• \(year) •")
                             .font(.subheadline)
                             .bold()
@@ -83,7 +84,7 @@ struct MovieCard: View {
                     Text(movie.overview)
                         .font(.body)
                         .foregroundColor(.white)
-                        .lineLimit(isExpanded ? 20 : 4)
+                        .lineLimit(isExpanded ? 20 : 5)
                 }
                 .padding()
                 .frame(width: 320, alignment: .leading)
