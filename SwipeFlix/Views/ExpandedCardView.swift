@@ -15,6 +15,8 @@ struct ExpandedCardView: View {
     let onClose: () -> Void
     @Binding var isFavorite: Bool
     let rating: Double?
+    let year: String?
+    let topGenre: String?
 
     @State private var isPresentingSafari = false
 
@@ -25,14 +27,12 @@ struct ExpandedCardView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.5)
+            Color.black.opacity(0.8)
                 .ignoresSafeArea()
                 .onTapGesture {
                     onClose()
                 }
-
             VStack(spacing: 12) {
-                // Poster image – clickable
                 Button(action: {
                     isPresentingSafari = true
                 }) {
@@ -51,21 +51,46 @@ struct ExpandedCardView: View {
                         Text(title)
                             .font(.title)
                             .bold()
+                            .lineLimit(2)
                         Spacer()
                         Button {
                             isFavorite.toggle()
                         } label: {
-                            Image(systemName: isFavorite ? "star.fill" : "star")
-                                .foregroundColor(.yellow)
+                            Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                                .foregroundColor(.green)
                                 .imageScale(.large)
                         }
                     }
 
                     HStack(spacing: 6) {
+                        Image("tmdb_large")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 20)
+                        Text("•")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(.white)
+                        Text(String(year ?? ""))
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(.white)
+                        Text("•")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(.white)
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
                         Text(String(format: "%.1f", rating ?? 0.0))
                             .bold()
+                        Text("•")
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(.white)
+                        Text(String(topGenre ?? ""))
+                            .font(.subheadline)
+                            .bold()
+                            .foregroundColor(.white)
                     }
                     .font(.subheadline)
 

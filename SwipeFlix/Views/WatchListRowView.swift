@@ -12,6 +12,9 @@ struct WatchListRowView: View {
     let overview: String
     let imageURL: URL?
     let linkURL: URL?
+    let rating: Double?
+    let year: String?
+    let topGenre: String?
 
     @State private var isPresentingSafari = false
     @State private var isExpanded = false
@@ -27,53 +30,73 @@ struct WatchListRowView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            AsyncImage(url: imageURL) { phase in
-                switch phase {
-                case .empty:
-                    Color.gray
-                        .frame(width: 100, height: 150)
-
-                case .success(let image):
-                    image
-                        .resizable()
-                        .interpolation(.low)
-                        .antialiased(false)
-                        .scaledToFit()
-                        .frame(width: 100, height: 150)
-
-                case .failure:
-                    Color.gray
-                        .frame(width: 100, height: 150)
-
-                @unknown default:
-                    Color.black
-                        .frame(width: 100, height: 150)
-                }
-            }
-            .frame(width: 100, height: 150)
-            .cornerRadius(12)
-            .clipped()
-            .padding(.leading, 8)
-            VStack(alignment: .leading, spacing: 6) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-
-                Group {
-                    if isExpanded {
-                        Text(overview)
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .transition(.opacity)
-                    } else {
-                        Text(overview)
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .lineLimit(4)
-                            .transition(.opacity)
+            VStack {
+                AsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .empty:
+                        Color.gray
+                            .frame(width: 100, height: 150)
+                        
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .interpolation(.low)
+                            .antialiased(false)
+                            .scaledToFit()
+                            .frame(width: 100, height: 150)
+                        
+                    case .failure:
+                        Color.gray
+                            .frame(width: 100, height: 150)
+                        
+                    @unknown default:
+                        Color.black
+                            .frame(width: 100, height: 150)
                     }
                 }
-                .animation(.easeInOut(duration: 0.3), value: isExpanded)
+                .frame(width: 100, height: 150)
+                .cornerRadius(12)
+                .clipped()
+                .padding(.leading, 8)
+                
+                Group {
+                    if isExpanded {
+                        VStack(spacing: 5) {
+                            HStack {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                                Text(String(format: "%.1f", rating ?? 0.0))
+                                    .bold()
+                            }
+                            Text(String(topGenre ?? ""))
+                                .bold()
+                                .foregroundColor(.white)
+                            Text(String(year ?? ""))
+                                    .bold()
+                                    .foregroundColor(.white)
+                        }
+                    }
+                }
+                .animation(.linear(duration: 0.3), value: isExpanded)
+            }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text(title)
+                        .font(.headline)
+                }
+                Group {
+                    Text(overview)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .lineLimit(isExpanded ? nil : 4)
+                        .transition(.opacity)
+                    HStack {
+                        Spacer()
+                        Text(isExpanded ? "Show less" : "Show more")
+                            .font(.subheadline)
+                    }
+                }
+                .animation(.linear(duration: 0.3), value: isExpanded)
             }
             Spacer()
         }

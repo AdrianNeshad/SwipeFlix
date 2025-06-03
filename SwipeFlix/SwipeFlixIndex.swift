@@ -92,7 +92,7 @@ struct SwipeFlixIndex: View {
 
                     if showToast {
                         HStack(spacing: 8) {
-                            Image(systemName: "checkmark.seal.fill")
+                            Image(systemName: "bookmark.fill")
                                 .foregroundColor(.green)
                             Text(toastText)
                                 .font(.subheadline.bold())

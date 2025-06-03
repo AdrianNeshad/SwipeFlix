@@ -38,7 +38,10 @@ struct WatchList: View {
                                 title: movie.title,
                                 overview: movie.overview,
                                 imageURL: movie.posterURLSmall,
-                                linkURL: nil
+                                linkURL: nil,
+                                rating: movie.voteAverage,
+                                year: movie.releaseYear,
+                                topGenre: movie.genreNames.first
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
                             .listStyle(.plain)
@@ -70,7 +73,10 @@ struct WatchList: View {
                                 title: tvShow.title,
                                 overview: tvShow.overview,
                                 imageURL: tvShow.posterURLSmall,
-                                linkURL: nil
+                                linkURL: nil,
+                                rating: tvShow.voteAverage,
+                                year: tvShow.releaseYear,
+                                topGenre: tvShow.genreNames.first
                             )
                             .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 12))
                             .listStyle(.plain)

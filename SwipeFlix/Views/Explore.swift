@@ -148,7 +148,9 @@ struct Explore: View {
                                 }
                             }
                         ),
-                        rating: movie.voteAverage
+                        rating: movie.voteAverage,
+                        year: movie.releaseYear,
+                        topGenre: movie.genreNames.first
                     )
                 } else if let show = selectedTVShow {
                     ExpandedCardView(
@@ -174,7 +176,9 @@ struct Explore: View {
                                 }
                             }
                         ),
-                        rating: show.voteAverage
+                        rating: show.voteAverage,
+                        year: show.releaseYear,
+                        topGenre: show.genreNames.first
                     )
                 }
             }
