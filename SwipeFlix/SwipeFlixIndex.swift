@@ -20,11 +20,15 @@ struct SwipeFlixIndex: View {
     @StateObject private var storeManager = StoreManager()
     @StateObject private var movieVM = MovieViewModel()
     @StateObject private var tvShowVM = TVShowViewModel()
+
     @State private var selectedTab = 0
     @State private var selectedIndex = 0
+
     @State private var showToast = false
     @State private var toastText = ""
+
     @State private var selectedSearchURL: URL? = nil
+
     @State private var triggerSwipe = false
     @State private var swipeDirection: SwipeDirection? = nil
 
@@ -51,7 +55,6 @@ struct SwipeFlixIndex: View {
                         .offset(y: -20)
                         .zIndex(0)
                     }
-
                     VStack(spacing: 0) {
                         Rectangle()
                             .fill(Color.black)
@@ -87,9 +90,8 @@ struct SwipeFlixIndex: View {
                                 .foregroundColor(.green)
                         }
                     }
-                    .offset(y: UIScreen.main.bounds.height * 0.82)
+                    .offset(y: UIScreen.main.bounds.height * 0.825)
                     .zIndex(1)
-
                     if showToast {
                         HStack(spacing: 8) {
                             Image(systemName: "bookmark.fill")
@@ -106,16 +108,60 @@ struct SwipeFlixIndex: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                         .zIndex(2)
                     }
-
                     VStack(spacing: 20) {
                         Text("FlixSwipe")
                             .font(.largeTitle.bold())
                             .padding(.top, 50)
-                        HBSegmentedPicker(
-                            selectedIndex: $selectedIndex,
-                            items: SwipeContentType.allCases.map { $0.rawValue }
-                        )
-                        .frame(width: 260, height: 40)
+                        ZStack {
+                            HBSegmentedPicker(
+                                selectedIndex: $selectedIndex,
+                                items: SwipeContentType.allCases.map { $0.rawValue }
+                            )
+                            .frame(width: 260, height: 40)
+
+                            HStack {
+                                Spacer()
+                                Menu {
+                                    switch selectedType {
+                                    case .movies:
+                                        ForEach(MovieCategory.allCases) { category in
+                                            Button {
+                                                movieVM.selectedCategory = category
+                                            } label: {
+                                                HStack {
+                                                    Text(category.displayName)
+                                                    Spacer()
+                                                    if movieVM.selectedCategory == category {
+                                                        Image(systemName: "checkmark")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    case .tvShows:
+                                        ForEach(TVShowCategory.allCases) { category in
+                                            Button {
+                                                tvShowVM.selectedCategory = category
+                                            } label: {
+                                                HStack {
+                                                    Text(category.displayName)
+                                                    Spacer()
+                                                    if tvShowVM.selectedCategory == category {
+                                                        Image(systemName: "checkmark")
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                } label: {
+                                    Label("", systemImage: "line.3.horizontal.decrease.circle")
+                                        .font(.headline)
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.leading, 8)
+                                .padding(.trailing, 30)
+                            }
+                        }
+                        .frame(height: 40)
                     }
                     .zIndex(1)
                 }
