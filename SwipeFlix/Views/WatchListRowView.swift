@@ -18,6 +18,7 @@ struct WatchListRowView: View {
 
     @State private var isPresentingSafari = false
     @State private var isExpanded = false
+    @State private var isPresentingShareSheet = false
 
     private var destinationURL: URL {
         if let linkURL = linkURL {
@@ -113,9 +114,18 @@ struct WatchListRowView: View {
             } label: {
                 Label("More info", systemImage: "globe")
             }
+            Button {
+                isPresentingShareSheet = true
+            } label: {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
         }
         .sheet(isPresented: $isPresentingSafari) {
             SafariView(url: destinationURL)
+        }
+        .sheet(isPresented: $isPresentingShareSheet) {
+            ShareSheet(activityItems: [title, destinationURL])
+                .presentationDetents([.medium])
         }
     }
 }

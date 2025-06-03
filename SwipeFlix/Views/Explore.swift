@@ -129,7 +129,7 @@ struct Explore: View {
                         title: movie.title,
                         overview: movie.overview,
                         imageURL: movie.posterURL,
-                        onClose: { selectedMovie = nil },
+                        onClose: { withAnimation { selectedMovie = nil } },
                         isFavorite: Binding(
                             get: {
                                 watchList.savedMovies.contains(where: { $0.id == movie.id })
@@ -152,12 +152,14 @@ struct Explore: View {
                         year: movie.releaseYear,
                         topGenre: movie.genreNames.first
                     )
+                    .transition(.opacity)
+                    .zIndex(1)
                 } else if let show = selectedTVShow {
                     ExpandedCardView(
                         title: show.name,
                         overview: show.overview,
                         imageURL: show.posterURL,
-                        onClose: { selectedTVShow = nil },
+                        onClose: { withAnimation { selectedTVShow = nil } },
                         isFavorite: Binding(
                             get: {
                                 watchList.savedTVShows.contains(where: { $0.id == show.id })
@@ -180,6 +182,8 @@ struct Explore: View {
                         year: show.releaseYear,
                         topGenre: show.genreNames.first
                     )
+                    .transition(.opacity)
+                    .zIndex(1)
                 }
             }
         }

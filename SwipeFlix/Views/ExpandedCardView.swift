@@ -27,7 +27,7 @@ struct ExpandedCardView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.8)
+            Color.black.opacity(0.7)
                 .ignoresSafeArea()
                 .onTapGesture {
                     onClose()
@@ -83,14 +83,16 @@ struct ExpandedCardView: View {
                             .foregroundColor(.yellow)
                         Text(String(format: "%.1f", rating ?? 0.0))
                             .bold()
-                        Text("•")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(.white)
-                        Text(String(topGenre ?? ""))
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(.white)
+                        if let genre = topGenre, !genre.isEmpty {
+                            Text("•")
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(.white)
+                            Text(genre)
+                                .font(.subheadline)
+                                .bold()
+                                .foregroundColor(.white)
+                        }
                     }
                     .font(.subheadline)
 
@@ -106,8 +108,6 @@ struct ExpandedCardView: View {
             }
             .padding()
         }
-        .transition(.opacity)
-        .animation(.easeInOut, value: isFavorite)
         .sheet(isPresented: $isPresentingSafari) {
             SafariView(url: googleSearchURL)
         }
