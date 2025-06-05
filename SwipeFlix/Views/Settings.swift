@@ -195,7 +195,7 @@ struct Settings: View {
                         Text("Univert")
                     }
                 }
-                
+                /*
                 Link(destination: URL(string: "https://apps.apple.com/us/app/unifeed/id6746576849")!) {
                     HStack {
                         Image("unifeed")
@@ -205,6 +205,7 @@ struct Settings: View {
                         Text("Unifeed")
                     }
                 }
+                 */
             }
 
             Section {

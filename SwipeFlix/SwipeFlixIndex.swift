@@ -10,7 +10,7 @@ enum SwipeDirection {
     case left, right
 }
 
-extension URL: Identifiable {
+extension URL: @retroactive Identifiable {
     public var id: String { absoluteString }
 }
 
