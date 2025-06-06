@@ -10,7 +10,7 @@ enum SwipeDirection {
     case left, right
 }
 
-extension URL: @retroactive Identifiable {
+extension URL: @retroactive Identifiable { 
     public var id: String { absoluteString }
 }
 
@@ -43,7 +43,7 @@ struct SwipeFlixIndex: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            NavigationView {
+            NavigationStack {
                 ZStack(alignment: .top) {
                     VStack {
                         Spacer(minLength: 150)

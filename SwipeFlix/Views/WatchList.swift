@@ -18,7 +18,7 @@ struct WatchList: View {
     @State private var selectedSegment: WatchListSegment = .movies
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 if selectedSegment == .movies {
                     if watchList.savedMovies.isEmpty {

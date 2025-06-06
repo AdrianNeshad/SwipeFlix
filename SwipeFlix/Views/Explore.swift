@@ -49,7 +49,7 @@ struct Explore: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {

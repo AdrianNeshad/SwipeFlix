@@ -19,7 +19,7 @@ struct NewsIndex: View {
     @State private var wasLoading = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 LazyVStack {
                     if viewModel.isLoading {
