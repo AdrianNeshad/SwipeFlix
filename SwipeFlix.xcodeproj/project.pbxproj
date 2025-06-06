@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */; };
 		3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A13C4202DECCE8E000DD7D9 /* Explore.swift */; };
 		3A3BD6212DEDDC1F00AEE209 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */; };
 		3A3BD6232DEDDCC000AEE209 /* CompactMovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipeFlixIndex_iPad.swift; sourceTree = "<group>"; };
 		3A13C4202DECCE8E000DD7D9 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 		3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMovieCard.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */,
 				3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */,
+				2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */,
 				3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */,
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
 				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
@@ -277,6 +280,7 @@
 				3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */,
 				3AF90EF82DEC7BB0008D58FC /* WatchListRowView.swift in Sources */,
 				3AD040522DEB85A2008DB045 /* AppVersion.swift in Sources */,
+				2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */,
 				3A3BD6232DEDDCC000AEE209 /* CompactMovieCard.swift in Sources */,
 				3A3BD6212DEDDC1F00AEE209 /* ExploreViewModel.swift in Sources */,
 				3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */,
@@ -462,7 +466,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -498,7 +502,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

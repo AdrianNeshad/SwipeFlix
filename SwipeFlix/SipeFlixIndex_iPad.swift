@@ -1,101 +1,25 @@
+//
+//  SipeFlixIndex_iPad.swift
+//  SwipeFlix
+//
+//  Created by Adrian Neshad on 2025-06-06.
+//
+
 import SwiftUI
 
-enum SwipeContentType: String, CaseIterable, Identifiable {
-    case movies = "Movies"
-    case tvShows = "TV Shows"
-    var id: String { rawValue }
-}
-
-enum SwipeDirection {
-    case left, right
-}
-
-extension URL: @retroactive Identifiable {
-    public var id: String { absoluteString }
-}
-
-struct SwipeFlixIndex: View {
+struct SwipeFlixIndex_iPad: View {
     @EnvironmentObject private var watchList: WatchListManager
-    @AppStorage("AdsRemoved") private var AdsRemoved = false
-    @StateObject private var storeManager = StoreManager()
-    @StateObject private var movieVM = MovieViewModel()
-    @StateObject private var tvShowVM = TVShowViewModel()
+    @EnvironmentObject private var movieVM: MovieViewModel
+    @EnvironmentObject private var tvShowVM: TVShowViewModel
 
-    @State private var selectedTab = 0
-    @State private var selectedIndex = 0
-    @State private var showToast = false
-    @State private var toastText = ""
-    @State private var selectedSearchURL: URL? = nil
-    @State private var triggerSwipe = false
-    @State private var swipeDirection: SwipeDirection? = nil
-
-    private var selectedType: SwipeContentType {
-        get { SwipeContentType.allCases[selectedIndex] }
-        set {
-            if let index = SwipeContentType.allCases.firstIndex(of: newValue) {
-                selectedIndex = index
-            }
-        }
-    }
+    @Binding var selectedIndex: Int
+    @Binding var triggerSwipe: Bool
+    @Binding var swipeDirection: SwipeDirection?
+    @Binding var selectedSearchURL: URL?
+    @Binding var showToast: Bool
+    @Binding var toastText: String
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            swipeTabView()
-                .tabItem {
-                    Label("Swipe", systemImage: "hand.point.right.fill")
-                }
-                .tag(0)
-
-            WatchList()
-                .tabItem {
-                    Label("Watchlists", systemImage: "list.bullet.rectangle")
-                }
-                .tag(1)
-
-            Explore()
-                .tabItem {
-                    Label("Explore", systemImage: "square.stack.3d.up.fill")
-                }
-                .tag(2)
-
-            NewsIndex()
-                .tabItem {
-                    Label("News Feed", systemImage: "newspaper")
-                }
-                .tag(3)
-
-            Settings()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-                .tag(4)
-        }
-        .sheet(item: $selectedSearchURL) { url in
-            SafariView(url: url)
-        }
-        .background(Color.black.ignoresSafeArea(edges: .bottom))
-    }
-
-    @ViewBuilder
-    private func swipeTabView() -> some View {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            SwipeFlixIndex_iPad(
-                selectedIndex: $selectedIndex,
-                triggerSwipe: $triggerSwipe,
-                swipeDirection: $swipeDirection,
-                selectedSearchURL: $selectedSearchURL,
-                showToast: $showToast,
-                toastText: $toastText
-            )
-            .environmentObject(watchList)
-            .environmentObject(movieVM)
-            .environmentObject(tvShowVM)
-        } else {
-            swipeViewContent
-        }
-    }
-
-    private var swipeViewContent: some View {
         ZStack(alignment: .top) {
             VStack {
                 Spacer(minLength: 150)
@@ -172,7 +96,7 @@ struct SwipeFlixIndex: View {
                     HStack {
                         Spacer()
                         Menu {
-                            switch selectedType {
+                            switch SwipeContentType.allCases[selectedIndex] {
                             case .movies:
                                 ForEach(MovieCategory.allCases) { category in
                                     Button {
@@ -232,6 +156,7 @@ struct SwipeFlixIndex: View {
     }
 
     private func swipeCardStack() -> some View {
+        let selectedType = SwipeContentType.allCases[selectedIndex]
         switch selectedType {
         case .movies:
             return AnyView(
@@ -313,10 +238,4 @@ struct SwipeFlixIndex: View {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return URL(string: "https://www.google.com/search?q=\(encoded)")
     }
-}
-
-#Preview {
-    SwipeFlixIndex()
-        .environmentObject(WatchListManager())
-        .preferredColorScheme(.dark)
 }
