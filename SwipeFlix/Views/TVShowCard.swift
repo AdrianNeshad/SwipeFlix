@@ -46,7 +46,7 @@ struct TVShowCard: View {
                         Text(ratingText)
                             .font(.subheadline)
                             .bold()
-                            .foregroundColor(.white)
+                            .foregroundColor(.yellow)
                         if !topGenre.isEmpty {
                             Text("• \(topGenre)")
                                 .font(.subheadline)

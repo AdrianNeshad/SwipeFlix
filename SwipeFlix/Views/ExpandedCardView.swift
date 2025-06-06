@@ -83,6 +83,7 @@ struct ExpandedCardView: View {
                             .foregroundColor(.yellow)
                         Text(String(format: "%.1f", rating ?? 0.0))
                             .bold()
+                            .foregroundColor(.yellow)
                         if let genre = topGenre, !genre.isEmpty {
                             Text("•")
                                 .font(.subheadline)

@@ -76,20 +76,28 @@ struct WatchListRowView: View {
                     if let rating {
                         Text(String(format: "%.1f", rating))
                             .foregroundColor(.yellow)
+                            .bold()
                     }
-                    if let genre = topGenre {
+                    Text("•")
+                        .padding(.leading, 5)
+                        .font(.title)
+                    if let genre = topGenre, !genre.isEmpty {
                         Text(genre)
                             .foregroundColor(.white)
                             .font(.callout)
                             .bold()
-                            .padding(.leading, 10)
+                            .padding(.leading, 5)
+                        
+                        Text("•")
+                            .padding(.leading, 5)
+                            .font(.title)
                     }
                     if let year {
                         Text(year)
                             .foregroundColor(.white)
                             .font(.callout)
                             .bold()
-                            .padding(.leading, 10)
+                            .padding(.leading, 5)
                     }
                 }
             }
