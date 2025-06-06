@@ -15,6 +15,7 @@ enum ExploreSegment: String, CaseIterable, Identifiable {
 
 struct Explore: View {
     @EnvironmentObject private var watchList: WatchListManager
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @AppStorage("watchlistMovies") private var watchlistMoviesString: String = "[]"
     @AppStorage("watchlistTV") private var watchlistTVString: String = "[]"
     @StateObject private var viewModel = ExploreViewModel()
@@ -23,6 +24,10 @@ struct Explore: View {
     @State private var selectedTVShow: TVShow? = nil
     @State private var movieIDs: [Int] = []
     @State private var tvIDs: [Int] = []
+
+    private var isPad: Bool {
+        horizontalSizeClass == .regular
+    }
 
     private var watchlistMovieIDs: [Int] {
         get {
@@ -53,6 +58,21 @@ struct Explore: View {
             ZStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        if isPad {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Explore")
+                                    .font(.title2.bold())
+                                    .padding(.horizontal)
+                                Picker("", selection: $selectedSegment) {
+                                    Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                                    Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal)
+                                .padding(.bottom, 8)
+                            }
+                        }
+
                         if selectedSegment == .movies {
                             if !viewModel.topRated.isEmpty {
                                 MovieRow(title: "Top Rated", movies: viewModel.topRated) { movie in
@@ -103,25 +123,28 @@ struct Explore: View {
                             }
                         }
                     }
-                    .padding()
-                }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Text("Explore")
-                            .font(.title2.bold())
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Picker("", selection: $selectedSegment) {
-                            Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
-                            Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 180)
-                    }
+                    .padding(.top, isPad ? 0 : nil)
+                    .padding(.horizontal)
                 }
                 .onAppear {
                     movieIDs = watchlistMovieIDs
                     tvIDs = watchlistTVIDs
+                }
+                .toolbar {
+                    if !isPad {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Text("Explore")
+                                .font(.title2.bold())
+                        }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Picker("", selection: $selectedSegment) {
+                                Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                                Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 180)
+                        }
+                    }
                 }
 
                 if let movie = selectedMovie {
@@ -189,6 +212,7 @@ struct Explore: View {
         }
     }
 }
+
 
 struct MovieRow: View {
     let title: String
