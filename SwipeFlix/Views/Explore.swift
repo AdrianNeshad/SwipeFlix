@@ -24,6 +24,7 @@ struct Explore: View {
     @State private var selectedTVShow: TVShow? = nil
     @State private var movieIDs: [Int] = []
     @State private var tvIDs: [Int] = []
+    @State private var isShowingSearch = false
 
     private var isPad: Bool {
         horizontalSizeClass == .regular
@@ -63,13 +64,20 @@ struct Explore: View {
                                 Text("Explore")
                                     .font(.title2.bold())
                                     .padding(.horizontal)
-                                Picker("", selection: $selectedSegment) {
-                                    Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
-                                    Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                                HStack {
+                                    Picker("", selection: $selectedSegment) {
+                                        Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                                        Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                                    }
+                                    .pickerStyle(.segmented)
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 8)
+                                    Button(action: {
+                                        isShowingSearch = true
+                                    }) {
+                                        Image(systemName: "magnifyingglass")
+                                    }
                                 }
-                                .pickerStyle(.segmented)
-                                .padding(.horizontal)
-                                .padding(.bottom, 8)
                             }
                         }
 
@@ -136,7 +144,7 @@ struct Explore: View {
                             Text("Explore")
                                 .font(.title2.bold())
                         }
-                        ToolbarItem(placement: .navigationBarTrailing) {
+                        ToolbarItem {
                             Picker("", selection: $selectedSegment) {
                                 Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
                                 Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
@@ -144,7 +152,17 @@ struct Explore: View {
                             .pickerStyle(.segmented)
                             .frame(width: 180)
                         }
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                isShowingSearch = true
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                            }
+                        }
                     }
+                }
+                .sheet(isPresented: $isShowingSearch) {
+                  SearchView()
                 }
 
                 if let movie = selectedMovie {
@@ -212,6 +230,7 @@ struct Explore: View {
         }
     }
 }
+
 
 
 struct MovieRow: View {

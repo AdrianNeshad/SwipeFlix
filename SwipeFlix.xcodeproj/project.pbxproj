@@ -12,6 +12,7 @@
 		2A9977C52DF3033C00C2A37F /* TVShowCard_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C42DF3033500C2A37F /* TVShowCard_iPad.swift */; };
 		2A9977C72DF3038D00C2A37F /* MovieCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */; };
 		2A9977C92DF303A900C2A37F /* TVShowCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */; };
+		2AF2E8BE2DF3380E00897D86 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF2E8BD2DF3380900897D86 /* SearchView.swift */; };
 		3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A13C4202DECCE8E000DD7D9 /* Explore.swift */; };
 		3A3BD6212DEDDC1F00AEE209 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */; };
 		3A3BD6232DEDDCC000AEE209 /* CompactMovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */; };
@@ -56,6 +57,7 @@
 		2A9977C42DF3033500C2A37F /* TVShowCard_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCard_iPad.swift; sourceTree = "<group>"; };
 		2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCardWrapper.swift; sourceTree = "<group>"; };
 		2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCardWrapper.swift; sourceTree = "<group>"; };
+		2AF2E8BD2DF3380900897D86 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		3A13C4202DECCE8E000DD7D9 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 		3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMovieCard.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		3AD0404A2DEB853B008DB045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2AF2E8BD2DF3380900897D86 /* SearchView.swift */,
 				2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */,
 				2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */,
 				3AD0404B2DEB854A008DB045 /* Settings.swift */,
@@ -306,6 +309,7 @@
 				3AF90EF42DEC5AEE008D58FC /* NewsCategory.swift in Sources */,
 				3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */,
 				3ADE61C32DEBAE1500819FD2 /* SwipeCard.swift in Sources */,
+				2AF2E8BE2DF3380E00897D86 /* SearchView.swift in Sources */,
 				3A3BD6252DEDF11F00AEE209 /* ExpandedCardView.swift in Sources */,
 				3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */,
 				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
