@@ -13,42 +13,34 @@ struct SearchResult: Identifiable {
 }
 
 class SearchViewModel: ObservableObject {
-    @Published var searchResults: [SearchResult] = []
+    @Published var movieResultsOnly: [SearchResult] = []
+    @Published var tvResultsOnly: [SearchResult] = []
     @Published var isLoading: Bool = false
     @Published var searchText: String = ""
-    
+
     private let apiKey = "19deb7cbacfe2238a57278a1a57a43e6"
-    
+
     func search(query: String) {
         guard !query.isEmpty else {
-            searchResults = []
+            movieResultsOnly = []
+            tvResultsOnly = []
             return
         }
-        
+
         isLoading = true
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        
-        // Search both movies and TV shows
         let group = DispatchGroup()
         var movieResults: [Movie] = []
         var tvResults: [TVShow] = []
-        
-        // Search movies
+
         group.enter()
         if let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(apiKey)&query=\(encodedQuery)") {
             URLSession.shared.dataTask(with: url) { data, _, error in
                 defer { group.leave() }
-                
-                if let error = error {
-                    print("Movie search error: \(error)")
-                    return
-                }
-                
                 if let data = data {
                     do {
                         let response = try JSONDecoder().decode(MovieResponse.self, from: data)
                         movieResults = response.results
-                        print("Found \(movieResults.count) movies")
                     } catch {
                         print("Movie decode error: \(error)")
                     }
@@ -57,23 +49,15 @@ class SearchViewModel: ObservableObject {
         } else {
             group.leave()
         }
-        
-        // Search TV shows
+
         group.enter()
         if let url = URL(string: "https://api.themoviedb.org/3/search/tv?api_key=\(apiKey)&query=\(encodedQuery)") {
             URLSession.shared.dataTask(with: url) { data, _, error in
                 defer { group.leave() }
-                
-                if let error = error {
-                    print("TV search error: \(error)")
-                    return
-                }
-                
                 if let data = data {
                     do {
                         let response = try JSONDecoder().decode(TVShowResponse.self, from: data)
                         tvResults = response.results
-                        print("Found \(tvResults.count) TV shows")
                     } catch {
                         print("TV decode error: \(error)")
                     }
@@ -82,46 +66,37 @@ class SearchViewModel: ObservableObject {
         } else {
             group.leave()
         }
-        
-        // Combine results
+
         group.notify(queue: .main) {
-            var combinedResults: [SearchResult] = []
-            
-            // Add movie results
-            for movie in movieResults {
-                let result = SearchResult(
-                    id: movie.id,
-                    title: movie.title,
-                    imageURL: movie.posterURLSmall,
-                    year: movie.releaseYear,
-                    rating: movie.voteAverage,
-                    overview: movie.overview,
+            self.movieResultsOnly = movieResults.map {
+                SearchResult(
+                    id: $0.id,
+                    title: $0.title,
+                    imageURL: $0.posterURLSmall,
+                    year: $0.releaseYear,
+                    rating: $0.voteAverage,
+                    overview: $0.overview,
                     isMovie: true,
-                    movie: movie,
+                    movie: $0,
                     tvShow: nil
                 )
-                combinedResults.append(result)
             }
-            
-            // Add TV show results
-            for tvShow in tvResults {
-                let result = SearchResult(
-                    id: tvShow.id + 1000000, // Offset to avoid ID conflicts
-                    title: tvShow.name,
-                    imageURL: tvShow.posterURLSmall,
-                    year: tvShow.releaseYear,
-                    rating: tvShow.voteAverage,
-                    overview: tvShow.overview,
+
+            self.tvResultsOnly = tvResults.map {
+                SearchResult(
+                    id: $0.id + 1000000,
+                    title: $0.name,
+                    imageURL: $0.posterURLSmall,
+                    year: $0.releaseYear,
+                    rating: $0.voteAverage,
+                    overview: $0.overview,
                     isMovie: false,
                     movie: nil,
-                    tvShow: tvShow
+                    tvShow: $0
                 )
-                combinedResults.append(result)
             }
-            
-            self.searchResults = combinedResults
+
             self.isLoading = false
-            print("Total combined results: \(combinedResults.count)")
         }
     }
 }
@@ -130,112 +105,118 @@ struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @EnvironmentObject private var watchList: WatchListManager
     @State private var selectedItem: SearchResult?
-    
+
     var body: some View {
-            VStack {
-                // Search bar
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                    
-                    TextField("Search movies and TV shows...", text: $viewModel.searchText)
-                        .textFieldStyle(.roundedBorder)
-                        .onSubmit {
-                            viewModel.search(query: viewModel.searchText)
-                        }
-                    
-                    if !viewModel.searchText.isEmpty {
-                        Button("Search") {
-                            viewModel.search(query: viewModel.searchText)
-                        }
-                        .buttonStyle(.bordered)
+        VStack {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+
+                TextField("Search movies and TV shows...", text: $viewModel.searchText)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit {
+                        viewModel.search(query: viewModel.searchText)
                     }
+
+                if !viewModel.searchText.isEmpty {
+                    Button("Search") {
+                        viewModel.search(query: viewModel.searchText)
+                    }
+                    .buttonStyle(.bordered)
                 }
-                .padding()
-                
-                // Content area
-                if viewModel.isLoading {
-                    Spacer()
-                    ProgressView("Searching...")
-                    Spacer()
-                } else if !viewModel.searchResults.isEmpty {
-                    // Simple list of results
-                    List(viewModel.searchResults) { result in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(result.title)
-                                .font(.headline)
-                            
-                            Text(result.isMovie ? "Movie" : "TV Show")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                            
-                            if let year = result.year {
-                                Text(year)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
+            }
+            .padding()
+
+            if viewModel.isLoading {
+                Spacer()
+                ProgressView("Searching...")
+                Spacer()
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 24) {
+                        if !viewModel.movieResultsOnly.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Movies")
+                                    .font(.title2)
+                                    .bold()
+                                    .padding(.horizontal)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 12) {
+                                        ForEach(viewModel.movieResultsOnly) { result in
+                                            CompactMovieCard(
+                                                title: result.title,
+                                                imageURL: result.imageURL,
+                                                tapAction: {
+                                                    selectedItem = result
+                                                }
+                                            )
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
                             }
                         }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            print("Tapped: \(result.title)")
-                            selectedItem = result
+
+                        if !viewModel.tvResultsOnly.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("TV Shows")
+                                    .font(.title2)
+                                    .bold()
+                                    .padding(.horizontal)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 12) {
+                                        ForEach(viewModel.tvResultsOnly) { result in
+                                            CompactMovieCard(
+                                                title: result.title,
+                                                imageURL: result.imageURL,
+                                                tapAction: {
+                                                    selectedItem = result
+                                                }
+                                            )
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
+                        }
+
+                        if viewModel.movieResultsOnly.isEmpty &&
+                            viewModel.tvResultsOnly.isEmpty &&
+                            !viewModel.searchText.isEmpty {
+                            Text("No results found")
+                                .foregroundColor(.gray)
+                                .frame(maxWidth: .infinity)
+                                .padding()
                         }
                     }
-                } else {
-                    // Empty space when no search or no results
-                    Spacer()
-                    if !viewModel.searchText.isEmpty {
-                        Text("No results found")
-                            .foregroundColor(.gray)
-                    }
-                    Spacer()
+                    .padding(.vertical)
                 }
             }
-            .navigationTitle("Search")
-            .navigationBarTitleDisplayMode(.large)
+        }
+        .navigationTitle("Search")
+        .navigationBarTitleDisplayMode(.large)
         .sheet(item: $selectedItem) { item in
-            // Simple detail view
-            NavigationView {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(item.title)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    
-                    Text(item.isMovie ? "Movie" : "TV Show")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    
-                    if let year = item.year {
-                        Text("Year: \(year)")
-                            .font(.subheadline)
-                    }
-                    
-                    if let rating = item.rating {
-                        Text("Rating: \(String(format: "%.1f", rating))")
-                            .font(.subheadline)
-                    }
-                    
-                    if !item.overview.isEmpty {
-                        Text("Overview:")
-                            .font(.headline)
-                        
-                        Text(item.overview)
-                            .font(.body)
-                    }
-                    
-                    Spacer()
-                }
-                .padding()
-                .navigationTitle("")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Close") {
-                            selectedItem = nil
+            ExpandedCardView(
+                title: item.title,
+                overview: item.overview,
+                imageURL: item.imageURL,
+                onClose: { selectedItem = nil },
+                isFavorite: Binding(
+                    get: { watchList.contains(item) },
+                    set: { newValue in
+                        if newValue {
+                            watchList.add(item)
+                        } else {
+                            watchList.remove(item)
                         }
                     }
-                }
-            }
+                ),
+                rating: item.rating,
+                year: item.year,
+                topGenre: item.movie?.genreNames.first ?? item.tvShow?.genreNames.first
+            )
         }
     }
 }

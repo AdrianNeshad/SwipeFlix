@@ -78,3 +78,30 @@ class WatchListManager: ObservableObject {
         }
     }
 }
+
+extension WatchListManager {
+    func contains(_ item: SearchResult) -> Bool {
+        if item.isMovie, let movie = item.movie {
+            return savedMovies.contains(where: { $0.id == movie.id })
+        } else if let show = item.tvShow {
+            return savedTVShows.contains(where: { $0.id == show.id })
+        }
+        return false
+    }
+
+    func add(_ item: SearchResult) {
+        if item.isMovie, let movie = item.movie {
+            addMovie(movie)
+        } else if let show = item.tvShow {
+            addTVShow(show)
+        }
+    }
+
+    func remove(_ item: SearchResult) {
+        if item.isMovie, let movie = item.movie {
+            removeMovie(movie)
+        } else if let show = item.tvShow {
+            removeTVShow(show)
+        }
+    }
+}

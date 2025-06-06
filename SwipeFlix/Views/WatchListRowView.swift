@@ -17,7 +17,6 @@ struct WatchListRowView: View {
     let topGenre: String?
 
     @State private var isPresentingSafari = false
-    @State private var isExpanded = false
     @State private var isPresentingShareSheet = false
 
     private var destinationURL: URL {
@@ -31,89 +30,83 @@ struct WatchListRowView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            VStack {
-                AsyncImage(url: imageURL) { phase in
-                    switch phase {
-                    case .empty:
-                        Color.gray
-                            .frame(width: 100, height: 150)
-                        
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .interpolation(.low)
-                            .antialiased(false)
-                            .scaledToFit()
-                            .frame(width: 100, height: 150)
-                        
-                    case .failure:
-                        Color.gray
-                            .frame(width: 100, height: 150)
-                        
-                    @unknown default:
-                        Color.black
-                            .frame(width: 100, height: 150)
-                    }
+            AsyncImage(url: imageURL) { phase in
+                switch phase {
+                case .empty:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                case .success(let image):
+                    image
+                        .resizable()
+                        .interpolation(.low)
+                        .antialiased(false)
+                        .scaledToFit()
+                        .frame(width: 100, height: 150)
+
+                case .failure:
+                    Color.gray
+                        .frame(width: 100, height: 150)
+
+                @unknown default:
+                    Color.black
+                        .frame(width: 100, height: 150)
                 }
-                .frame(width: 100, height: 150)
-                .cornerRadius(12)
-                .clipped()
-                .padding(.leading, 8)
-                
-                Group {
-                    if isExpanded {
-                        VStack(spacing: 5) {
-                            HStack {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", rating ?? 0.0))
-                                    .bold()
-                            }
-                            Text(String(topGenre ?? ""))
-                                .bold()
-                                .foregroundColor(.white)
-                            Text(String(year ?? ""))
-                                    .bold()
-                                    .foregroundColor(.white)
-                        }
-                    }
-                }
-                .animation(.linear(duration: 0.3), value: isExpanded)
             }
+            .frame(width: 100, height: 150)
+            .cornerRadius(12)
+            .clipped()
+            .padding(.leading, 8)
+
             VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Text(title)
-                        .font(.headline)
-                }
-                Group {
-                    Text(overview)
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .lineLimit(isExpanded ? nil : 4)
-                        .transition(.opacity)
-                    HStack {
-                        Spacer()
-                        Text(isExpanded ? "Show less" : "Show more")
-                            .font(.subheadline)
+                Text(title)
+                    .font(.headline)
+                    .lineLimit(1)
+                Text(overview)
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .lineLimit(4)
+
+                HStack(spacing: 4) {
+                    if let rating {
+                        Image(systemName: "star.fill")
+                            .font(.caption)
+                            .foregroundColor(.yellow)
+                    }
+                    if let rating {
+                        Text(String(format: "%.1f", rating))
+                            .foregroundColor(.yellow)
+                    }
+                    if let genre = topGenre {
+                        Text(genre)
+                            .foregroundColor(.white)
+                            .font(.callout)
+                            .bold()
+                            .padding(.leading, 10)
+                    }
+                    if let year {
+                        Text(year)
+                            .foregroundColor(.white)
+                            .font(.callout)
+                            .bold()
+                            .padding(.leading, 10)
                     }
                 }
-                .animation(.linear(duration: 0.3), value: isExpanded)
             }
+
             Spacer()
         }
         .padding(.trailing, 10)
         .padding(.vertical, 6)
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(12)
-        .onTapGesture {
-            isExpanded.toggle()
-        }
         .contextMenu {
             Button {
                 isPresentingSafari = true
             } label: {
                 Label("More info", systemImage: "globe")
             }
+
             Button {
                 isPresentingShareSheet = true
             } label: {
