@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */; };
+		2A9977C32DF3033000C2A37F /* MovieCard_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C22DF3032700C2A37F /* MovieCard_iPad.swift */; };
+		2A9977C52DF3033C00C2A37F /* TVShowCard_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C42DF3033500C2A37F /* TVShowCard_iPad.swift */; };
+		2A9977C72DF3038D00C2A37F /* MovieCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */; };
+		2A9977C92DF303A900C2A37F /* TVShowCardWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */; };
 		3A13C4212DECCE8E000DD7D9 /* Explore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A13C4202DECCE8E000DD7D9 /* Explore.swift */; };
 		3A3BD6212DEDDC1F00AEE209 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */; };
 		3A3BD6232DEDDCC000AEE209 /* CompactMovieCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */; };
@@ -48,6 +52,10 @@
 
 /* Begin PBXFileReference section */
 		2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipeFlixIndex_iPad.swift; sourceTree = "<group>"; };
+		2A9977C22DF3032700C2A37F /* MovieCard_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCard_iPad.swift; sourceTree = "<group>"; };
+		2A9977C42DF3033500C2A37F /* TVShowCard_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCard_iPad.swift; sourceTree = "<group>"; };
+		2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCardWrapper.swift; sourceTree = "<group>"; };
+		2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCardWrapper.swift; sourceTree = "<group>"; };
 		3A13C4202DECCE8E000DD7D9 /* Explore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Explore.swift; sourceTree = "<group>"; };
 		3A3BD6202DEDDC1F00AEE209 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		3A3BD6222DEDDCC000AEE209 /* CompactMovieCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactMovieCard.swift; sourceTree = "<group>"; };
@@ -169,12 +177,16 @@
 		3AD0404A2DEB853B008DB045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2A9977C82DF303A200C2A37F /* TVShowCardWrapper.swift */,
+				2A9977C62DF3038500C2A37F /* MovieCardWrapper.swift */,
 				3AD0404B2DEB854A008DB045 /* Settings.swift */,
 				3AD0405D2DEB869F008DB045 /* SafariView.swift */,
 				3ADE61BE2DEBADAE00819FD2 /* MovieViewModel.swift */,
 				3ADE61C02DEBADCA00819FD2 /* MovieCard.swift */,
+				2A9977C22DF3032700C2A37F /* MovieCard_iPad.swift */,
 				3ADE61C62DEBAEFB00819FD2 /* TVShowViewModel.swift */,
 				3ADE61C82DEBAF4900819FD2 /* TVShowCard.swift */,
+				2A9977C42DF3033500C2A37F /* TVShowCard_iPad.swift */,
 				3ADE61CA2DEBB7D500819FD2 /* WatchList.swift */,
 				3AF90EF12DEC5ABE008D58FC /* NewsViewModel.swift */,
 				3AF90EF32DEC5AEE008D58FC /* NewsCategory.swift */,
@@ -274,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A9977C72DF3038D00C2A37F /* MovieCardWrapper.swift in Sources */,
 				3ADE61C92DEBAF4900819FD2 /* TVShowCard.swift in Sources */,
 				3AD040572DEB8604008DB045 /* PurchaseView.swift in Sources */,
 				3AD0405E2DEB869F008DB045 /* SafariView.swift in Sources */,
@@ -283,9 +296,12 @@
 				2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */,
 				3A3BD6232DEDDCC000AEE209 /* CompactMovieCard.swift in Sources */,
 				3A3BD6212DEDDC1F00AEE209 /* ExploreViewModel.swift in Sources */,
+				2A9977C52DF3033C00C2A37F /* TVShowCard_iPad.swift in Sources */,
 				3AF90EEE2DEC5A55008D58FC /* String+HTMLDecoding.swift in Sources */,
 				3AF90EEC2DEC5A1D008D58FC /* RSSFetcher.swift in Sources */,
 				3AD0404C2DEB854A008DB045 /* Settings.swift in Sources */,
+				2A9977C32DF3033000C2A37F /* MovieCard_iPad.swift in Sources */,
+				2A9977C92DF303A900C2A37F /* TVShowCardWrapper.swift in Sources */,
 				3ADE61BD2DEBAD8200819FD2 /* Movie.swift in Sources */,
 				3AF90EF42DEC5AEE008D58FC /* NewsCategory.swift in Sources */,
 				3A9166922DEB8273007E0420 /* SwipeFlixApp.swift in Sources */,

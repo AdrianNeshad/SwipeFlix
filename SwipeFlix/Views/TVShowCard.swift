@@ -10,22 +10,22 @@ import SwiftUI
 struct TVShowCard: View {
     let show: TVShow
     var tapAction: (() -> Void)? = nil
-
+    
     @State private var isExpanded = false
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             if let poster = show.posterURL {
-                            AsyncImage(url: poster) { image in
-                                image.resizable().scaledToFill()
-                                    .drawingGroup()
-                            } placeholder: {
-                                Color.gray
-                                    .drawingGroup()
-                            }
-                            .frame(width: 320, height: 550)
-                            .clipped()
-                        }
+                AsyncImage(url: poster) { image in
+                    image.resizable().scaledToFill()
+                        .drawingGroup()
+                } placeholder: {
+                    Color.gray
+                        .drawingGroup()
+                }
+                .frame(width: 320, height: 550)
+                .clipped()
+            }
             VStack(alignment: .leading, spacing: 4) {
                 if let year = show.releaseYear,
                    let rating = show.voteAverage {
@@ -78,10 +78,11 @@ struct TVShowCard: View {
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(show.name)
+                    Text(show.title)
                         .font(.title2)
                         .bold()
                         .foregroundColor(.white)
+                    
                     Text(show.overview)
                         .font(.body)
                         .foregroundColor(.white)
@@ -101,14 +102,14 @@ struct TVShowCard: View {
             .frame(width: 320, height: isExpanded ? 550 : 180, alignment: .bottom)
             .offset(y: -15)
             Color.clear
-                            .frame(width: 320, height: 400)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if !isExpanded {
-                                    tapAction?()
-                                }
-                            }
-                            .offset(y: -190)
+                .frame(width: 320, height: 400)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if !isExpanded {
+                        tapAction?()
+                    }
+                }
+                .offset(y: -190)
         }
         .cornerRadius(16)
         .shadow(radius: 5)

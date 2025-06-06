@@ -1,9 +1,9 @@
-//
-//  MovieCard.swift
-//  SwipeFlix
-//
-//  Created by Adrian Neshad on 2025-05-31.
-//
+    //
+    //  MovieCard.swift
+    //  SwipeFlix
+    //
+    //  Created by Adrian Neshad on 2025-05-31.
+    //
 
 import SwiftUI
 
@@ -16,16 +16,16 @@ struct MovieCard: View {
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             if let poster = movie.posterURL {
-                            AsyncImage(url: poster) { image in
-                                image.resizable().scaledToFill()
-                                    .drawingGroup()
-                            } placeholder: {
-                                Color.gray
-                                    .drawingGroup()
-                            }
-                            .frame(width: 320, height: 550)
-                            .clipped()
-                        }
+                AsyncImage(url: poster) { image in
+                    image.resizable().scaledToFill()
+                        .drawingGroup()
+                } placeholder: {
+                    Color.gray
+                        .drawingGroup()
+                }
+                .frame(width: 320, height: 550)
+                .clipped()
+            }
             VStack(alignment: .leading, spacing: 4) {
                 if let year = movie.releaseYear,
                    let rating = movie.voteAverage {
@@ -102,14 +102,14 @@ struct MovieCard: View {
             .frame(width: 320, height: isExpanded ? 550 : 180, alignment: .bottom)
             .offset(y: -15)
             Color.clear
-                            .frame(width: 320, height: 400)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if !isExpanded {
-                                    tapAction?()
-                                }
-                            }
-                            .offset(y: -190)
+                .frame(width: 320, height: 400)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if !isExpanded {
+                        tapAction?()
+                    }
+                }
+                .offset(y: -190)
         }
         .cornerRadius(16)
         .shadow(radius: 5)

@@ -30,24 +30,27 @@ struct SwipeCard<Content: View>: View {
     }
     
     var body: some View {
-        content
-            .rotationEffect(.degrees(Double(offset.width / 20)))
-            .offset(x: offset.width, y: offset.height)
-            .gesture(
-                DragGesture()
-                    .onChanged { gesture in
-                        offset = gesture.translation
-                    }
-                    .onEnded { _ in
-                        handleSwipeEnd()
-                    }
-            )
-            .onChange(of: triggerSwipe) { newValue in
-                if newValue, let direction = swipeDirection {
-                    performProgrammaticSwipe(direction: direction)
-                    triggerSwipe = false
+        ZStack {
+            content
+                .frame(maxWidth: .infinity, maxHeight: .infinity) // Gör att kortet fyller utsatt storlek
+        }
+        .rotationEffect(.degrees(Double(offset.width / 20)))
+        .offset(x: offset.width, y: offset.height)
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    offset = gesture.translation
                 }
+                .onEnded { _ in
+                    handleSwipeEnd()
+                }
+        )
+        .onChange(of: triggerSwipe) { newValue in
+            if newValue, let direction = swipeDirection {
+                performProgrammaticSwipe(direction: direction)
+                triggerSwipe = false
             }
+        }
     }
     
     private func handleSwipeEnd() {

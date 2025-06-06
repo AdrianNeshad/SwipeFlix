@@ -132,7 +132,7 @@ struct SwipeFlixIndex_iPad: View {
                                 .foregroundColor(.blue)
                         }
                         .padding(.leading, 8)
-                        .padding(.trailing, 30)
+                        .padding(.trailing, 200)
                     }
                 }
                 .frame(height: 40)
@@ -221,7 +221,7 @@ struct SwipeFlixIndex_iPad: View {
             }
         }
     }
-
+    
     private func showToast(text: String) {
         toastText = text
         withAnimation {
