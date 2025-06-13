@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A4B21E72DFC498C0046C52B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E62DFC498C0046C52B /* Info.plist */; };
 		2A4B21EA2DFC4BC00046C52B /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */; };
 		2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */; };
 		2A9977C32DF3033000C2A37F /* MovieCard_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C22DF3032700C2A37F /* MovieCard_iPad.swift */; };
@@ -54,7 +53,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2A4B21E62DFC498C0046C52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NativeAdView.xib; sourceTree = "<group>"; };
 		2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SipeFlixIndex_iPad.swift; sourceTree = "<group>"; };
 		2A9977C22DF3032700C2A37F /* MovieCard_iPad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCard_iPad.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */,
 				2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */,
 				3AF90EF52DEC5B63008D58FC /* NewsIndex.swift */,
-				2A4B21E62DFC498C0046C52B /* Info.plist */,
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
 				2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */,
 				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
@@ -282,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A4B21E72DFC498C0046C52B /* Info.plist in Resources */,
 				3AD040542DEB85BF008DB045 /* Launch Screen.storyboard in Resources */,
 				2A4B21EA2DFC4BC00046C52B /* NativeAdView.xib in Resources */,
 				3A9166992DEB8277007E0420 /* Preview Assets.xcassets in Resources */,
@@ -477,7 +473,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -513,7 +509,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (

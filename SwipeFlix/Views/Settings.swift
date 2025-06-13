@@ -195,17 +195,6 @@ struct Settings: View {
                         Text("Univert")
                     }
                 }
-                /*
-                Link(destination: URL(string: "https://apps.apple.com/us/app/unifeed/id6746576849")!) {
-                    HStack {
-                        Image("unifeed")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .cornerRadius(8)
-                        Text("Unifeed")
-                    }
-                }
-                 */
             }
 
             Section {
