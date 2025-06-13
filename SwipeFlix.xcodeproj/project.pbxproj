@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A4B21E52DFC48DD0046C52B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 2A4B21E42DFC48DD0046C52B /* GoogleMobileAds */; };
 		2A4B21E72DFC498C0046C52B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E62DFC498C0046C52B /* Info.plist */; };
 		2A4B21EA2DFC4BC00046C52B /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */; };
 		2A9977C12DF2FD5700C2A37F /* SipeFlixIndex_iPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */; };
@@ -101,16 +100,11 @@
 		3AF90EF72DEC7BB0008D58FC /* WatchListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		2A4B21E82DFC4AB90046C52B /* AdMob */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AdMob; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		3A91668B2DEB8273007E0420 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A4B21E52DFC48DD0046C52B /* GoogleMobileAds in Frameworks */,
 				3AD0405C2DEB864C008DB045 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +139,6 @@
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
 				2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */,
 				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
-				2A4B21E82DFC4AB90046C52B /* AdMob */,
 				3AD0404A2DEB853B008DB045 /* Views */,
 				3AD040482DEB8518008DB045 /* Funktioner */,
 				3AD040492DEB8523008DB045 /* DataFetcher */,
@@ -240,13 +233,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				2A4B21E82DFC4AB90046C52B /* AdMob */,
-			);
 			name = SwipeFlix;
 			packageProductDependencies = (
 				3AD0405B2DEB864C008DB045 /* AlertToast */,
-				2A4B21E42DFC48DD0046C52B /* GoogleMobileAds */,
 			);
 			productName = SwipeFlix;
 			productReference = 3A91668E2DEB8273007E0420 /* SwipeFlix.app */;
@@ -278,7 +267,6 @@
 			mainGroup = 3A9166852DEB8272007E0420;
 			packageReferences = (
 				3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				2A4B21E32DFC48DD0046C52B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 3A91668F2DEB8273007E0420 /* Products */;
 			projectDirPath = "";
@@ -570,14 +558,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		2A4B21E32DFC48DD0046C52B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.6.0;
-			};
-		};
 		3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/elai950/AlertToast";
@@ -589,11 +569,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2A4B21E42DFC48DD0046C52B /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2A4B21E32DFC48DD0046C52B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
-		};
 		3AD0405B2DEB864C008DB045 /* AlertToast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */;
