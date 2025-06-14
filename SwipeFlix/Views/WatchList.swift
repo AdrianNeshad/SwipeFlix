@@ -25,87 +25,81 @@ struct WatchList: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                Group {
-                    if isPad {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Watchlist")
-                                .font(.title2.bold())
-                                .padding(.top)
-                                .padding(.horizontal)
-
-                            Picker("", selection: $selectedSegment) {
-                                Label("Movies", systemImage: "film").tag(WatchListSegment.movies)
-                                Label("TV", systemImage: "tv").tag(WatchListSegment.tvShows)
-                            }
-                            .pickerStyle(.segmented)
+            Group {
+                if isPad {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Watchlist")
+                            .font(.title2.bold())
+                            .padding(.top)
                             .padding(.horizontal)
-                            .padding(.bottom, 8)
 
-                            contentList
+                        Picker("", selection: $selectedSegment) {
+                            Label("Movies", systemImage: "film").tag(WatchListSegment.movies)
+                            Label("TV", systemImage: "tv").tag(WatchListSegment.tvShows)
                         }
-                    } else {
-                        contentList
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarLeading) {
-                                    Text("Watchlist")
-                                        .font(.title2.bold())
-                                }
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Picker("", selection: $selectedSegment) {
-                                        Label("Movies", systemImage: "film").tag(WatchListSegment.movies)
-                                        Label("TV", systemImage: "tv").tag(WatchListSegment.tvShows)
-                                    }
-                                    .pickerStyle(.segmented)
-                                    .frame(width: 180)
-                                }
-                            }
-                    }
-                }
+                        .pickerStyle(.segmented)
+                        .padding(.horizontal)
+                        .padding(.bottom, 8)
 
-                // ExpandedCardView visning
-                if let item = selectedItem {
-                    ExpandedCardView(
-                        title: item.title,
-                        overview: item.overview,
-                        imageURL: item.imageURL,
-                        onClose: {
-                            withAnimation {
-                                selectedItem = nil
+                        contentList
+                    }
+                } else {
+                    contentList
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                Text("Watchlist")
+                                    .font(.title2.bold())
                             }
-                        },
-                        isFavorite: Binding(
-                            get: {
-                                item.isMovie
-                                    ? watchList.savedMovies.contains(where: { $0.id == item.id })
-                                    : watchList.savedTVShows.contains(where: { $0.id == item.id - 1000000 })
-                            },
-                            set: { newValue in
-                                if newValue {
-                                    if item.isMovie, let movie = item.movie {
-                                        watchList.addMovie(movie)
-                                    } else if let tvShow = item.tvShow {
-                                        watchList.addTVShow(tvShow)
-                                    }
-                                } else {
-                                    if item.isMovie, let movie = item.movie {
-                                        watchList.removeMovie(movie)
-                                    } else if let tvShow = item.tvShow {
-                                        watchList.removeTVShow(tvShow)
-                                    }
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Picker("", selection: $selectedSegment) {
+                                    Label("Movies", systemImage: "film").tag(WatchListSegment.movies)
+                                    Label("TV", systemImage: "tv").tag(WatchListSegment.tvShows)
                                 }
+                                .pickerStyle(.segmented)
+                                .frame(width: 180)
                             }
-                        ),
-                        rating: item.rating,
-                        year: item.year,
-                        topGenre: item.movie?.genreNames.first ?? item.tvShow?.genreNames.first
-                    )
-                    .transition(.opacity)
-                    .zIndex(1)
+                        }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .animation(.easeInOut(duration: 0.25), value: selectedItem != nil)
+            .sheet(item: $selectedItem) { item in
+                ExpandedCardView(
+                    id: item.isMovie ? item.id : item.id - 1_000_000,
+                    isMovie: item.isMovie,
+                    title: item.title,
+                    overview: item.overview,
+                    imageURL: item.imageURL,
+                    onClose: {
+                        withAnimation { selectedItem = nil }
+                    },
+                    isFavorite: Binding(
+                        get: {
+                            item.isMovie
+                            ? watchList.savedMovies.contains(where: { $0.id == item.id })
+                            : watchList.savedTVShows.contains(where: { $0.id == item.id - 1_000_000 })
+                        },
+                        set: { newValue in
+                            if newValue {
+                                if item.isMovie, let movie = item.movie {
+                                    watchList.addMovie(movie)
+                                } else if let tvShow = item.tvShow {
+                                    watchList.addTVShow(tvShow)
+                                }
+                            } else {
+                                if item.isMovie, let movie = item.movie {
+                                    watchList.removeMovie(movie)
+                                } else if let tvShow = item.tvShow {
+                                    watchList.removeTVShow(tvShow)
+                                }
+                            }
+                        }
+                    ),
+                    rating: item.rating,
+                    year: item.year,
+                    topGenre: item.movie?.genreNames.first ?? item.tvShow?.genreNames.first
+                )
+            }
         }
     }
 

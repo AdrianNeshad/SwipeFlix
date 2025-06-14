@@ -1,10 +1,3 @@
-//
-//  Explore.swift
-//  SwipeFlix
-//
-//  Created by Adrian Neshad on 2025-06-01.
-//
-
 import SwiftUI
 
 enum ExploreSegment: String, CaseIterable, Identifiable {
@@ -56,181 +49,172 @@ struct Explore: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        if isPad {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Explore")
-                                    .font(.title2.bold())
-                                    .padding(.horizontal)
-                                HStack {
-                                    Picker("", selection: $selectedSegment) {
-                                        Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
-                                        Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
-                                    }
-                                    .pickerStyle(.segmented)
-                                    .padding(.horizontal)
-                                    .padding(.bottom, 8)
-                                    Button(action: {
-                                        isShowingSearch = true
-                                    }) {
-                                        Image(systemName: "magnifyingglass")
-                                    }
-                                }
-                            }
-                        }
-
-                        if selectedSegment == .movies {
-                            if !viewModel.topRated.isEmpty {
-                                MovieRow(title: "Top Rated", movies: viewModel.topRated) { movie in
-                                    withAnimation { selectedMovie = movie }
-                                }
-                            }
-
-                            if !viewModel.trendingMovies.isEmpty {
-                                MovieRow(title: "Trending", movies: viewModel.trendingMovies) { movie in
-                                    withAnimation { selectedMovie = movie }
-                                }
-                            }
-
-                            if !viewModel.popularMovies.isEmpty {
-                                MovieRow(title: "Popular", movies: viewModel.popularMovies) { movie in
-                                    withAnimation { selectedMovie = movie }
-                                }
-                            }
-
-                            ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
-                                MovieRow(title: genre, movies: movies) { movie in
-                                    withAnimation { selectedMovie = movie }
-                                }
-                            }
-                        } else {
-                            if !viewModel.topRatedTV.isEmpty {
-                                TVShowRow(title: "Top Rated", shows: viewModel.topRatedTV) { show in
-                                    withAnimation { selectedTVShow = show }
-                                }
-                            }
-
-                            if !viewModel.trendingTVShows.isEmpty {
-                                TVShowRow(title: "Trending", shows: viewModel.trendingTVShows) { show in
-                                    withAnimation { selectedTVShow = show }
-                                }
-                            }
-
-                            if !viewModel.popularTVShows.isEmpty {
-                                TVShowRow(title: "Popular", shows: viewModel.popularTVShows) { show in
-                                    withAnimation { selectedTVShow = show }
-                                }
-                            }
-
-                            ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
-                                TVShowRow(title: genre, shows: shows) { show in
-                                    withAnimation { selectedTVShow = show }
-                                }
-                            }
-                        }
-                    }
-                    .padding(.top, isPad ? 0 : nil)
-                    .padding(.horizontal)
-                }
-                .onAppear {
-                    movieIDs = watchlistMovieIDs
-                    tvIDs = watchlistTVIDs
-                }
-                .toolbar {
-                    if !isPad {
-                        ToolbarItem(placement: .navigationBarLeading) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    if isPad {
+                        VStack(alignment: .leading, spacing: 8) {
                             Text("Explore")
                                 .font(.title2.bold())
-                        }
-                        ToolbarItem {
-                            Picker("", selection: $selectedSegment) {
-                                Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
-                                Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                                .padding(.horizontal)
+                            HStack {
+                                Picker("", selection: $selectedSegment) {
+                                    Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                                    Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal)
+                                .padding(.bottom, 8)
+                                Button(action: {
+                                    isShowingSearch = true
+                                }) {
+                                    Image(systemName: "magnifyingglass")
+                                }
                             }
-                            .pickerStyle(.segmented)
-                            .frame(width: 180)
                         }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                isShowingSearch = true
-                            }) {
-                                Image(systemName: "magnifyingglass")
+                    }
+
+                    if selectedSegment == .movies {
+                        if !viewModel.topRated.isEmpty {
+                            MovieRow(title: "Top Rated", movies: viewModel.topRated) { movie in
+                                selectedMovie = movie // Set selectedMovie
+                            }
+                        }
+
+                        if !viewModel.trendingMovies.isEmpty {
+                            MovieRow(title: "Trending", movies: viewModel.trendingMovies) { movie in
+                                selectedMovie = movie // Set selectedMovie
+                            }
+                        }
+
+                        if !viewModel.popularMovies.isEmpty {
+                            MovieRow(title: "Popular", movies: viewModel.popularMovies) { movie in
+                                selectedMovie = movie // Set selectedMovie
+                            }
+                        }
+
+                        ForEach(viewModel.genreMovies.sorted(by: { $0.key < $1.key }), id: \.key) { genre, movies in
+                            MovieRow(title: genre, movies: movies) { movie in
+                                selectedMovie = movie // Set selectedMovie
+                            }
+                        }
+                    } else {
+                        if !viewModel.topRatedTV.isEmpty {
+                            TVShowRow(title: "Top Rated", shows: viewModel.topRatedTV) { show in
+                                selectedTVShow = show // Set selectedTVShow
+                            }
+                        }
+
+                        if !viewModel.trendingTVShows.isEmpty {
+                            TVShowRow(title: "Trending", shows: viewModel.trendingTVShows) { show in
+                                selectedTVShow = show // Set selectedTVShow
+                            }
+                        }
+
+                        if !viewModel.popularTVShows.isEmpty {
+                            TVShowRow(title: "Popular", shows: viewModel.popularTVShows) { show in
+                                selectedTVShow = show // Set selectedTVShow
+                            }
+                        }
+
+                        ForEach(viewModel.genreTVShows.sorted(by: { $0.key < $1.key }), id: \.key) { genre, shows in
+                            TVShowRow(title: genre, shows: shows) { show in
+                                selectedTVShow = show // Set selectedTVShow
                             }
                         }
                     }
                 }
-                .sheet(isPresented: $isShowingSearch) {
-                  SearchView()
+                .padding(.top, isPad ? 0 : nil)
+                .padding(.horizontal)
+            }
+            .onAppear {
+                movieIDs = watchlistMovieIDs
+                tvIDs = watchlistTVIDs
+            }
+            .toolbar {
+                if !isPad {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text("Explore")
+                            .font(.title2.bold())
+                    }
+                    ToolbarItem {
+                        Picker("", selection: $selectedSegment) {
+                            Label("Movies", systemImage: "film").tag(ExploreSegment.movies)
+                            Label("TV", systemImage: "tv").tag(ExploreSegment.tvShows)
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(width: 180)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            isShowingSearch = true
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
                 }
-
-                if let movie = selectedMovie {
-                    ExpandedCardView(
-                        title: movie.title,
-                        overview: movie.overview,
-                        imageURL: movie.posterURL,
-                        onClose: { withAnimation { selectedMovie = nil } },
-                        isFavorite: Binding(
-                            get: {
-                                watchList.savedMovies.contains(where: { $0.id == movie.id })
-                            },
-                            set: { newValue in
-                                if newValue {
-                                    watchList.addMovie(movie)
-                                } else {
-                                    watchList.removeMovie(movie)
-                                }
-
-                                movieIDs = watchList.savedMovies.map { $0.id }
-                                if let data = try? JSONEncoder().encode(movieIDs),
-                                   let string = String(data: data, encoding: .utf8) {
-                                    watchlistMoviesString = string
-                                }
+            }
+            .sheet(isPresented: $isShowingSearch) {
+                SearchView()
+            }
+            .sheet(item: $selectedMovie) { movie in
+                ExpandedCardView(
+                    id: movie.id,
+                    isMovie: true,
+                    title: movie.title,
+                    overview: movie.overview,
+                    imageURL: movie.posterURL,
+                    onClose: { selectedMovie = nil },
+                    isFavorite: Binding(
+                        get: { watchList.savedMovies.contains(where: { $0.id == movie.id }) },
+                        set: { newValue in
+                            if newValue {
+                                watchList.addMovie(movie)
+                            } else {
+                                watchList.removeMovie(movie)
                             }
-                        ),
-                        rating: movie.voteAverage,
-                        year: movie.releaseYear,
-                        topGenre: movie.genreNames.first
-                    )
-                    .transition(.opacity)
-                    .zIndex(1)
-                } else if let show = selectedTVShow {
-                    ExpandedCardView(
-                        title: show.name,
-                        overview: show.overview,
-                        imageURL: show.posterURL,
-                        onClose: { withAnimation { selectedTVShow = nil } },
-                        isFavorite: Binding(
-                            get: {
-                                watchList.savedTVShows.contains(where: { $0.id == show.id })
-                            },
-                            set: { newValue in
-                                if newValue {
-                                    watchList.addTVShow(show)
-                                } else {
-                                    watchList.removeTVShow(show)
-                                }
-
-                                tvIDs = watchList.savedTVShows.map { $0.id }
-                                if let data = try? JSONEncoder().encode(tvIDs),
-                                   let string = String(data: data, encoding: .utf8) {
-                                    watchlistTVString = string
-                                }
+                            movieIDs = watchList.savedMovies.map { $0.id }
+                            if let data = try? JSONEncoder().encode(movieIDs),
+                               let string = String(data: data, encoding: .utf8) {
+                                watchlistMoviesString = string
                             }
-                        ),
-                        rating: show.voteAverage,
-                        year: show.releaseYear,
-                        topGenre: show.genreNames.first
-                    )
-                    .transition(.opacity)
-                    .zIndex(1)
-                }
+                        }
+                    ),
+                    rating: movie.voteAverage,
+                    year: movie.releaseYear,
+                    topGenre: movie.genreNames.first
+                )
+            }
+            .sheet(item: $selectedTVShow) { show in
+                ExpandedCardView(
+                    id: show.id,
+                    isMovie: false,
+                    title: show.name,
+                    overview: show.overview,
+                    imageURL: show.posterURL,
+                    onClose: { selectedTVShow = nil },
+                    isFavorite: Binding(
+                        get: { watchList.savedTVShows.contains(where: { $0.id == show.id }) },
+                        set: { newValue in
+                            if newValue {
+                                watchList.addTVShow(show)
+                            } else {
+                                watchList.removeTVShow(show)
+                            }
+                            tvIDs = watchList.savedTVShows.map { $0.id }
+                            if let data = try? JSONEncoder().encode(tvIDs),
+                               let string = String(data: data, encoding: .utf8) {
+                                watchlistTVString = string
+                            }
+                        }
+                    ),
+                    rating: show.voteAverage,
+                    year: show.releaseYear,
+                    topGenre: show.genreNames.first
+                )
             }
         }
     }
 }
-
 
 
 struct MovieRow: View {
@@ -266,7 +250,7 @@ struct TVShowRow: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(shows) { show in
-                        CompactMovieCard(title: show.title, imageURL: show.posterURLSmall) {
+                        CompactMovieCard(title: show.name, imageURL: show.posterURLSmall) {
                             onTap?(show)
                         }
                     }

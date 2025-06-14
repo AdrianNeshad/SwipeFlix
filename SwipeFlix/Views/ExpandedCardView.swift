@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
-import SafariServices
+import YouTubePlayerKit
 
 struct ExpandedCardView: View {
+    let id: Int
+    let isMovie: Bool
     let title: String
     let overview: String
     let imageURL: URL?
@@ -19,6 +21,8 @@ struct ExpandedCardView: View {
     let topGenre: String?
 
     @State private var isPresentingSafari = false
+    @State private var isPresentingTrailer = false
+    @State private var youtubeVideoID: String?
 
     private var googleSearchURL: URL {
         let encoded = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
@@ -26,91 +30,122 @@ struct ExpandedCardView: View {
     }
 
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.7)
-                .ignoresSafeArea()
-                .onTapGesture {
-                    onClose()
-                }
-            VStack(spacing: 12) {
-                Button(action: {
-                    isPresentingSafari = true
-                }) {
-                    AsyncImage(url: imageURL) { image in
-                        image.resizable().scaledToFit()
-                    } placeholder: {
-                        Color.gray
-                    }
-                    .frame(maxHeight: 400)
-                    .cornerRadius(16)
-                }
-                .buttonStyle(.plain)
-
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text(title)
-                            .font(.title)
-                            .bold()
-                            .lineLimit(2)
-                        Spacer()
-                        Button {
-                            isFavorite.toggle()
-                        } label: {
-                            Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
-                                .foregroundColor(.green)
-                                .imageScale(.large)
+        ScrollView {
+            ZStack(alignment: .top) {
+                VStack(spacing: 0) {
+                    ZStack(alignment: .bottomLeading) {
+                        AsyncImage(url: imageURL) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } placeholder: {
+                            Color.gray
                         }
+                        .frame(height: 450)
+                        .clipped()
+                        .overlay(
+                            LinearGradient(
+                                gradient: Gradient(colors: [.black.opacity(0.7), .clear]),
+                                startPoint: .bottom,
+                                endPoint: .top
+                            )
+                        )
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(title)
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(.white)
+
+                            HStack(spacing: 20) {
+                                if youtubeVideoID != nil {
+                                    Button {
+                                        isPresentingTrailer = true
+                                    } label: {
+                                        Label("Trailer", systemImage: "play.rectangle.fill")
+                                            .font(.headline)
+                                            .padding()
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color.white)
+                                            .foregroundColor(.black)
+                                            .cornerRadius(12)
+                                    }
+                                }
+
+                                Button {
+                                    isFavorite.toggle()
+                                } label: {
+                                    Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                                        .font(.title2)
+                                        .padding()
+                                        .background(Color.white.opacity(0.3))
+                                        .foregroundColor(isFavorite ? .green : .white)
+                                        .clipShape(Circle())
+                                }
+
+                                Button {
+                                    isPresentingSafari = true
+                                } label: {
+                                    Image(systemName: "magnifyingglass")
+                                        .font(.title2)
+                                        .padding()
+                                        .background(Color.white.opacity(0.3))
+                                        .foregroundColor(.white)
+                                        .clipShape(Circle())
+                                }
+                            }
+                            .padding(.top, 8)
+                        }
+                        .padding()
                     }
 
-                    HStack(spacing: 6) {
-                        Image("tmdb_large")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 20)
-                        Text("•")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(.white)
-                        Text(String(year ?? ""))
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(.white)
-                        Text("•")
-                            .font(.subheadline)
-                            .bold()
-                            .foregroundColor(.white)
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                        Text(String(format: "%.1f", rating ?? 0.0))
-                            .bold()
-                            .foregroundColor(.yellow)
-                        if let genre = topGenre, !genre.isEmpty {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 8) {
+                            if let rating = rating {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                                Text(String(format: "%.1f", rating))
+                                Text("•")
+                            }
+                            Text("\(year ?? "Year")")
                             Text("•")
-                                .font(.subheadline)
-                                .bold()
-                                .foregroundColor(.white)
-                            Text(genre)
-                                .font(.subheadline)
-                                .bold()
-                                .foregroundColor(.white)
+                            Text(topGenre ?? "Genre")
                         }
-                    }
-                    .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.85))
+                        .font(.headline)
 
-                    Text(overview)
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.leading)
+                        Text(overview)
+                            .foregroundColor(.secondary)
+                            .font(.body)
+
+                        Divider().padding(.vertical)
+                        Text("Cast, trailers, etc. kommer här...")
+                            .foregroundColor(.gray)
+                    }
+                    .padding()
+                    .background(Color.black)
                 }
-                .padding()
-                .background(Color(UIColor.systemBackground))
-                .cornerRadius(16)
-                .padding(.horizontal)
             }
-            .padding()
+        }
+        .background(Color.black.edgesIgnoringSafeArea(.all))
+        .sheet(isPresented: $isPresentingTrailer) {
+            if let videoID = youtubeVideoID {
+                YouTubeTrailerView(videoID: videoID)
+            }
         }
         .sheet(isPresented: $isPresentingSafari) {
             SafariView(url: googleSearchURL)
+        }
+        .onAppear {
+            if isMovie {
+                VideoService.shared.fetchYouTubeVideoID(forMovieId: id) { videoID in
+                    self.youtubeVideoID = videoID
+                }
+            } else {
+                VideoService.shared.fetchYouTubeVideoID(forTVShowId: id) { videoID in
+                    self.youtubeVideoID = videoID
+                }
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ struct WatchListRowView: View {
                     .lineLimit(4)
 
                 HStack(spacing: 4) {
-                    if let rating {
+                    if rating != nil {
                         Image(systemName: "star.fill")
                             .font(.caption)
                             .foregroundColor(.yellow)

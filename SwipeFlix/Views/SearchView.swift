@@ -199,6 +199,8 @@ struct SearchView: View {
         .navigationBarTitleDisplayMode(.large)
         .sheet(item: $selectedItem) { item in
             ExpandedCardView(
+                id: item.isMovie ? item.id : item.id - 1_000_000,
+                isMovie: item.isMovie,
                 title: item.title,
                 overview: item.overview,
                 imageURL: item.imageURL,
