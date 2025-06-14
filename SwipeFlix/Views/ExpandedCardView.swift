@@ -52,46 +52,40 @@ struct ExpandedCardView: View {
                         )
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(title)
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(.white)
+                            HStack(alignment: .bottom) {
+                                // Titel till vänster
+                                Text(title)
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.leading)
 
-                            HStack(spacing: 20) {
-                                if youtubeVideoID != nil {
+                                Spacer()
+
+                                // Ikoner till höger
+                                HStack(spacing: 12) {
                                     Button {
-                                        isPresentingTrailer = true
+                                        isFavorite.toggle()
                                     } label: {
-                                        Label("Trailer", systemImage: "play.rectangle.fill")
-                                            .font(.headline)
-                                            .padding()
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color.white)
-                                            .foregroundColor(.black)
-                                            .cornerRadius(12)
+                                        Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                                            .font(.title2)
+                                            .padding(8)
+                                            .background(Color.white.opacity(0.3))
+                                            .foregroundColor(isFavorite ? .green : .white)
+                                            .clipShape(Circle())
                                     }
-                                }
 
-                                Button {
-                                    isFavorite.toggle()
-                                } label: {
-                                    Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
-                                        .font(.title2)
-                                        .padding()
-                                        .background(Color.white.opacity(0.3))
-                                        .foregroundColor(isFavorite ? .green : .white)
-                                        .clipShape(Circle())
-                                }
-
-                                Button {
-                                    isPresentingSafari = true
-                                } label: {
-                                    Image(systemName: "magnifyingglass")
-                                        .font(.title2)
-                                        .padding()
-                                        .background(Color.white.opacity(0.3))
-                                        .foregroundColor(.white)
-                                        .clipShape(Circle())
+                                    Button {
+                                        isPresentingSafari = true
+                                    } label: {
+                                        Image(systemName: "magnifyingglass")
+                                            .font(.title2)
+                                            .padding(8)
+                                            .background(Color.white.opacity(0.3))
+                                            .foregroundColor(.white)
+                                            .clipShape(Circle())
+                                    }
                                 }
                             }
                             .padding(.top, 8)
@@ -117,8 +111,20 @@ struct ExpandedCardView: View {
                         Text(overview)
                             .foregroundColor(.secondary)
                             .font(.body)
-
+                        
                         Divider().padding(.vertical)
+                        
+                        if let videoID = youtubeVideoID {
+                            VStack(spacing: 8) {
+                                YouTubePlayerView(
+                                    YouTubePlayer(source: .video(id: videoID))
+                                )
+                                .frame(height: 200)
+                                .cornerRadius(12)
+                            }
+                        }
+                        Divider().padding(.vertical)
+                        
                         Text("Cast, trailers, etc. kommer här...")
                             .foregroundColor(.gray)
                     }
@@ -128,11 +134,6 @@ struct ExpandedCardView: View {
             }
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
-        .sheet(isPresented: $isPresentingTrailer) {
-            if let videoID = youtubeVideoID {
-                YouTubeTrailerView(videoID: videoID)
-            }
-        }
         .sheet(isPresented: $isPresentingSafari) {
             SafariView(url: googleSearchURL)
         }
