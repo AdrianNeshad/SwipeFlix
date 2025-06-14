@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A050C2C2DFDE7D2001977DC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2A050C2B2DFDE7D2001977DC /* Kingfisher */; };
+		2A050C2E2DFDEB08001977DC /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A050C2D2DFDEB04001977DC /* MovieDetails.swift */; };
 		2A4B21EA2DFC4BC00046C52B /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */; };
 		2A6299AB2DFDD47F007445C7 /* VideoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6299AA2DFDD47A007445C7 /* VideoResponse.swift */; };
 		2A6299B12DFDD617007445C7 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6299B02DFDD617007445C7 /* YouTubePlayerKit */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A050C2D2DFDEB04001977DC /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
 		2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NativeAdView.xib; sourceTree = "<group>"; };
 		2A6299AA2DFDD47A007445C7 /* VideoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoResponse.swift; sourceTree = "<group>"; };
 		2A6299B22DFDD628007445C7 /* YoutubeTrailerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeTrailerView.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		3AD040492DEB8523008DB045 /* DataFetcher */ = {
 			isa = PBXGroup;
 			children = (
+				2A050C2D2DFDEB04001977DC /* MovieDetails.swift */,
 				3ADE61BC2DEBAD8200819FD2 /* Movie.swift */,
 				3ADE61C42DEBAED800819FD2 /* TVShow.swift */,
 				3AF90EE92DEC5A08008D58FC /* RSSNewsModels.swift */,
@@ -327,6 +330,7 @@
 				3A3BD6252DEDF11F00AEE209 /* ExpandedCardView.swift in Sources */,
 				3ADE61CB2DEBB7D500819FD2 /* WatchList.swift in Sources */,
 				3AD040592DEB861B008DB045 /* StoreManager.swift in Sources */,
+				2A050C2E2DFDEB08001977DC /* MovieDetails.swift in Sources */,
 				3AF90EE42DEC4E7D008D58FC /* HBSegmentedControl.swift in Sources */,
 				3AD040502DEB858F008DB045 /* MailFeedback.swift in Sources */,
 				3ADE61C12DEBADCA00819FD2 /* MovieCard.swift in Sources */,
