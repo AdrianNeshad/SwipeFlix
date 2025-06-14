@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MovieCard_iPad: View {
     let movie: Movie
     var tapAction: (() -> Void)? = nil
-    
+
     @State private var isExpanded = false
 
     var body: some View {
@@ -20,20 +21,21 @@ struct MovieCard_iPad: View {
 
             ZStack(alignment: .bottomLeading) {
                 if let poster = movie.posterURL {
-                    AsyncImage(url: poster) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        Color.gray
-                    }
-                    .frame(width: cardWidth, height: cardHeight)
-                    .clipped()
+                    KFImage(poster)
+                        .resizable()
+                        .placeholder {
+                            Color.gray
+                        }
+                        .scaledToFill()
+                        .frame(width: cardWidth, height: cardHeight)
+                        .clipped()
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
                     if let year = movie.releaseYear,
                        let rating = movie.voteAverage {
                         let topGenre = movie.genreNames.first ?? ""
-                        let ratingText = String(format: "%.1f", rating)
+                        let ratingText = rating == 0.0 ? "N/A" : String(format: "%.1f", rating)
                         HStack(spacing: 6) {
                             Image("tmdb_large")
                                 .resizable()
@@ -49,7 +51,7 @@ struct MovieCard_iPad: View {
                             Text(ratingText)
                                 .font(.subheadline)
                                 .bold()
-                                .foregroundColor(.white)
+                                .foregroundColor(rating == 0.0 ? .gray : .yellow)
                             if !topGenre.isEmpty {
                                 Text("• \(topGenre)")
                                     .font(.subheadline)
@@ -108,7 +110,7 @@ struct MovieCard_iPad: View {
                 .offset(y: -15)
 
                 Color.clear
-                    .frame(width: 320, height: 550)
+                    .frame(width: cardWidth, height: cardHeight)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         tapAction?()

@@ -68,30 +68,32 @@ struct WatchListRowView: View {
                     .lineLimit(4)
 
                 HStack(spacing: 4) {
-                    if rating != nil {
-                        Image(systemName: "star.fill")
-                            .font(.caption)
-                            .foregroundColor(.yellow)
-                    }
-                    if let rating {
-                        Text(String(format: "%.1f", rating))
-                            .foregroundColor(.yellow)
-                            .bold()
-                    }
+                    let ratingText = (rating ?? 0.0) == 0.0 ? "N/A" : String(format: "%.1f", rating ?? 0.0)
+                    let isValidRating = (rating ?? 0.0) > 0.0
+
+                    Image(systemName: "star.fill")
+                        .font(.caption)
+                        .foregroundColor(.yellow)
+
+                    Text(ratingText)
+                        .bold()
+
                     Text("•")
                         .padding(.leading, 5)
                         .font(.title)
+
                     if let genre = topGenre, !genre.isEmpty {
                         Text(genre)
                             .foregroundColor(.white)
                             .font(.callout)
                             .bold()
                             .padding(.leading, 5)
-                        
+
                         Text("•")
                             .padding(.leading, 5)
                             .font(.title)
                     }
+
                     if let year {
                         Text(year)
                             .foregroundColor(.white)

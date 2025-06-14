@@ -6,31 +6,32 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TVShowCard: View {
     let show: TVShow
     var tapAction: (() -> Void)? = nil
-    
+
     @State private var isExpanded = false
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             if let poster = show.posterURL {
-                AsyncImage(url: poster) { image in
-                    image.resizable().scaledToFill()
-                        .drawingGroup()
-                } placeholder: {
-                    Color.gray
-                        .drawingGroup()
-                }
-                .frame(width: 320, height: 550)
-                .clipped()
+                KFImage(poster)
+                    .resizable()
+                    .placeholder {
+                        Color.gray
+                    }
+                    .scaledToFill()
+                    .drawingGroup()
+                    .frame(width: 320, height: 550)
+                    .clipped()
             }
             VStack(alignment: .leading, spacing: 4) {
                 if let year = show.releaseYear,
                    let rating = show.voteAverage {
                     let topGenre = show.genreNames.first ?? ""
-                    let ratingText = String(format: "%.1f", rating)
+                    let ratingText = rating == 0.0 ? "N/A" : String(format: "%.1f", rating)
                     HStack(spacing: 6) {
                         Image("tmdb_large")
                             .resizable()
@@ -46,7 +47,7 @@ struct TVShowCard: View {
                         Text(ratingText)
                             .font(.subheadline)
                             .bold()
-                            .foregroundColor(.yellow)
+                            .foregroundColor(rating == 0.0 ? .gray : .yellow)
                         if !topGenre.isEmpty {
                             Text("• \(topGenre)")
                                 .font(.subheadline)
@@ -60,7 +61,7 @@ struct TVShowCard: View {
                     .padding(.top, 8)
                     .padding(.leading, 8)
                 }
-                
+
                 Spacer()
             }
             .frame(width: 320, height: 550, alignment: .topLeading)
@@ -82,7 +83,7 @@ struct TVShowCard: View {
                         .font(.title2)
                         .bold()
                         .foregroundColor(.white)
-                    
+
                     Text(show.overview)
                         .font(.body)
                         .foregroundColor(.white)
