@@ -53,7 +53,6 @@ struct ExpandedCardView: View {
 
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(alignment: .bottom) {
-                                // Titel till vänster
                                 Text(title)
                                     .font(.largeTitle)
                                     .bold()
@@ -62,8 +61,6 @@ struct ExpandedCardView: View {
                                     .multilineTextAlignment(.leading)
 
                                 Spacer()
-
-                                // Ikoner till höger
                                 HStack(spacing: 12) {
                                     Button {
                                         isFavorite.toggle()
