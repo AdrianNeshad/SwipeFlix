@@ -76,7 +76,7 @@ struct ExpandedCardView: View {
                                     Button {
                                         isPresentingSafari = true
                                     } label: {
-                                        Image(systemName: "magnifyingglass")
+                                        Image(systemName: "globe")
                                             .font(.title2)
                                             .padding(8)
                                             .background(Color.white.opacity(0.3))
@@ -92,12 +92,12 @@ struct ExpandedCardView: View {
 
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(spacing: 8) {
-                            if let rating = rating {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", rating))
-                                Text("•")
-                            }
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+
+                            Text(rating == nil || rating == 0.0 ? "N/A" : String(format: "%.1f", rating!))
+
+                            Text("•")
                             Text("\(year ?? "Year")")
                             Text("•")
                             Text(topGenre ?? "Genre")
@@ -109,8 +109,6 @@ struct ExpandedCardView: View {
                             .foregroundColor(.secondary)
                             .font(.body)
                         
-                        Divider().padding(.vertical)
-                        
                         if let videoID = youtubeVideoID {
                             VStack(spacing: 8) {
                                 YouTubePlayerView(
@@ -120,9 +118,8 @@ struct ExpandedCardView: View {
                                 .cornerRadius(12)
                             }
                         }
-                        Divider().padding(.vertical)
                         
-                        Text("Cast, trailers, etc. kommer här...")
+                        Text("Cast, trailers, etc. coming soon...")
                             .foregroundColor(.gray)
                     }
                     .padding()

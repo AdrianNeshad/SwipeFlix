@@ -1,3 +1,10 @@
+//
+//  SwipeFlixIndex.swift
+//  SwipeFlix
+//
+//  Created by Adrian Neshad on 2025-06-06.
+//
+
 import SwiftUI
 
 enum SwipeContentType: String, CaseIterable, Identifiable {
@@ -28,6 +35,9 @@ struct SwipeFlixIndex: View {
     @State private var selectedSearchURL: URL? = nil
     @State private var triggerSwipe = false
     @State private var swipeDirection: SwipeDirection? = nil
+
+    @State private var selectedExpandedMovie: Movie? = nil
+    @State private var selectedExpandedTVShow: TVShow? = nil
 
     private var selectedType: SwipeContentType {
         get { SwipeContentType.allCases[selectedIndex] }
@@ -72,6 +82,52 @@ struct SwipeFlixIndex: View {
         }
         .sheet(item: $selectedSearchURL) { url in
             SafariView(url: url)
+        }
+        .sheet(item: $selectedExpandedMovie) { movie in
+            ExpandedCardView(
+                id: movie.id,
+                isMovie: true,
+                title: movie.title,
+                overview: movie.overview,
+                imageURL: movie.posterURL,
+                onClose: { selectedExpandedMovie = nil },
+                isFavorite: Binding(
+                    get: { watchList.containsMovie(movie) },
+                    set: { isFav in
+                        if isFav {
+                            watchList.addMovie(movie)
+                        } else {
+                            watchList.removeMovie(movie)
+                        }
+                    }
+                ),
+                rating: movie.voteAverage,
+                year: movie.releaseYear,
+                topGenre: movie.genreNames.first
+            )
+        }
+        .sheet(item: $selectedExpandedTVShow) { show in
+            ExpandedCardView(
+                id: show.id,
+                isMovie: false,
+                title: show.title,
+                overview: show.overview,
+                imageURL: show.posterURL,
+                onClose: { selectedExpandedTVShow = nil },
+                isFavorite: Binding(
+                    get: { watchList.containsTVShow(show) },
+                    set: { isFav in
+                        if isFav {
+                            watchList.addTVShow(show)
+                        } else {
+                            watchList.removeTVShow(show)
+                        }
+                    }
+                ),
+                rating: show.voteAverage,
+                year: show.releaseYear,
+                topGenre: show.genreNames.first
+            )
         }
         .background(Color.black.ignoresSafeArea(edges: .bottom))
     }
@@ -243,9 +299,7 @@ struct SwipeFlixIndex: View {
                     movieVM.removeTop()
                 }) { movie in
                     MovieCard(movie: movie) {
-                        if let url = googleSearchURL(for: movie.title) {
-                            selectedSearchURL = url
-                        }
+                        selectedExpandedMovie = movie
                     }
                 }
             )
@@ -259,9 +313,7 @@ struct SwipeFlixIndex: View {
                     tvShowVM.removeTop()
                 }) { show in
                     TVShowCard(show: show) {
-                        if let url = googleSearchURL(for: show.title) {
-                            selectedSearchURL = url
-                        }
+                        selectedExpandedTVShow = show
                     }
                 }
             )
@@ -307,11 +359,6 @@ struct SwipeFlixIndex: View {
                 showToast = false
             }
         }
-    }
-
-    private func googleSearchURL(for query: String) -> URL? {
-        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        return URL(string: "https://www.google.com/search?q=\(encoded)")
     }
 }
 

@@ -102,14 +102,11 @@ struct TVShowCard: View {
             .frame(width: 320, height: isExpanded ? 550 : 180, alignment: .bottom)
             .offset(y: -15)
             Color.clear
-                .frame(width: 320, height: 400)
+                .frame(width: 320, height: 550)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    if !isExpanded {
-                        tapAction?()
-                    }
+                    tapAction?()
                 }
-                .offset(y: -190)
         }
         .cornerRadius(16)
         .shadow(radius: 5)

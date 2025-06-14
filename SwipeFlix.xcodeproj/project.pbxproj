@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A050C2C2DFDE7D2001977DC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2A050C2B2DFDE7D2001977DC /* Kingfisher */; };
 		2A4B21EA2DFC4BC00046C52B /* NativeAdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */; };
 		2A6299AB2DFDD47F007445C7 /* VideoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6299AA2DFDD47A007445C7 /* VideoResponse.swift */; };
 		2A6299B12DFDD617007445C7 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2A6299B02DFDD617007445C7 /* YouTubePlayerKit */; };
@@ -104,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A050C2C2DFDE7D2001977DC /* Kingfisher in Frameworks */,
 				2A6299B12DFDD617007445C7 /* YouTubePlayerKit in Frameworks */,
 				3AD0405C2DEB864C008DB045 /* AlertToast in Frameworks */,
 			);
@@ -131,7 +133,6 @@
 		3A9166902DEB8273007E0420 /* SwipeFlix */ = {
 			isa = PBXGroup;
 			children = (
-				2A6299A92DFDD454007445C7 /* ViewModel */,
 				3A9166912DEB8273007E0420 /* SwipeFlixApp.swift */,
 				3AD0405F2DEB86FB008DB045 /* SwipeFlixIndex.swift */,
 				2A9977C02DF2FD4B00C2A37F /* SipeFlixIndex_iPad.swift */,
@@ -139,6 +140,7 @@
 				3A9166952DEB8277007E0420 /* Assets.xcassets */,
 				2A4B21E92DFC4BC00046C52B /* NativeAdView.xib */,
 				3AD040532DEB85BF008DB045 /* Launch Screen.storyboard */,
+				2A6299A92DFDD454007445C7 /* ViewModel */,
 				3AD0404A2DEB853B008DB045 /* Views */,
 				3AD040482DEB8518008DB045 /* Funktioner */,
 				3AD040492DEB8523008DB045 /* DataFetcher */,
@@ -238,6 +240,7 @@
 			packageProductDependencies = (
 				3AD0405B2DEB864C008DB045 /* AlertToast */,
 				2A6299B02DFDD617007445C7 /* YouTubePlayerKit */,
+				2A050C2B2DFDE7D2001977DC /* Kingfisher */,
 			);
 			productName = SwipeFlix;
 			productReference = 3A91668E2DEB8273007E0420 /* SwipeFlix.app */;
@@ -270,6 +273,7 @@
 			packageReferences = (
 				3AD0405A2DEB864C008DB045 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				2A6299AF2DFDD617007445C7 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				2A050C2A2DFDE7D2001977DC /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 3A91668F2DEB8273007E0420 /* Products */;
 			projectDirPath = "";
@@ -558,6 +562,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2A050C2A2DFDE7D2001977DC /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.2;
+			};
+		};
 		2A6299AF2DFDD617007445C7 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
@@ -577,6 +589,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2A050C2B2DFDE7D2001977DC /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2A050C2A2DFDE7D2001977DC /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		2A6299B02DFDD617007445C7 /* YouTubePlayerKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2A6299AF2DFDD617007445C7 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;

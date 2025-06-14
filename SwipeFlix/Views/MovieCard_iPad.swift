@@ -108,11 +108,10 @@ struct MovieCard_iPad: View {
                 .offset(y: -15)
 
                 Color.clear
+                    .frame(width: 320, height: 550)
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        if !isExpanded {
-                            tapAction?()
-                        }
+                        tapAction?()
                     }
             }
             .cornerRadius(16)

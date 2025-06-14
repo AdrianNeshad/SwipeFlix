@@ -19,6 +19,9 @@ struct SwipeFlixIndex_iPad: View {
     @Binding var showToast: Bool
     @Binding var toastText: String
 
+    @State private var selectedExpandedMovie: Movie? = nil
+    @State private var selectedExpandedTVShow: TVShow? = nil
+
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -139,6 +142,52 @@ struct SwipeFlixIndex_iPad: View {
             }
             .zIndex(1)
         }
+        .sheet(item: $selectedExpandedMovie) { movie in
+            ExpandedCardView(
+                id: movie.id,
+                isMovie: true,
+                title: movie.title,
+                overview: movie.overview,
+                imageURL: movie.posterURL,
+                onClose: { selectedExpandedMovie = nil },
+                isFavorite: Binding(
+                    get: { watchList.containsMovie(movie) },
+                    set: { isFav in
+                        if isFav {
+                            watchList.addMovie(movie)
+                        } else {
+                            watchList.removeMovie(movie)
+                        }
+                    }
+                ),
+                rating: movie.voteAverage,
+                year: movie.releaseYear,
+                topGenre: movie.genreNames.first
+            )
+        }
+        .sheet(item: $selectedExpandedTVShow) { show in
+            ExpandedCardView(
+                id: show.id,
+                isMovie: false,
+                title: show.title,
+                overview: show.overview,
+                imageURL: show.posterURL,
+                onClose: { selectedExpandedTVShow = nil },
+                isFavorite: Binding(
+                    get: { watchList.containsTVShow(show) },
+                    set: { isFav in
+                        if isFav {
+                            watchList.addTVShow(show)
+                        } else {
+                            watchList.removeTVShow(show)
+                        }
+                    }
+                ),
+                rating: show.voteAverage,
+                year: show.releaseYear,
+                topGenre: show.genreNames.first
+            )
+        }
         .onAppear {
             movieVM.fetch()
             tvShowVM.fetch()
@@ -168,9 +217,7 @@ struct SwipeFlixIndex_iPad: View {
                     movieVM.removeTop()
                 }) { movie in
                     MovieCard(movie: movie) {
-                        if let url = googleSearchURL(for: movie.title) {
-                            selectedSearchURL = url
-                        }
+                        selectedExpandedMovie = movie
                     }
                 }
             )
@@ -184,9 +231,7 @@ struct SwipeFlixIndex_iPad: View {
                     tvShowVM.removeTop()
                 }) { show in
                     TVShowCard(show: show) {
-                        if let url = googleSearchURL(for: show.title) {
-                            selectedSearchURL = url
-                        }
+                        selectedExpandedTVShow = show
                     }
                 }
             )
@@ -221,7 +266,7 @@ struct SwipeFlixIndex_iPad: View {
             }
         }
     }
-    
+
     private func showToast(text: String) {
         toastText = text
         withAnimation {
@@ -232,10 +277,5 @@ struct SwipeFlixIndex_iPad: View {
                 showToast = false
             }
         }
-    }
-
-    private func googleSearchURL(for query: String) -> URL? {
-        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        return URL(string: "https://www.google.com/search?q=\(encoded)")
     }
 }

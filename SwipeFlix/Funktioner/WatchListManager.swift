@@ -105,3 +105,13 @@ extension WatchListManager {
         }
     }
 }
+
+extension WatchListManager {
+    func containsMovie(_ movie: Movie) -> Bool {
+        savedMovies.contains(where: { $0.id == movie.id })
+    }
+
+    func containsTVShow(_ show: TVShow) -> Bool {
+        savedTVShows.contains(where: { $0.id == show.id })
+    }
+}
