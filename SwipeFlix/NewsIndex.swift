@@ -47,6 +47,7 @@ struct NewsIndex: View {
                     }
                 }
             }
+            
             BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
                 .frame(width: .infinity, height: 50)
                 .padding(.bottom, 5)
