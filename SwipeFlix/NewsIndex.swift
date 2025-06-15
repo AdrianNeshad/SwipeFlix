@@ -48,9 +48,8 @@ struct NewsIndex: View {
                 }
             }
             BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
-                .frame(width: 320, height: 50)
-                .padding(.bottom, 10)
-                .padding(.top, 1)
+                .frame(width: .infinity, height: 50)
+                .padding(.bottom, 5)
             
             .sheet(item: $selectedLink) { wrapped in
                 SafariView(url: wrapped.url)

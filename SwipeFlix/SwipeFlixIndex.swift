@@ -160,17 +160,13 @@ struct SwipeFlixIndex: View {
                 }
                 .frame(height: UIScreen.main.bounds.height * 0.75)
                 .padding(.bottom, 40)
-                .offset(y: -20)
+                .offset(y: -70)
                 .zIndex(0)
-                
-                BannerAdView(adUnitID: "ca-app-pub-3940256099942544/2934735716") // Test-ID, byt till ditt eget sen
-                                   .frame(width: 320, height: 50)
-                                   .padding(.bottom, 10)
             }
             VStack(spacing: 0) {
                 Rectangle()
                     .fill(Color.black)
-                    .frame(height: 160)
+                    .frame(height: 120)
                     .edgesIgnoringSafeArea(.top)
                     .zIndex(0.5)
 
@@ -185,21 +181,30 @@ struct SwipeFlixIndex: View {
             }
             .frame(maxHeight: .infinity)
 
-            HStack(spacing: 60) {
-                Button(action: swipeLeft) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(.red)
+            VStack {
+                HStack(spacing: 60) {
+                    Button(action: swipeLeft) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.red)
+                    }
+                    
+                    Button(action: swipeRight) {
+                        Image(systemName: "heart.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.green)
+                    }
                 }
+                .offset(y: UIScreen.main.bounds.height * 0.825)
+                .offset(y: -60)
+                .zIndex(1)
+                
+                BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
+                    .frame(width: .infinity, height: 50)
+                    .offset(y: UIScreen.main.bounds.height * 0.825)
+                    .offset(y: -60)
 
-                Button(action: swipeRight) {
-                    Image(systemName: "heart.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(.green)
-                }
             }
-            .offset(y: UIScreen.main.bounds.height * 0.825)
-            .zIndex(1)
 
             if showToast {
                 HStack(spacing: 8) {
@@ -219,9 +224,6 @@ struct SwipeFlixIndex: View {
             }
 
             VStack(spacing: 20) {
-                Text("FlixSwipe")
-                    .font(.largeTitle.bold())
-                    .padding(.top, 50)
                 ZStack {
                     HBSegmentedPicker(
                         selectedIndex: $selectedIndex,
@@ -271,7 +273,7 @@ struct SwipeFlixIndex: View {
                         .padding(.trailing, 30)
                     }
                 }
-                .frame(height: 40)
+                .frame(height: 160)
             }
             .zIndex(1)
         }
