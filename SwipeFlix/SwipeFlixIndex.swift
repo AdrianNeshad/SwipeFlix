@@ -174,7 +174,7 @@ struct SwipeFlixIndex: View {
 
                 Rectangle()
                     .fill(Color.black)
-                    .frame(height: 100)
+                    .frame(height: 110)
                     .edgesIgnoringSafeArea(.bottom)
                     .zIndex(0.5)
                     .offset(y: 40)
@@ -201,6 +201,7 @@ struct SwipeFlixIndex: View {
         
                 BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
                     .frame(width: .infinity, height: 50)
+                    .padding(.bottom, 5)
                     .offset(y: UIScreen.main.bounds.height * 0.825)
                     .offset(y: -50)
             }

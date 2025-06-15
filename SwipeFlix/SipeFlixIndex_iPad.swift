@@ -21,6 +21,9 @@ struct SwipeFlixIndex_iPad: View {
 
     @State private var selectedExpandedMovie: Movie? = nil
     @State private var selectedExpandedTVShow: TVShow? = nil
+    
+    let isPortraitiPad = UIDevice.current.userInterfaceIdiom == .pad &&
+                         UIScreen.main.bounds.height > UIScreen.main.bounds.width
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -51,23 +54,21 @@ struct SwipeFlixIndex_iPad: View {
                     .offset(y: 40)
             }
             .frame(maxHeight: .infinity)
-
-            HStack(spacing: 60) {
-                Button(action: swipeLeft) {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(.red)
+                HStack(spacing: 60) {
+                    Button(action: swipeLeft) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.red)
+                    }
+                    
+                    Button(action: swipeRight) {
+                        Image(systemName: "heart.circle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.green)
+                    }
                 }
-
-                Button(action: swipeRight) {
-                    Image(systemName: "heart.circle.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(.green)
-                }
-            }
-            .offset(y: UIScreen.main.bounds.height * 0.825)
-            .zIndex(1)
-
+                .offset(y: UIScreen.main.bounds.height * 0.825)
+                .zIndex(1)
             if showToast {
                 HStack(spacing: 8) {
                     Image(systemName: "bookmark.fill")
@@ -86,9 +87,19 @@ struct SwipeFlixIndex_iPad: View {
             }
 
             VStack(spacing: 20) {
-                Text("FlixSwipe")
-                    .font(.largeTitle.bold())
-                    .padding(.top, 50)
+                if isPortraitiPad {
+                    BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
+                        .frame(width: 400, height: 100)
+                        .padding(.bottom, 5)
+                        .padding(.top, 15)
+                    Text("FlixSwipe")
+                        .font(.largeTitle.bold())
+                        .padding(.top, 10)
+                } else {
+                    Text("FlixSwipe")
+                        .font(.largeTitle.bold())
+                        .padding(.top, 50)
+                }
                 ZStack {
                     HBSegmentedPicker(
                         selectedIndex: $selectedIndex,

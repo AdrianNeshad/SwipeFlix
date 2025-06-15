@@ -48,8 +48,11 @@ struct NewsIndex: View {
                 }
             }
             
+            let isPad = UIDevice.current.userInterfaceIdiom == .pad
+            let bannerHeight: CGFloat = isPad ? 90 : 50
+
             BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
-                .frame(width: .infinity, height: 50)
+                .frame(maxWidth: .infinity, minHeight: bannerHeight, maxHeight: bannerHeight)
                 .padding(.bottom, 5)
             
             .sheet(item: $selectedLink) { wrapped in
