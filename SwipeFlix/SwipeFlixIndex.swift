@@ -162,6 +162,10 @@ struct SwipeFlixIndex: View {
                 .padding(.bottom, 40)
                 .offset(y: -20)
                 .zIndex(0)
+                
+                BannerAdView(adUnitID: "ca-app-pub-3940256099942544/2934735716") // Test-ID, byt till ditt eget sen
+                                   .frame(width: 320, height: 50)
+                                   .padding(.bottom, 10)
             }
             VStack(spacing: 0) {
                 Rectangle()
