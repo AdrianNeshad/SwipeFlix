@@ -199,11 +199,11 @@ struct SwipeFlixIndex: View {
                 .offset(y: -50)
                 .zIndex(1)
         
-                BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
-                    .frame(width: .infinity, height: 50)
-                    .padding(.bottom, 5)
-                    .offset(y: UIScreen.main.bounds.height * 0.825)
-                    .offset(y: -50)
+                NavigationView {
+                    VStack {
+                        NavigationLink("Visa Native Ad", destination: NativeContentView(navigationTitle: "Native Annons"))
+                    }
+                }
             }
 
             if showToast {
