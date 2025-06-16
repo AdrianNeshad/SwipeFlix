@@ -196,7 +196,9 @@ struct Settings: View {
                     }
                 }
             }
-
+            Section {
+                Text(appVersionNumber)
+            }
             Section {
                 EmptyView()
             } footer: {
@@ -222,3 +224,9 @@ struct Settings: View {
     }
     @Environment(\.requestReview) var requestReview
 }
+
+private var appVersionNumber: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
+        return "Version \(version) (\(build))"
+    }
