@@ -199,11 +199,7 @@ struct SwipeFlixIndex: View {
                 .offset(y: -50)
                 .zIndex(1)
         
-                NavigationView {
-                    VStack {
-                        NavigationLink("Visa Native Ad", destination: NativeContentView(navigationTitle: "Native Annons"))
-                    }
-                }
+                NativeContentView(navigationTitle: "Native Annons")
             }
 
             if showToast {
