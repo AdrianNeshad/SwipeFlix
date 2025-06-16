@@ -347,7 +347,7 @@ struct SwipeFlixIndex: View {
                 case .tvShow(let show):
                     TVShowCard(show: show) { selectedExpandedTVShow = show }
                 case .ad:
-                    NativeContentView(navigationTitle: "Ad").frame(height: 300)
+                    NativeContentView(navigationTitle: "Ad").frame(height: 400)
                 }
             }
         )

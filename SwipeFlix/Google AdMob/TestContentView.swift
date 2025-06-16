@@ -23,22 +23,6 @@ struct NativeContentView: View {
         NativeAdViewContainer(nativeViewModel: nativeViewModel)
           .frame(minHeight: 300)  // minHeight determined from xib.
         // [END add_view_model_to_view]
-
-        Text(
-          nativeViewModel.nativeAd?.mediaContent.hasVideoContent == true
-            ? "Ad contains a video asset." : "Ad does not contain a video."
-        )
-        .frame(maxWidth: .infinity)
-        .foregroundColor(.gray)
-        .opacity(nativeViewModel.nativeAd == nil ? 0 : 1)
-
-        Button("Refresh Ad") {
-          refreshAd()
-        }
-
-        Text(
-          "SDK Version:"
-            + "\(string(for: MobileAds.shared.versionNumber))")
       }
       .padding()
     }
