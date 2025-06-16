@@ -360,7 +360,7 @@ struct SwipeFlixIndex: View {
         )
     }
 
-    private func interleavedItems<T: Identifiable>(from items: [T], adFrequency: Int = 3, isMovie: Bool) -> [SwipeCardItem] {
+    private func interleavedItems<T: Identifiable>(from items: [T], adFrequency: Int = 5, isMovie: Bool) -> [SwipeCardItem] {
         var result: [SwipeCardItem] = []
         for (index, item) in items.enumerated() {
             if index > 0 && index % adFrequency == 0 && !AdsRemoved {
