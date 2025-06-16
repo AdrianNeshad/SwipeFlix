@@ -17,6 +17,23 @@ enum SwipeDirection {
     case left, right
 }
 
+enum SwipeCardItem: Identifiable {
+    case movie(Movie)
+    case tvShow(TVShow)
+    case ad(UUID = UUID())
+
+    var id: UUID {
+        switch self {
+        case .movie(let movie):
+            return UUID(uuidString: "movie-\(movie.id)") ?? UUID()
+        case .tvShow(let show):
+            return UUID(uuidString: "show-\(show.id)") ?? UUID()
+        case .ad(let id):
+            return id
+        }
+    }
+}
+
 extension URL: @retroactive Identifiable {
     public var id: String { absoluteString }
 }
@@ -27,6 +44,7 @@ struct SwipeFlixIndex: View {
     @StateObject private var storeManager = StoreManager()
     @StateObject private var movieVM = MovieViewModel()
     @StateObject private var tvShowVM = TVShowViewModel()
+    @StateObject private var nativeAdVM = NativeAdViewModel()
 
     @State private var selectedTab = 0
     @State private var selectedIndex = 0
@@ -38,6 +56,7 @@ struct SwipeFlixIndex: View {
 
     @State private var selectedExpandedMovie: Movie? = nil
     @State private var selectedExpandedTVShow: TVShow? = nil
+    @State private var swipeItems: [SwipeCardItem] = []
 
     private var selectedType: SwipeContentType {
         get { SwipeContentType.allCases[selectedIndex] }
@@ -51,6 +70,9 @@ struct SwipeFlixIndex: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             swipeTabView()
+                .environmentObject(watchList)
+                .environmentObject(movieVM)
+                .environmentObject(tvShowVM)
                 .tabItem {
                     Label("Swipe", systemImage: "hand.point.right.fill")
                 }
@@ -132,22 +154,20 @@ struct SwipeFlixIndex: View {
         .background(Color.black.ignoresSafeArea(edges: .bottom))
     }
 
-    @ViewBuilder
     private func swipeTabView() -> some View {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            SwipeFlixIndex_iPad(
-                selectedIndex: $selectedIndex,
-                triggerSwipe: $triggerSwipe,
-                swipeDirection: $swipeDirection,
-                selectedSearchURL: $selectedSearchURL,
-                showToast: $showToast,
-                toastText: $toastText
-            )
-            .environmentObject(watchList)
-            .environmentObject(movieVM)
-            .environmentObject(tvShowVM)
-        } else {
-            swipeViewContent
+        Group {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                SwipeFlixIndex_iPad(
+                    selectedIndex: $selectedIndex,
+                    triggerSwipe: $triggerSwipe,
+                    swipeDirection: $swipeDirection,
+                    selectedSearchURL: $selectedSearchURL,
+                    showToast: $showToast,
+                    toastText: $toastText
+                )
+            } else {
+                swipeViewContent
+            }
         }
     }
 
@@ -188,7 +208,7 @@ struct SwipeFlixIndex: View {
                             .font(.system(size: 50))
                             .foregroundColor(.red)
                     }
-                    
+
                     Button(action: swipeRight) {
                         Image(systemName: "heart.circle.fill")
                             .font(.system(size: 50))
@@ -198,8 +218,6 @@ struct SwipeFlixIndex: View {
                 .offset(y: UIScreen.main.bounds.height * 0.825)
                 .offset(y: -50)
                 .zIndex(1)
-        
-                NativeContentView(navigationTitle: "Native Annons")
             }
 
             if showToast {
@@ -235,6 +253,7 @@ struct SwipeFlixIndex: View {
                                 ForEach(MovieCategory.allCases) { category in
                                     Button {
                                         movieVM.selectedCategory = category
+                                        reloadSwipeItems()
                                     } label: {
                                         HStack {
                                             Text(category.displayName)
@@ -249,6 +268,7 @@ struct SwipeFlixIndex: View {
                                 ForEach(TVShowCategory.allCases) { category in
                                     Button {
                                         tvShowVM.selectedCategory = category
+                                        reloadSwipeItems()
                                     } label: {
                                         HStack {
                                             Text(category.displayName)
@@ -277,6 +297,16 @@ struct SwipeFlixIndex: View {
             movieVM.fetch()
             tvShowVM.fetch()
         }
+        .onChange(of: movieVM.movies) { _ in
+            if selectedType == .movies {
+                reloadSwipeItems()
+            }
+        }
+        .onChange(of: tvShowVM.shows) { _ in
+            if selectedType == .tvShows {
+                reloadSwipeItems()
+            }
+        }
     }
 
     private func swipeLeft() {
@@ -289,36 +319,64 @@ struct SwipeFlixIndex: View {
         triggerSwipe = true
     }
 
-    private func swipeCardStack() -> some View {
+    private func reloadSwipeItems() {
         switch selectedType {
         case .movies:
-            return AnyView(
-                swipeStack(items: movieVM.movies, onRemove: { liked, movie in
-                    if liked {
-                        watchList.addMovie(movie)
-                        showToast(text: "Added to Watchlist")
-                    }
-                    movieVM.removeTop()
-                }) { movie in
-                    MovieCard(movie: movie) {
-                        selectedExpandedMovie = movie
-                    }
-                }
-            )
+            swipeItems = interleavedItems(from: movieVM.movies, isMovie: true)
         case .tvShows:
-            return AnyView(
-                swipeStack(items: tvShowVM.shows, onRemove: { liked, show in
-                    if liked {
-                        watchList.addTVShow(show)
-                        showToast(text: "Added to Watchlist")
-                    }
-                    tvShowVM.removeTop()
-                }) { show in
-                    TVShowCard(show: show) {
-                        selectedExpandedTVShow = show
-                    }
+            swipeItems = interleavedItems(from: tvShowVM.shows, isMovie: false)
+        }
+    }
+
+    private func swipeCardStack() -> some View {
+        return AnyView(
+            swipeStack(items: swipeItems, onRemove: { liked, item in
+                switch item {
+                case .movie(let movie):
+                    if liked { watchList.addMovie(movie); showToast(text: "Added to Watchlist") }
+                case .tvShow(let show):
+                    if liked { watchList.addTVShow(show); showToast(text: "Added to Watchlist") }
+                case .ad:
+                    break
                 }
-            )
+                swipeItems.removeFirst()
+            }) { item in
+                switch item {
+                case .movie(let movie):
+                    MovieCard(movie: movie) { selectedExpandedMovie = movie }
+                case .tvShow(let show):
+                    TVShowCard(show: show) { selectedExpandedTVShow = show }
+                case .ad:
+                    NativeContentView(navigationTitle: "Ad").frame(height: 300)
+                }
+            }
+        )
+    }
+
+    private func interleavedItems<T: Identifiable>(from items: [T], adFrequency: Int = 3, isMovie: Bool) -> [SwipeCardItem] {
+        var result: [SwipeCardItem] = []
+        for (index, item) in items.enumerated() {
+            if index > 0 && index % adFrequency == 0 && !AdsRemoved {
+                result.append(.ad())
+            }
+            if isMovie, let movie = item as? Movie {
+                result.append(.movie(movie))
+            } else if let show = item as? TVShow {
+                result.append(.tvShow(show))
+            }
+        }
+        return result
+    }
+
+    private func showToast(text: String) {
+        toastText = text
+        withAnimation {
+            showToast = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation {
+                showToast = false
+            }
         }
     }
 
@@ -333,7 +391,7 @@ struct SwipeFlixIndex: View {
                     .font(.title)
                     .foregroundColor(.gray)
             } else {
-                ForEach(Array(items.prefix(5).enumerated()), id: \.1.id) { index, item in
+                ForEach(Array(items.prefix(5).enumerated()), id: \ .1.id) { index, item in
                     SwipeCard(
                         triggerSwipe: index == 0 ? $triggerSwipe : .constant(false),
                         swipeDirection: index == 0 ? $swipeDirection : .constant(nil),
@@ -347,18 +405,6 @@ struct SwipeFlixIndex: View {
                     .zIndex(Double(-index))
                     .padding(8)
                 }
-            }
-        }
-    }
-
-    private func showToast(text: String) {
-        toastText = text
-        withAnimation {
-            showToast = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            withAnimation {
-                showToast = false
             }
         }
     }
