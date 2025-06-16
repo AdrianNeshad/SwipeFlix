@@ -1,8 +1,8 @@
 //
-//  SwipeFlixIndex.swift
-//  SwipeFlix
+//   SwipeFlixIndex.swift
+//   SwipeFlix
 //
-//  Created by Adrian Neshad on 2025-06-06.
+//   Created by Adrian Neshad on 2025-06-06.
 //
 
 import SwiftUI
@@ -25,8 +25,10 @@ enum SwipeCardItem: Identifiable {
     var id: UUID {
         switch self {
         case .movie(let movie):
+            // Använd movie.id om den är unik och stabil, annars UUID(uuidString: "movie-\(movie.id)") ?? UUID()
             return UUID(uuidString: "movie-\(movie.id)") ?? UUID()
         case .tvShow(let show):
+            // Använd show.id om den är unik och stabil, annars UUID(uuidString: "show-\(show.id)") ?? UUID()
             return UUID(uuidString: "show-\(show.id)") ?? UUID()
         case .ad(let id):
             return id
@@ -296,6 +298,7 @@ struct SwipeFlixIndex: View {
         .onAppear {
             movieVM.fetch()
             tvShowVM.fetch()
+            reloadSwipeItems()
         }
         .onChange(of: movieVM.movies) { _ in
             if selectedType == .movies {
@@ -306,6 +309,10 @@ struct SwipeFlixIndex: View {
             if selectedType == .tvShows {
                 reloadSwipeItems()
             }
+        }
+        // MARK: - Denna onChange löser problemet med växlingen
+        .onChange(of: selectedIndex) { _ in
+            reloadSwipeItems()
         }
     }
 
@@ -347,7 +354,7 @@ struct SwipeFlixIndex: View {
                 case .tvShow(let show):
                     TVShowCard(show: show) { selectedExpandedTVShow = show }
                 case .ad:
-                    NativeContentView(navigationTitle: "Ad").frame(height: 400)
+                    NativeContentView(navigationTitle: "Ad")
                 }
             }
         )

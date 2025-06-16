@@ -15,16 +15,15 @@ struct NativeContentView: View {
   // [START_EXCLUDE silent]
   let navigationTitle: String
   // [END_EXCLUDE]
-
+ 
   var body: some View {
-    ScrollView {
-      VStack(spacing: 20) {
-        // Updates when the native ad data changes.
+      VStack(spacing: 0) {
+        // Updates  when the native ad data changes.
         NativeAdViewContainer(nativeViewModel: nativeViewModel)
-          .frame(minHeight: 300)  // minHeight determined from xib.
-        // [END add_view_model_to_view]
-      }
-      .padding()
+              .frame(maxWidth: 320, maxHeight: 550)
+              .cornerRadius(15)
+          // minHeight determined from xib.
+        // [END add_view_model_to_view]s
     }
     .onAppear {
       refreshAd()
