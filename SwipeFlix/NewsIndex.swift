@@ -43,17 +43,19 @@ struct NewsIndex: View {
                                         selectedLink = IdentifiableURL(url: link)
                                     }
                                 }
+                            // Test banner id: ca-app-pub-3940256099942544/9214589741
+                            
+                            // Riktigt ID: ca-app-pub-9539709997316775/5936126417
+                            if !AdsRemoved && (index + 1) % 4 == 0 {
+                                BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
+                                    .frame(height: 150)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal)
+                            }
                         }
                     }
                 }
             }
-            
-            let isPad = UIDevice.current.userInterfaceIdiom == .pad
-            let bannerHeight: CGFloat = isPad ? 90 : 50
-
-            BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
-                .frame(maxWidth: .infinity, minHeight: bannerHeight, maxHeight: bannerHeight)
-                .padding(.bottom, 5)
             
             .sheet(item: $selectedLink) { wrapped in
                 SafariView(url: wrapped.url)

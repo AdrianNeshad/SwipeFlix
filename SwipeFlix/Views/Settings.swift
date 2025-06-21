@@ -192,7 +192,16 @@ struct Settings: View {
                             .resizable()
                             .frame(width: 30, height: 30)
                             .cornerRadius(8)
-                        Text("Univert")
+                        Text("Univert - Unit Converter")
+                    }
+                }
+                Link(destination: URL(string: "https://apps.apple.com/us/app/unifeed-nyhetsfl%C3%B6de/id6746872036")!) {
+                    HStack {
+                        Image("unifeed")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .cornerRadius(8)
+                        Text("Unifeed - Nyhetsflöde")
                     }
                 }
             }
