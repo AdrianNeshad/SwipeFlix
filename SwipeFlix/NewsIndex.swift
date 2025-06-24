@@ -43,10 +43,16 @@ struct NewsIndex: View {
                                         selectedLink = IdentifiableURL(url: link)
                                     }
                                 }
+                            
+                            // Byt  if AdsRemoved && (index + 1) % 4 == 0 {
+                            // till if !AdsRemoved && (index + 1) % 4 == 0 {
+                            // när reklam funkar
+                            
+                            
                             // Test banner id: ca-app-pub-3940256099942544/9214589741
                             
                             // Riktigt ID: ca-app-pub-9539709997316775/5936126417
-                            if !AdsRemoved && (index + 1) % 4 == 0 {
+                            if AdsRemoved && (index + 1) % 4 == 0 {
                                 BannerAdView(adUnitID: "ca-app-pub-9539709997316775/5936126417")
                                     .frame(height: 150)
                                     .padding(.vertical, 8)

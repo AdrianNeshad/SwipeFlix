@@ -359,11 +359,15 @@ struct SwipeFlixIndex: View {
             }
         )
     }
-
+    
+    // Byt  if index > 0 && index % adFrequency == 0 && AdsRemoved {
+    // till  if index > 0 && index % adFrequency == 0 && !AdsRemoved {
+    // när reklam funkar
+    
     private func interleavedItems<T: Identifiable>(from items: [T], adFrequency: Int = 5, isMovie: Bool) -> [SwipeCardItem] {
         var result: [SwipeCardItem] = []
         for (index, item) in items.enumerated() {
-            if index > 0 && index % adFrequency == 0 && !AdsRemoved {
+            if index > 0 && index % adFrequency == 0 && AdsRemoved {
                 result.append(.ad())
             }
             if isMovie, let movie = item as? Movie {
